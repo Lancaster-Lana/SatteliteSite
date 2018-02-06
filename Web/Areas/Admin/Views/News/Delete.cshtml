@@ -1,0 +1,25 @@
+﻿@model NewsEditingViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.News
+
+@{
+    ViewBag.Title = "Видалити статтю";
+    Layout = null; //it is modal window
+}
+
+@if (ViewBag.Error != null)
+{
+    <label class="label-danger">@ViewBag.Error</label>
+}
+
+@using (Html.BeginForm("DeleteNewsConfirm", "News", new { area = "Admin", controller = "News", @articleId = Model.NewsId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="modal-header bg-info">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3 id="AreaArticle" class="modal-title panel-title">@ViewBag.Title @Model.Title ?</h3>
+    </div>
+    @Html.ValidationSummary(true)
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"> Cancel </button>
+        <button type="submit" class="btn btn-danger col-md-offset-2"> Delete </button>
+    </div>
+}

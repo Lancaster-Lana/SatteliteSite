@@ -1,0 +1,80 @@
+﻿@model NewsListViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.News
+@using Sattelite.Web
+@{
+    ViewBag.Title = "Index";
+    var allNews = AppCach.AllNews;// ?? Model.AllNews;
+}
+
+@using (Html.BeginForm("Index", "News", new { page = 0 }))
+{
+    <div id="content">
+        <div class="box">
+            <div class="box-head">
+                <div class="left h5">Поточні статті </div>
+                @*<div class="right">
+                        @Html.TextBoxFor(m => m.TitleSearchText, new { Class = "field small-field" })
+                        <input type="submit" class="button" value="знайти" id="search" name="search" />
+                    </div>*@
+            </div>
+            <table class="table table-striped table-bordered" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th width="12"> <input type="checkbox" class="checkbox" /> </th>
+                    <th>Категорія</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Added by</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var article in allNews)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="checkbox" />
+                        </td>
+                        <td>
+                            @if (@article.Category != null)
+                            {
+                                <a href="#">@article.Category.Name</a>
+                            }
+                        </td>
+                        <td>
+                            <a href="#">@article.NewsContent.Title</a>
+                        </td>
+
+                        <td>@article.CreatedDate</td>
+                        <td><a href="#">@article.CreatedBy</a></td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "News", new { id = article.Id }, new { Class = "ico edit" }) |
+                            @*@Html.ActionLink("Delete", "Delete", "News", new { id = article.Id }, new { Class = "ico del" })*@
+                            <a href="/Admin/News/Delete/@article.Id" class="ico del" data-toggle="modal" data-target="#delete_article_modal">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    @Html.Partial("_Pagination", Model.PagingData)
+}
+
+<div class="right-sidebar text-center">
+    <div class="box">
+        <div class="box-head text-capitalize">Управління новинами</div>
+        <div class="box-content">
+            @*@Html.ActionLink("Add new Article", "Create", "News", new {Class="add-button"})*@
+            <a href="/Admin/News/Create" class="add-button"><span>Створити новину</span></a>
+            <div class="cl">&nbsp;</div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals-->
+<div id="delete_article_modal" class="modal fade" aria-labelledby="AreaArticle" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

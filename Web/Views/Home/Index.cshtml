@@ -1,0 +1,20 @@
+﻿@model Sattelite.EntityFramework.ViewModels.Client.HomePageViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@section TitleContent{
+
+}
+
+
+@if (Model != null)
+{
+    @Html.Partial("_LeftMenu", Model.Header)
+
+    @Html.Partial("_MainPage", Model.MainPage)
+
+    @Html.Partial("_DashBoard", Model.DashBoard)
+
+    @Html.Partial("_Footer", Model.Footer)
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "outputFileName": "Scripts/jquery.min.js",
+    "inputFiles": [
+      "Scripts/jquery.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/bootstrap.min.js",
+    "inputFiles": [
+      "Scripts/bootstrap.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/bootstrap.min.css",
+    "inputFiles": [
+      "Content/bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/jquery-ui.min.css",
+    "inputFiles": [
+      "Content/jquery-ui.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/bootstrap-social.min.css",
+    "inputFiles": [
+      "Content/bootstrap-social.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/bootstrap-theme.min.css",
+    "inputFiles": [
+      "Content/bootstrap-theme.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/jquery.ui.accordion.min.css",
+    "inputFiles": [
+      "Content/jquery.ui.accordion.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/Login.min.css",
+    "inputFiles": [
+      "Content/Login.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/Site.min.css",
+    "inputFiles": [
+      "Content/Site.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery-ui.min.js",
+    "inputFiles": [
+      "Scripts/jquery-ui.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/additional-methods.min.js",
+    "inputFiles": [
+      "Scripts/additional-methods.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/plugins/table/datatables.min.css",
+    "inputFiles": [
+      "Scripts/plugins/table/datatables.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/plugins/table/datatables.min.js",
+    "inputFiles": [
+      "Scripts/plugins/table/datatables.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/plugins/table/dataTables.colReorder.min.js",
+    "inputFiles": [
+      "Scripts/plugins/table/dataTables.colReorder.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/plugins/table/colReorder.bootstrap.min.css",
+    "inputFiles": [
+      "Scripts/plugins/table/colReorder.bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/admin/adminSite.min.css",
+    "inputFiles": [
+      "Content/admin/adminSite.css"
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+﻿<div class="label label-danger">
+    <p>
+        <strong>
+            @if (@ViewBag.ErrorMessage != null)
+            {
+                @ViewBag.ErrorMessage
+            }
+        </strong>
+    </p>
+</div>
+@Html.Partial("_LoginPartial")

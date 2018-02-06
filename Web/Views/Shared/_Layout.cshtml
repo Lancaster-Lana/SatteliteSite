@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+
+@using System.Web.Optimization
+@{
+    var usersOnline = HttpContext.Current.Application["users_count"];
+}
+<head>
+    <title>Супутник НК - @RenderSection("TitleContent", required: false)</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @Styles.Render("~/bundles/main.css")
+    @Scripts.Render("~/bundles/modernizr.js")
+    @RenderSection("HeaderContent", required: false)
+</head>
+
+<body id="top">
+    <div id="network">
+        <div class="center-wrapper">
+            <div class="left">@DateTime.Now.ToShortDateString() <span class="text-separator">|</span> <span class="quiet">@usersOnline users online</span></div>
+            <div class="login-toolbar">
+                @if (User == null || string.IsNullOrWhiteSpace(User.Identity.Name))
+                {
+                    @Html.ActionLink("Login", "Index", new { area = "Admin", controller = "DashBoard" })
+                }
+                else
+                {
+                    //var rolesArray = Roles.GetRolesForUser(User.Identity.Name);
+                    //var isUserAdmin = User.IsInRole("Administrator");
+
+                    <span>
+                        @* @if (isUserAdmin)*@
+                        @Html.ActionLink("Go to administration board", "Index", new { area = "Admin", controller = "DashBoard" })
+
+                        Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage", area = "", href = "/Account/Manage" })!
+                        @Html.ActionLink("Log out", "Logout", new { area = "", controller = "Account" })
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div id="site">
+        <div class="center-wrapper">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery.js")
+    @Scripts.Render("~/bundles/jqueryval.js")
+    @Scripts.Render("~/bundles/bootstrap.js")
+    @*NOTE: requires JQUERY >1.9.1 < 2.0*@
+
+    @RenderSection("Scripts", required: false)
+
+    <script type="text/javascript">
+        $(function () {
+            $(".feed").on('click', function () {
+
+                //var url = $(this).attr('href');
+                //$('#subscribeCat').load(url);
+
+                //Remove cached data in the modal window
+                $('body').on('hidden.bs.modal', '.modal', function () {
+                    $(this).removeData('bs.modal');
+                });
+
+                $('#subscribeCat').on('shown.bs.modal', function () {
+                    //Init data in modal after show;
+                    //1. If user subscribed to category, then suggest unsubscribe from
+                    //2. if not, then suggest to click "Subscribe"
+                });
+            });
+        });
+    </script>
+</body>
+</html>

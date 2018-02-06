@@ -1,0 +1,76 @@
+﻿@model MainPageRightColumnViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
+
+<aside class="right-sidebar">
+    <section class="section-title">
+        <div>
+            <span> Останні Новини</span>
+            <div class="pull-right">
+                <img src="/Content/themes/base/images/icon-time.gif" width="14" height="14" alt="" />
+            </div>
+        </div>
+        <div class="clearer">&nbsp;</div>
+    </section>
+    <section class="section-content">
+        <ul class="nice-list">
+            @foreach (var article in Model.LatestNews)
+            {
+                <li>
+                    <div class="left">
+                        @Html.ActionLink(article.NewsContent.Title, "Details", "Home", new { id = article.Id }, null)
+                    </div>
+                    <div class="right">@article.CreatedDate.Value.ToShortTimeString()</div>
+                    <div class="clearer">&nbsp;</div>
+                </li>
+            }
+            <li>
+                <a href="#" class="more">Browse all </a>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <div class="section-title">
+            <div>
+                <span>Проекти </span>
+                <div class="pull-right">
+                    <img src="/Content/themes/base/images/icon-time.gif" width="14" height="14" alt="" />
+                </div>
+            </div>
+
+            <div class="clearer">&nbsp;</div>
+        </div>
+        <div class="section-content">
+            <ul class="nice-list">
+                @foreach (var project in Model.Projects)
+                {
+                    <li>
+                        <div class="left">
+                            @Html.ActionLink(project.ProjectContent.Name, "Details", "Project", new { id = project.Id }, null)
+                        </div>
+                        <div class="right">@project.CreatedDate.Value.ToShortTimeString()</div>
+                        <div class="clearer">&nbsp;</div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </section>
+    <section>
+        <div class="section-title">Most Viewed</div>
+        <div class="section-content">
+            <ul class="nice-list">
+                @for (var index = 0; index < Model.MostViews.Count; index++)
+                {
+                    var currentArticle = Model.MostViews.ElementAt(index);
+                    <li>
+                        <span class="quiet">@Html.Raw(index + 1).</span>
+                        @Html.ActionLink(currentArticle.NewsContent.Title, "Details", "Home", new { id = currentArticle.Id }, null)
+                        (@currentArticle.NewsContent.NumOfView times)
+                    </li>
+                }
+                <li><a href="#" class="more">Browse all &#187;</a></li>
+            </ul>
+        </div>
+    </section>
+</aside>
+
+

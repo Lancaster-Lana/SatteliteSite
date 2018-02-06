@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+@using System.Web.Optimization
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Адміністрування налаштувань - @RenderSection("TitleContent", required: false)</title>
+
+    @Styles.Render("~/bundles/admin.css")
+    @Styles.Render("~/bundles/alert.css")
+    @Styles.Render("~/bundles/datatables.css")
+    @*@Styles.Render("~/bundles/modernizr.css")*@
+
+    @RenderSection("HeaderContent", required: false)
+</head>
+<body>
+    <div id="header">
+        <div class="shell">
+            <div id="top">
+                <h1 class="text-center">Administration Board</h1>
+                <div id="top-navigation">
+                    @Html.ActionLink("ВЕРНУТИСЬ НА ГОЛОВНУ", "Index", new { area = "", controller = "Home" })
+                    Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage", area = "", href = "/Account/Manage" }) !
+                    @Html.ActionLink("Sign out", "Logout", new { area = "", controller = "Account" })
+                </div>
+            </div>
+            <div>
+                <ul class="admin_menu nav nav-tabs">
+                    <li>@Html.ActionLink("Категорії НК (групи розсилки)", "Index", new { area = "Admin", controller = "Category" }) </li>
+                    <li>@Html.ActionLink("Редактор новин (розсилки)", "Index", new { area = "Admin", controller = "News" })</li>
+                    <li>@Html.ActionLink("Проекти НК по категоріям", "Index", new { area = "Admin", controller = "Project" }) </li>
+                    <li>@Html.ActionLink("Управління правами користучів", "Index", new { area = "Admin", controller = "Role" }) </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="container">
+        <div class="shell">
+            <br />
+            @Html.Partial("_SucceedMessage")
+            @Html.Partial("_ErrorMessage")
+            <div id="main">
+                <div class="cl">&nbsp;</div>
+                @RenderBody()
+                <div class="cl">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+
+    @*<div id="footer">
+            <center class="text-center">НК Супутник &copy; @DateTime.Now.Year</center>
+        </div>*@
+
+    @Scripts.Render("~/bundles/jquery.js")
+    @Scripts.Render("~/bundles/jqueryval.js")
+    @Scripts.Render("~/bundles/bootstrap.js")
+    @Scripts.Render("~/bundles/alert.js")
+    @RenderSection("Scripts", required: false)
+
+    @*@Scripts.Render("~/bundles/datatables.js")*@
+
+    <script type="text/javascript">
+        $(function () {
+            //filterable table
+            //$('.tblFilter').dataTable();
+            //Hightlight selected tab
+            var str = location.href.toLowerCase();
+            $('ul.admin_menu li a').each(function () {
+                if (str.indexOf(this.href.toLowerCase()) > -1) {
+                    $(this).addClass("current");
+                }
+            });
+
+            //Remove cached data in modal window
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+
+            //Handle error as alert message
+            $('body').on('shown.bs.modal', '.modal', function () {
+                var modalW = $(this);
+                var btnSubmit = $(modalW).find('.delete'); //or update
+                //$(theModal).submit();
+                if (btnSubmit) {
+                    $(btnSubmit).on('click', function (e) {
+                        try {
+                            var theModal = $(this).closest('.modal').find('form');
+                            var url = theModal.attr('action'); // href
+                            $.post(url)
+                                .done(function (response) { })
+                                .fail(function (response) {
+                                    //var errorMsg = (response.error) ? response.error.message : response.message;
+                                    var errorMsg = 'Error to delete(update) record. Seems to be related child tables\records, related to this one';
+                                    swal({
+                                        title: "Error",
+                                        text: errorMsg,
+                                        type: "warning",
+                                        showCancelButton: false,
+                                        closeOnConfirm: true
+                                    }, function () {
+                                        var theModal = $(this).closest('.modal').find('form');
+                                        theModal.modal("hide");
+                                    });
+                                });
+
+                            /* //or
+                               $.ajax({
+                                type: 'POST',
+                                url: url,
+                                data: theModal.serializeObject(),
+                                    success: function (response) {
+                                    },
+                                    error: function (response) {
+                                    }
+                                });*/
+                        }
+                        catch (ex) {
+                            e.preventDefault();
+                            swal('error', ex.message);
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>

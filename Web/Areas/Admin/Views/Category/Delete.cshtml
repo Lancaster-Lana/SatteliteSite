@@ -1,0 +1,24 @@
+﻿@using Sattelite.EntityFramework.ViewModels.Admin.Category
+@model CategoryEditingViewModel
+@{
+    ViewBag.Title = "Видалити категорію";
+    Layout = null; //it is modal window
+}
+
+@*@if (ViewBag.Error != null)
+    {
+        <label class="label-danger">@ViewBag.Error</label>
+    }*@
+
+@using (Html.BeginForm("DeleteCategoryConfirm", "Category", new { area = "Admin", controller = "Category", @categoryId = Model.CategoryId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="modal-header bg-info">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3 id="AreaCategory" class="modal-title panel-title">@ViewBag.Title @Model.Name ?</h3>
+    </div>
+    @Html.ValidationSummary(true)
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"> Cancel </button>
+        <button type="submit" class="btn btn-danger col-md-offset-2"> Delete </button>
+    </div>
+}

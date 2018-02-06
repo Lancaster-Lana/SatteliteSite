@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{14FD496D-1F35-47C7-B050-E9CD225179DD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sattelite.EntityFramework</RootNamespace>
+    <AssemblyName>Sattelite.EntityFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet">
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.3.12303\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.3.12303\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.3.12303\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.3.12303\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.3.12303\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.3.12303\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc.Extensions">
+      <HintPath>..\packages\System.Web.Mvc.Extensions.Mvc.4.1.0.9\lib\net40\System.Web.Mvc.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionResults\Admin\CategoryCreatingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\CategoryEditingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\UserCreatingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\ProjectMemberDeletingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\ProjectDeletingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\ProjectsViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\ProjectEditingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\RolesViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\RoleCreatingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\RoleEditingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\ProjectCreatingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\DashBoardViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\NewsCreatingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\NewsEditingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\UserEditingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Client\CategoryViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Client\DetailsViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Client\HomePageViewModelActionResult.cs" />
+    <Compile Include="ActionResults\ActionResultBase.cs" />
+    <Compile Include="BaseController.cs" />
+    <Compile Include="DBModel\SatteliteDBSInitializer.cs" />
+    <Compile Include="Migrations\201801301601318_InitDB.cs" />
+    <Compile Include="Migrations\201801301601318_InitDB.Designer.cs">
+      <DependentUpon>201801301601318_InitDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060208570_UpdateProjectRelationship.cs" />
+    <Compile Include="Migrations\201802060208570_UpdateProjectRelationship.Designer.cs">
+      <DependentUpon>201802060208570_UpdateProjectRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Seeder.cs" />
+    <Compile Include="Profiles\ProjectMemberMapperProfile.cs" />
+    <Compile Include="Repository\ProjectRoleRepository.cs" />
+    <Compile Include="ViewModels\Admin\Category\CategoryListViewModel.cs" />
+    <Compile Include="ViewModels\Admin\News\NewsListViewModel.cs" />
+    <Compile Include="ViewModels\Admin\News\NewsCreatingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\News\NewsEditingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\News\NewsViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IUserCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\UserCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Project\ProjectListViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Project\ProjectContentViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Project\ProjectMemberRoleViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Project\ProjectMemberViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Role\RoleViewModel.cs" />
+    <Compile Include="ViewModels\Admin\User\UserListViewModel.cs" />
+    <Compile Include="ViewModels\BaseListViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Extensions\HtmlExtension.cs" />
+    <Compile Include="Extensions\HttpPostedFileExtension.cs" />
+    <Compile Include="Extensions\RoleEx.cs" />
+    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Profiles\CategoryMapperProfile.cs" />
+    <Compile Include="Profiles\SubscriptionMapperProfile.cs" />
+    <Compile Include="Profiles\RoleMapperProfile.cs" />
+    <Compile Include="Profiles\ProjectMapperProfile.cs" />
+    <Compile Include="Profiles\UserMapperProfile.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\ProjectRepository.cs" />
+    <Compile Include="Security\AdminMembershipProvider.cs" />
+    <Compile Include="Security\AdminRoleProvider.cs" />
+    <Compile Include="Security\UserInfo.cs" />
+    <Compile Include="MediaItem\IMediaItemStorage.cs" />
+    <Compile Include="MediaItem\MediaItemStorage.cs" />
+    <Compile Include="DBModel\SatteliteDBContext.cs" />
+    <Compile Include="Profiles\NewsMapperProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CategoryRepository.cs" />
+    <Compile Include="Repository\NewsRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="ViewModels\AccountModels.cs" />
+    <Compile Include="ViewModels\Admin\Category\SubscriptionViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Category\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Category\CategoryEditingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Category\CategoryCreatingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\UserEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\CategoryEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IUserEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IProjectCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IProjectDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IProjectEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\ProjectCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\ProjectDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\ProjectEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IRoleDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IRoleEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\RoleEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\RoleCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\RoleDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\IRoleCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Project\ProjectCreatingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Project\ProjectEditingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Project\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\Admin\DashBoard\DashBoardViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\CategoryDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\CategoryCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\ICategoryCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\ICategoryDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\ICategoryEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\INewsDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\INewsEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\NewsDeletingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\NewsEditingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\User\UserCreatingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\User\UserEditingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\User\UserViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Role\RoleCreatingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Role\RoleEditingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Role\RoleListViewModel.cs" />
+    <Compile Include="ViewModels\Client\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\Client\FooterViewModel.cs" />
+    <Compile Include="ViewModels\Client\HeaderViewModel.cs" />
+    <Compile Include="ViewModels\Client\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\Client\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\GlobalCollections.cs" />
+    <Compile Include="ViewModels\PagingViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\INewsCreatingPersistence.cs" />
+    <Compile Include="ViewModels\Admin\Persistences\NewsCreatingPersistence.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Sattelite.Data.csproj">
+      <Project>{75f3c1ec-8818-4526-8651-fa14c149cf86}</Project>
+      <Name>Sattelite.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sattelite.Core\Sattelite.Core.csproj">
+      <Project>{92abec06-ce0a-4252-bffb-7101580c961b}</Project>
+      <Name>Sattelite.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sattelite.Mapping\Sattelite.Mapping.csproj">
+      <Project>{097F8A48-03D1-4C83-BCF7-C9424A32018A}</Project>
+      <Name>Sattelite.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Sattelite.Entities.csproj">
+      <Project>{381D5A10-BB0D-4262-8369-C2CD351B8011}</Project>
+      <Name>Sattelite.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework\Sattelite.Framework.csproj">
+      <Project>{B51B27D7-A648-4E3A-9F4F-2261BA04B610}</Project>
+      <Name>Sattelite.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201801301601318_InitDB.resx">
+      <DependentUpon>201801301601318_InitDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060208570_UpdateProjectRelationship.resx">
+      <DependentUpon>201802060208570_UpdateProjectRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

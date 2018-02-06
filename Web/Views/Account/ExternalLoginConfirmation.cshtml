@@ -1,0 +1,32 @@
+﻿@model Sattelite.EntityFramework.ViewModels.RegisterExternalLoginModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<hgroup class="title">
+    <h2>Associate your @ViewBag.ProviderDisplayName account.</h2>
+</hgroup>
+
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="col-md-3" ></div>
+    <fieldset class="col-md-6">
+        <legend class="h4">Ви ідентифіковані в <strong>@ViewBag.ProviderDisplayName</strong>.
+            Підтвердіть реєстрацію для входу </legend>
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName)
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName)
+        </div>
+        <p />
+        <input type="submit" class="btn btn-success" value="ЗАРЕЄСТРУВАТИСЬ" />
+        @Html.HiddenFor(m => m.ExternalLoginData)
+    </fieldset>
+    <div class="col-md-3" ></div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval.js")
+}

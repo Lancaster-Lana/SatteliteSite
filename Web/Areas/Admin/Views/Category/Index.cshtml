@@ -1,0 +1,59 @@
+﻿@model CategoryListViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Category
+@using Sattelite.Web
+@{
+    ViewBag.Title = "Index";
+    var allCategories = AppCach.AllCategories;// ?? Model.AllCategories;
+}
+
+@using (Html.BeginForm("Index", "Category", new { page = 0 }))
+{
+    <div id="content col-md-6">
+        <div class="box">
+            <div class="box-head h5"> Категорії Проектів\Новин </div>
+
+            <table class="tblFilter table table-striped table-bordered">
+                <tr>
+                    <th>Категорія</th>
+                    <th>Власник</th>
+                    @*<th>Створено</th>*@
+                    <th></th>
+                </tr>
+
+                @foreach (var category in allCategories)
+                {
+                    <tr>
+                        <td><a href="#">@category.Name</a> </td>
+                        <td><a href="#">@category.CreatedBy</a></td>
+                        @*<td>@category.CreatedDate</td>*@
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Category", new { id = category.Id }, new { Class = "ico edit" }) |
+                            @*@Html.ActionLink("Delete", "Delete", "Category", new { id = category.Id }, new { Class = "ico del" })*@
+                            <a href="/Admin/Category/Delete/@category.Id" class="ico del" data-toggle="modal" data-target="#delete_category_modal">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="right-sidebar text-center">
+        <div class="box">
+            <div class="box-head">Управління категоріями</div>
+            <div class="box-content">
+                @*@Html.ActionLink("Add a new category", "Create", "Category", new {Class="add-button"})*@
+                <a href="/Admin/Category/Create" class="add-button"><span>Створити категорію</span></a>
+                <div class="cl">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+}
+<!-- Modals-->
+<div id="delete_category_modal" class="modal fade" aria-labelledby="AreaCategory" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

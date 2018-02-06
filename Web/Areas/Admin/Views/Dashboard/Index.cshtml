@@ -1,0 +1,25 @@
+﻿@using Sattelite.EntityFramework.ViewModels.Admin.DashBoard
+@model DashBoardViewModel
+@{
+    ViewBag.Title = "Wellcome to the administration board !";
+}
+
+<section class="well-lg text-center">
+    <h2 class="alert alert-success"> @ViewBag.Title </h2>
+</section>
+
+<div class="right-sidebar text-center">
+    <div class="box">
+        <div class="box-head">Управління </div>
+        <br/>
+        <p class="box-content">
+            @*@Html.ActionLink("Add new Article", "Create", "News", new {Class="add-button"})*@
+            <a href="/Admin/News/Create" ><span>Створити новину</span></a>
+            <div class="cl">&nbsp;</div>
+        </p>
+        <p class="box-content">
+            <a href="/Admin/Project/Create" ><span>Створити проект</span></a>
+            <div class="cl">&nbsp;</div>
+        </p>
+    </div>
+</div>

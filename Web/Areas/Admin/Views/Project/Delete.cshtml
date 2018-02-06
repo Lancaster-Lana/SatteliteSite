@@ -1,0 +1,20 @@
+﻿@model ProjectViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Project
+
+@{
+    ViewBag.Title = "Are you sure to delete project";
+    Layout = null;
+}
+
+@using (Html.BeginForm("DeleteProjectConfirm", "Project", new { area = "Admin", controller = "Project", @projectId = Model.ProjectId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="modal-header bg-info">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3 id="AreaRole" class="modal-title panel-title">@ViewBag.Title @Model.Name ?</h3>
+    </div>
+    @Html.ValidationSummary(true)
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"> Cancel </button>
+        <button type="submit" class="btn btn-danger col-md-offset-2"> Delete </button>
+    </div>
+}

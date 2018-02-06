@@ -1,0 +1,74 @@
+﻿@model FooterViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
+
+<div class="footer-links row">
+    <div class="column left" id="column-1">
+        <div class="column-content">
+            <div class="column-title">Follow\Subscribe RSS topics</div>
+            <ul class="plain-list">
+                @if (Model.Categories != null)
+                {
+                    foreach (var cat in Model.Categories)
+                    {
+                        string categoryName = cat.Name;
+                        var userName = User.Identity.Name;
+
+                        <li>
+                            @if (userName.IsEmpty())
+                            {
+                                <label class="feed" title="You must login brfore subscribe category">@categoryName</label>
+                            }
+                            else
+                            {
+                                <a class="feed" href="~/Category/RSSCategoryFeed/@cat.Id"
+                                   data-toggle="modal" data-target="#subscribeCat">@categoryName</a>
+                                @*@Html.ActionLink(@name, "RSSCategoryFeed", "Category", new { id = cat.Id }, new { @class = "feed" })*@
+                            }
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="column left" id="column-2">
+        <div class="column-content">
+            <div class="column-title">Про проект "Супутник" </div>
+            <section>
+                <p>
+                    <a href="https://docs.google.com/document/d/1WaPHso0Xp6OM3SoA8KWPAfqsE0rRxgRTw5k5b_WHHD4/edit">Управління групою проектів Нова Країна </a>
+                </p>
+                <p>
+                    <a href="https://garazd.org">Система голосування "Гаразд" </a>
+                </p>
+                <p>
+                    <a href="http://newkraina.org/">Платформа е-демократії </a>
+                </p>
+                <p>
+                    <a href="http://taxes.org.ua/">Податковий кодекс </a>
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <div class="column right" id="column-3">
+        <div class="column-content">
+            <div class="column-title">Get in touch</div>
+            <p>Email: lan.levi@hotmail.com</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <h4 class="text-center">
+        @Html.Raw(string.Format("Супутник НК {0}", DateTime.Now.Year))
+    </h4>
+</footer>
+
+<!-- Modals -->
+<div id="subscribeCat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

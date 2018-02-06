@@ -1,0 +1,153 @@
+﻿@model ProjectEditingViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Project
+@using Sattelite.Web
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Редагування проекту";
+    var allCategories = AppCach.AllCategories;
+    var allUsers = AppCach.AllUsers;
+}
+
+@using (Html.BeginForm("Edit", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.ProjectId)
+
+    <div class="box">
+        <div class="box-head"> Редагування проекту @Model.Name </div>
+        @Html.ValidationSummary(true)
+        <div class="form">
+            <p>
+                <span class="req">max 100 symbols</span>
+                <label>Назва<span>(*)</span></label>
+                @Html.TextBoxFor(x => x.Name, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+            </p>
+            <p class="inline-field">
+                <label>Категорія</label>
+                @Html.DropDownListFor(x => x.CategoryId, new SelectList(allCategories, "Id", "Name", Model.CategoryId), new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+            </p>
+            <p>
+                <label>Куратор</label>
+                @Html.DropDownListFor(x => x.CoordinatorId, new SelectList(allUsers, "Id", "UserName", Model.CoordinatorId), new { Class = "field size3" })
+            </p>
+            <p>
+                <label>Опис<span>(*)</span></label>
+                @Html.TextAreaFor(x => x.ShortDescription, new { Class = "field size1" })
+            </p>
+            <p>
+                <label>Основний контент</label>
+                @Html.TextAreaFor(x => x.Content, new { Class = "field size1" })
+            </p>
+
+            <fieldset>
+                <legend>Виконавці</legend>
+                <a href="/Admin/Project/AddProjectMember/@Model.ProjectId" class="add-button"
+                   data-toggle="modal" data-target="#add_project_member_modal">
+                    <span> Додати учасника до проекту</span>
+                </a>
+
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>
+                            @Html.Label("Name")
+                        </th>
+                        <th>
+                            @Html.Label("Email")
+                        </th>
+                        <th>
+                            @Html.Label("Role")
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                    @foreach (var member in Model.ProjectMembers)
+                    {
+                        //TODO: User -> display info from UserProfile
+                        <tr>
+                            <td> @member.User.DisplayName </td>
+                            <td> @member.User.Email </td>
+                            <td> @member.ProjectRole.Name </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditProjectMember", "Project", new { id = member.Id }, new { Class = "ico edit" }) |
+                                <a href="/Admin/Project/DeleteProjectMember/@member.Id" class="ico del"
+                                   data-toggle="modal" data-target="#delete_project_member_modal">
+                                    <span> Delete</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </fieldset>
+
+            <div class="buttons">
+                @Html.ActionLink("Всі проекти", "Index", null, new { @class = "btn btn-info pull-left" })
+                <input type="submit" class="btn btn-success" value="Зберегти" />
+            </div>
+        </div>
+    </div>
+}
+
+<!-- MODALS -->
+<div id="delete_project_member_modal" class="modal fade" aria-hidden="true" aria-labelledby="AreaMember" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content"> </div>
+    </div>
+</div>
+
+<div id="add_project_member_modal" class="modal fade" aria-hidden="true" aria-labelledby="AreaMember" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content"> </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery.js")
+<script type="text/javascript">
+    $(function () {
+        var form = $('form');
+        form.submit(function (e) {
+            e.preventDefault();
+
+            //Get correct\selected
+            var newCategoryId = $("select[name='CategoryId'] option:selected").val();
+            var newCoordinatorId = $("select[name='CoordinatorId'] option:selected").val();
+
+            var projectViewModel = $(this).serializeArray();
+
+            $.each(projectViewModel, function () {
+                if (this.name == 'CategoryId') {
+                    this.value = newCategoryId;
+                }
+                if (this.name == 'CoordinatorId') {
+                    this.value = newCoordinatorId;
+                }
+            });
+
+            //Pass corrected ViewModel to action
+            var url = $('form').attr('action'); // href="/Admin/Project/Edit"
+            $.post(url, projectViewModel, function (response) {
+
+            }).fail(function (response) {
+                //var errorMsg = (response.error) ? response.error.message : response.message;
+                var errorMsg = 'Error to delete(update) record. Seems to be related child tables\records, related to this one';
+                swal({
+                    title: "Error",
+                    text: errorMsg,
+                    type: "warning",
+                    showCancelButton: false,
+                    closeOnConfirm: true
+                }, function () {
+                    //if Edit is opened in modal window
+                    //var theModal = $(this).closest('.modal').find('form');
+                    //theModal.modal("hide");
+                });
+            }).always(function (response) {
+                //abp.ui.clearBusy($(busyModal));
+            });
+
+        });
+    });
+</script>
+

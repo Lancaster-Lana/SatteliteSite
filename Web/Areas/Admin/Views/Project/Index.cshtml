@@ -1,0 +1,88 @@
+﻿@model ProjectListViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Project
+@using System.Linq
+@using Sattelite.Web
+
+@{
+    ViewBag.Title = "Projects";
+    var projects = Model.Projects;//AppCach.AllProjects; ;
+    var allCategories = AppCach.AllCategories;// ?? Model.AllCategories;
+    var allUsers = AppCach.AllUsers;
+}
+
+@using (Html.BeginForm("Index", "Project", new { page = 0 }))
+{
+    <div id="content col-md-6">
+        <div class="box">
+            <div class="box-head">
+                <div class="left h5">Активні проекти</div>
+                <div class="right">
+                    <label>Категорія : </label>
+                    @Html.DropDownListFor(x => x.CategoryId, new SelectList(allCategories, "Id", "Name"), new
+                    {
+                        selected = Model.CategoryId,
+                        onchange = "this.form.submit();",
+                        Class = "field small-field"
+                    })
+
+                    @*<label>Назва</label>
+                        @Html.TextBoxFor(m => m.TitleSearchText, new { Class = "field small-field" })*@
+                    @*<button type="submit" class="button pull-right" value="search" id="searchByName" name="знайти" />*@
+                </div>
+            </div>
+
+            <table class="table table-striped table-bordered">
+                <tr class="list-group-item-heading">
+                    <th width="12"><input type="checkbox" class="checkbox" /></th>
+                    <th>@Html.Label("Категорія")</th>
+                    <th>@Html.Label("Назва")</th>
+                    <th>@Html.Label("Опис")</th>
+                    <th>@Html.Label("Координатор")</th>
+                    <th>@Html.Label("Дата")</th>
+                    <th>@Html.Label("Створено")</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var project in projects)
+                {
+                    var category = allCategories.FirstOrDefault(p => p.Id == project.CategoryId);
+                    var categoryName = category != null ? category.Name : "";
+                    var coordinator = allUsers.FirstOrDefault(u => u.Id == project.CoordinatorId);
+                    string coordinatorName = coordinator != null ? coordinator.UserName : string.Empty;
+                    <tr>
+                        <td> <input type="checkbox" class="checkbox" /> </td>
+                        <td> @categoryName </td>
+                        <td> @project.ProjectContent.Name  </td>
+                        <td> @project.ProjectContent.ShortDescription </td>
+                        <td> @coordinatorName </td>
+                        <td> @project.CreatedDate.Value.ToShortDateString()</td>
+                        <td><a href="#">@project.CreatedBy</a></td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Project", new { id = project.Id }, new { Class = "ico edit" }) |
+                            <a href="/Admin/Project/Delete/@project.Id" class="ico del" data-toggle="modal" data-target="#delete_project_modal">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+<div class="right-sidebar text-center">
+    <div class="box">
+        <div class="box-head"> Управління проектами</div>
+        <div class="box-content">
+            <a href="/Admin/Project/Create" class="add-button"><span>Створити проект</span></a>
+            <div class="cl">&nbsp;</div>
+        </div>
+    </div>
+</div>
+
+<!-- MODALS-->
+<div id="delete_project_modal" class="modal fade" aria-labelledby="AreaRole" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

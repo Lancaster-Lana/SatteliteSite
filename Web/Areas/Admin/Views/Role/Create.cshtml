@@ -1,0 +1,32 @@
+﻿@model RoleCreatingViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Role
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Create Role";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="box">
+        <div class="box-head"> Нова роль </div>
+        <div class="form">
+            @Html.ValidationSummary(true)
+            <p>
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Description)
+                @Html.TextAreaFor(model => model.Description, new { Class = "field size1" })
+                @Html.ValidationMessageFor(model => model.Description)
+            </p>
+        </div>
+        <div class="buttons">
+            @Html.ActionLink("Всі ролі", "Index", null, new { @class = "btn btn-info pull-left" })
+            <input type="submit" class="btn btn-success" value="Створити">
+        </div>
+    </div>
+}

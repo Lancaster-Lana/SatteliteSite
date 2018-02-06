@@ -1,0 +1,61 @@
+﻿@model UserCreatingViewModel
+@using System.Web.Optimization
+@using Sattelite.EntityFramework.ViewModels.Admin.User
+@using Sattelite.Web
+@{
+    ViewBag.Title = "Create User";
+
+    var allRoles = AppCach.AllRoles;
+    var allCategories = AppCach.AllCategories;
+}
+
+@using (Html.BeginForm())
+{
+    <div class="box">
+        <div class="box-head"> Новий користувач </div>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset class="form">
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "control-label col-sm-3" })
+                @Html.EditorFor(model => model.UserName, new { @class = "form-control col-sm-6" })
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "control-label col-sm-3" })
+                @Html.EditorFor(model => model.Email, new { @class = "form-control col-sm-6" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DisplayName, new { @class = "control-label col-sm-3" })
+                @Html.EditorFor(model => model.DisplayName, new { @class = "form-control col-sm-6" })
+                @Html.ValidationMessageFor(model => model.DisplayName)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, new { @class = "control-label col-sm-3" })
+                @Html.EditorFor(model => model.Password, new { Class = "form-control col-sm-6", type = "password" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.ConfirmPassword)
+                    @Html.TextBoxFor(model => model.ConfirmPassword, new { Class = "field", type = "password" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                </div>*@
+
+            <div class="form-group">
+                @Html.Label("Role", new { @class = "control-label col-sm-3" })
+                @Html.DropDownListFor(model => model.RoleId, new SelectList(allRoles, "Id", "Name", Model.RoleId), new { @class = "form-group col-sm-6 field2" })
+                @Html.ValidationMessageFor(model => model.RoleId)
+            </div>
+        </fieldset>
+        <div class="buttons">
+            @Html.ActionLink("Всі користувачі", "Index", null, new { @class = "btn btn-info pull-left" })
+            <a href="/Admin/User" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </div>
+}

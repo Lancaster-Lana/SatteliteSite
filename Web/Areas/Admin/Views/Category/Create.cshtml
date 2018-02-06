@@ -1,0 +1,29 @@
+﻿@using System.Web.Optimization
+@model Sattelite.EntityFramework.ViewModels.Admin.Category.CategoryCreatingViewModel
+@{
+    ViewBag.Title = "Create category";
+}
+
+@using (Html.BeginForm("Create", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box">
+        <div class="box-head">Створити категорію</div>
+
+        <div class="form">
+            <p>
+                <span class="req">max 100 symbols</span>
+                <label>Назва категорії <span>(*)</span></label>
+                @Html.TextBoxFor(x => x.Name, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                <label>Опис</label>
+                @Html.TextAreaFor(x => x.Description, new { Class = "field size1" })
+            </p>
+        </div>
+        @Html.ValidationSummary()
+        <div class="buttons">
+            <input type="submit" class="btn btn-success" value="Створити" />
+        </div>
+    </div>
+}

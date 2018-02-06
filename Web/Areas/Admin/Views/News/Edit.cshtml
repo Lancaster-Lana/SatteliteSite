@@ -1,0 +1,60 @@
+﻿@model NewsEditingViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.News
+@using Sattelite.Web
+@using Sattelite.EntityFramework.Extensions
+@{
+    ViewBag.Title = "Редагування статті";
+    var allCategories = AppCach.AllCategories;
+}
+
+@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box">
+        <div class="box-head"> Редагування <b> @Model.Title </b></div>
+        <div class="form">
+            <p class="inline-field">
+                <label>Категорія</label>
+                @Html.HiddenFor(m => m.NewsId)
+                @Html.DropDownListFor(x => x.CategoryId, new SelectList(allCategories, "Id", "Name", Model.CategoryId), new { Class = "field size1" })
+            </p>
+            <p>
+                <span class="req">max 100 symbols</span>
+                <label>Назва статті<span>(*)</span></label>
+                @Html.TextBoxFor(x => x.Title, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+            </p>
+            <p>
+                <label>Short Description<span>(*)</span></label>
+                @Html.TextAreaFor(x => x.ShortDescription, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.ShortDescription, null, new { @class = "text-danger" })
+            </p>
+            <p>
+                <label>Main Content</label>
+                @Html.TextAreaFor(x => x.Content, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
+            </p>
+            <p>
+                <label>Small image<span>(*)</span></label>
+                @Html.TextBoxFor(m => m.SmallImage, new { type = "file" })
+                @Html.RenderImageWithPath(Model, m => m.SmallImagePath, "bordered", 100, 100)
+            </p>
+            <p>
+                <label>Medium image<span>(*)</span></label>
+                @Html.TextBoxFor(m => m.MediumImage, new { type = "file" })
+                @Html.RenderImageWithPath(Model, m => m.MediumImagePath, "bordered", 100, 100)
+            </p>
+            <p>
+                <label>Large image<span>(*)</span></label>
+                @Html.TextBoxFor(m => m.BigImage, new { type = "file" })
+                @Html.RenderImageWithPath(Model, m => m.BigImagePath, "bordered", 100, 100)
+            </p>
+        </div>
+
+        @Html.ValidationSummary(true)
+
+        <div class="buttons">
+            @Html.ActionLink("Всі статті", "Index", "News", null, new { @class = "btn btn-info pull-left" })
+            <button type="submit" class="btn btn-success">Зберегти</button>
+        </div>
+    </div>
+}

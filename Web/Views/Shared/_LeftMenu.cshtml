@@ -1,0 +1,36 @@
+﻿@model Sattelite.EntityFramework.ViewModels.Client.HeaderViewModel
+
+<div class="site_header" >
+    <h1 class="text-center" >
+        @Model.SiteTitle
+    </h1>
+</div>
+
+<aside class="pull-left">
+      @*<div class="clearer">&nbsp;</div>*@
+    <div class="site_sidebar">
+      <div class="site_menu">
+        @if (Model.Categories.Any())
+        {
+             <ul>
+                @for (var i = 0; i < Model.Categories.Count; i++)
+                {
+                    var currentTab = string.Empty;
+
+                    var cat = Model.Categories.ElementAt(i);
+
+                    if (Model.CurrentCategoryId > 0 && Model.CurrentCategoryId == cat.Id || (i == 0))
+                    {
+                        currentTab = "current";
+                    }
+
+                    <li>
+                        @*<a href="~/Home/Category/@cat.Id" >@cat.Name</a>*@
+                       @Html.ActionLink(@cat.Name, "Category", "Home", new { @id = @cat.Id }, new {@class=@currentTab })
+                    </li>
+                }
+             </ul>
+        }
+        </div>
+    </div>
+</aside>

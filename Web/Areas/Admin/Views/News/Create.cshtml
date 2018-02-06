@@ -1,0 +1,55 @@
+﻿@model NewsCreatingViewModel
+@using System.Web.Optimization
+@using Sattelite.EntityFramework.ViewModels.Admin.News
+@using Sattelite.Web
+
+@{
+    ViewBag.Title = "Create News Article";
+    var allCategories = AppCach.AllCategories;
+}
+
+@using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box">
+        <div class="box-head"> Нова стаття </div>
+
+        <div class="form">
+            <p class="inline-field">
+                <label>Категорія</label>
+                @Html.DropDownListFor(x => x.CategoryId, new SelectList(allCategories, "Id", "Name", Model.CategoryId), new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.CategoryId)
+            </p>
+            <p>
+                <span class="req">max 100 symbols</span>
+                <label>Назва статті <span>(*)</span></label>
+                @Html.TextBoxFor(x => x.Title, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.Title)
+            </p>
+            <p>
+                <label>Короткий опис<span>(*)</span></label>
+                @Html.TextAreaFor(x => x.ShortDescription, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.ShortDescription, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                <label>Основний контент</label>
+                @Html.TextAreaFor(x => x.Content, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.Content)
+            </p>
+            <p>
+                <label>Мала картинка<span></span></label>
+                @Html.TextBoxFor(m => m.SmallImage, new { type = "file" })
+            </p>
+            <p>
+                <label>Середня<span></span></label>
+                @Html.TextBoxFor(m => m.MediumImage, new { type = "file" })
+            </p>
+            <p>
+                <label>Велика картинка <span></span></label>
+                @Html.TextBoxFor(m => m.BigImage, new { type = "file" })
+            </p>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,31 @@
+﻿@model CategoryEditingViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Category
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Редагування категорії";
+}
+
+@using (Html.BeginForm("Edit", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.CategoryId)
+
+    <div class="box">
+        <div class="box-head">@ViewBag.Title <b>@Model.Name </b></div>
+
+        <div class="form">
+            <p>
+                <span class="req">max 100 symbols</span>
+                <label>Назва категорії <span>(*)</span></label>
+                @Html.TextBoxFor(x => x.Name, new { Class = "field size1" })
+            </p>
+            <p>
+                <label>Опис </label>
+                @Html.TextAreaFor(x => x.Description, new { Class = "field size1" })
+            </p>
+        </div>
+        <div class="buttons">
+            <input type="submit" class="btn btn-success" value="Зберегти" />
+        </div>
+    </div>
+}

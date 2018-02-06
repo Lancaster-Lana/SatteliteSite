@@ -1,0 +1,161 @@
+﻿@model UserEditingViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.User
+@using System.Web.Optimization
+@using Sattelite.Web
+
+@{
+    ViewBag.Title = "Edit User";
+
+    //NOTE: for collections can be used IDistributedCache
+    var allRoles = AppCach.AllRoles;
+    var allCategories = AppCach.AllCategories;
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            var $form = $('form');
+            $form.submit(function (e) {
+                e.preventDefault();
+
+                var url = $(this).attr('action'); //"/Admin/User/Edit";
+                var userViewModel = $(this).serializeArray();
+
+                var selectedCatCheckboxes = $(":checkbox").filter(function (idx, elem) {
+                    return $(elem).is(':checked');
+                });
+
+                var categoriesIds = $.map(selectedCatCheckboxes, function (elem) {
+                    return $(elem).val();
+                });
+
+                //var categoriesArr = $.map(selectedCatCheckboxes, function (elem) {
+                //    return { 'Id': $(elem).val(), 'Name': $(elem).attr('name') };
+                //});
+
+                /* //Values to $.post
+                 var newRole = $("select option:selected").val();
+                 $.each(userViewModel, function() {
+                       if (this.name == 'RoleId') {
+                            this.value = newRole;
+                       }
+                   });
+                */
+
+                //Correct subscriptions
+                //userViewModel[userViewModel.length] = { name: 'NewSubscribeCategories', value: categoriesIds };
+                userViewModel[userViewModel.length] = {
+                    name: 'SubscriptionsIds',
+                    value: categoriesIds
+                };
+
+                $.post(url, userViewModel)
+                    .fail(function (response) {
+                        var errorMsg = (response.error) ? response.error.message : response.message;
+                        swal({
+                            title: "Error",
+                            text: "Failed to update user",
+                            type: "warning",
+                            showCancelButton: false,
+                            closeOnConfirm: true
+                        });
+                    }).success(function (response) {
+                        swal({
+                            title: "Success",
+                            text: "Successfully updated user data",
+                            type: "success",
+                            showCancelButton: false,
+                            closeOnConfirm: true
+                        });
+                    }).always(function (response) {
+                        //abp.ui.clearBusy($(busyModal));
+                    });
+            });
+        });
+    </script>
+}
+
+@if (Model != null)
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="box">
+            <div class="box-head">Редагування даних користувача</div>
+            @Html.HiddenFor(model => model.UserId)
+            @Html.Partial("_SucceedMessage")
+            @Html.Partial("_ErrorMessage")
+
+            <div class="form">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.UserName)
+                    @Html.TextBoxFor(model => model.UserName, new { Class = "field size3" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.DisplayName)
+                    @Html.TextBoxFor(model => model.DisplayName, new { Class = "field size3" })
+                    @Html.ValidationMessageFor(model => model.DisplayName)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Email)
+                    @Html.TextBoxFor(model => model.Email, new { Class = "field" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Password)
+                    @Html.TextBoxFor(model => model.Password, new { Class = "field", type = "password" })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+                <p class="col-md-12">
+                    @Html.Label("Role")
+                    @if (allRoles != null)
+                    {
+                    @Html.DropDownListFor(model => model.RoleId, new SelectList(allRoles, "Id", "Name", Model.RoleId), new { Class = "field1" })
+                    }
+                    else
+                    {
+                        <span class="alert alert-danger" > Empty list of roles</span>
+                    }
+                    @Html.ValidationMessageFor(model => model.RoleId)
+                </p>
+
+                @*@Html.ActionLink("Підписатись на нову категорію", "CreateCategorySubscriptions", new { userName = Model.UserName }, new { @class = "btn btn-foursquare pull-left" })*@
+                <table id="tblSubscriptions" class="table table-striped table-bordered">
+                    <tr class="text-info text-capitalize">
+                        <th width="12">
+                            @*<input type="checkbox" class="checkbox" />*@
+                        </th>
+                        <th>
+                            @Html.Label("Категорії підписки")
+                        </th>
+                    </tr>
+                    @foreach (var category in allCategories)
+                    {
+                        var isUserSubsribedToCategory = Model.Subscriptions.Select(s => s.Category.Id).Contains(category.Id);
+                        <tr>
+                            <td width="12">
+                                <input type="checkbox" id="ckb_@category.Id" name="@category.Name" value="@category.Id"
+                                       class="checkbox" @(isUserSubsribedToCategory ? "checked" : "") />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => category.Name)
+                                @Html.HiddenFor(modelItem => category.Id)
+                            </td>
+                        </tr>
+                    }
+                </table>
+                @Html.ValidationSummary(true)
+
+                <div class="buttons">
+                    @Html.ActionLink("Список користувачів", "Index", null, new { @class = "btn btn-info pull-left" })
+                    <button name="btnSaveUser" class="btn btn-success" type="submit">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+

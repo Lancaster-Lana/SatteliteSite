@@ -1,0 +1,35 @@
+﻿@model Sattelite.Entities.ProjectAgg.Subscription
+
+@{
+    ViewBag.Title = "RSSCategoryFeed";
+    Layout = null;//"~/Views/Shared/_Layout.cshtml";
+}
+
+@using(Html.BeginForm("SubscribeRSSCategoryFeed", "Category", new { @id = 1 },  FormMethod.Post, new {id="editForm" , enctype = "multipart/form-data" }))
+{
+
+    // @Html.AntiForgeryToken()
+
+<!-- Box -->
+<div class="box">
+    <!-- Box Head -->
+    <div class="box-head">
+        <h2>Підписатись на категорію</h2>
+    </div>
+</div>
+
+<div class="form1">
+    @if (Model != null)
+    {
+    <p class="field size1">
+        <label>Користувач : </label>
+        @Html.DisplayFor(model => model.UserName)
+    </p>
+
+    <p class="field size2">
+        <label>Категорія : </label>
+        @Html.DisplayFor(model => model.CategoryId, new { @class = "control-label col-md-2" })
+    </p>
+    }
+</div>
+}

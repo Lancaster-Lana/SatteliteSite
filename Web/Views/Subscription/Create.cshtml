@@ -1,0 +1,76 @@
+﻿@model Sattelite.Entities.ProjectAgg.Subscription
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+<fieldset>
+    <legend>Subscription</legend>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.UserName)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.UserName)
+        @Html.ValidationMessageFor(model => model.UserName)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CategoryId)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.CategoryId)
+        @Html.ValidationMessageFor(model => model.CategoryId)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Category)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Category)
+        @Html.ValidationMessageFor(model => model.Category)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CreatedDate)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.CreatedDate)
+        @Html.ValidationMessageFor(model => model.CreatedDate)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CreatedBy)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.CreatedBy)
+        @Html.ValidationMessageFor(model => model.CreatedBy)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.ModifiedDate)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.ModifiedDate)
+        @Html.ValidationMessageFor(model => model.ModifiedDate)
+    </div>
+
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+</fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
