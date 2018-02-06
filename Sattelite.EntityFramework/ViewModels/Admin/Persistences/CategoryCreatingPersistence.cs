@@ -23,13 +23,17 @@
 
         public CategoryCreatingPersistence(ICategoryRepository categoryRepository, IUserRepository userRepository)
         {
-            this._categoryRepository = categoryRepository;
-            this._userRepository = userRepository;
+            _categoryRepository = categoryRepository;
+            _userRepository = userRepository;
         }
 
         public bool CreateCategory(Category category)
         {
-            return this._categoryRepository.SaveCategory(category);
+            //Check if category with same name exists
+            //var existCategory = _categoryRepository.GetByName(category.Name);
+            //if (existCategory)
+            //    return false;
+            return _categoryRepository.SaveCategory(category);
         }
     }
 }

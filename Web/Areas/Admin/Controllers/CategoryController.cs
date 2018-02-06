@@ -62,8 +62,15 @@
         {
             var category = PrepareCategory(viewModel, true);
 
+            //if(!_categoryCreatingPersistence.Validate(category))//check name, etc/
+            // SetErrorMessage("Cannot create category with same name");
+
             if (_categoryCreatingPersistence.CreateCategory(category))
+            {
                 SetSucceedMessage("Save category successfully");
+                //Refresh cach AllCategories
+                AppCach.AllCategories.Add(category);
+            }
             else
                 SetErrorMessage("Cannot create category");
 
@@ -76,7 +83,6 @@
         }
 
         [HttpPost]
-        //[ValidateInput(false)]
         public ActionResult Edit(CategoryEditingViewModel viewModel)
         {
             if (!ModelState.IsValid)
