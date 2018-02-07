@@ -95,7 +95,8 @@ namespace Sattelite.EntityFramework.Repository
 
         public bool DeleteUser(int userId)
         {
-            return DeleteUser(GetById(userId));
+            var user = GetById(userId);
+            return DeleteUser(user);
         }
 
         public bool DeleteUser(User user)

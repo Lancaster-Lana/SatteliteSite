@@ -1,6 +1,7 @@
-﻿@model Sattelite.EntityFramework.ViewModels.Client.DetailsLeftColumnViewModel
+﻿@model DetailsLeftColumnViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
 
-<div id="main-left" class="left">
+<div id="main-left" class="col-md-6">
     <div class="post">
         <div class="post-title">
             <h2>
@@ -13,8 +14,7 @@
              - 
             @Html.Raw(@Model.CurrentItem.CreatedDate.Value.ToShortDateString()) by @Html.Raw(@Model.CurrentItem.CreatedBy)
         </div>
-        <div class="post-date">
-        </div>
+        <div class="post-date"> </div>
         <div class="post-body">
             <p>
                 @Html.Raw(@Model.CurrentItem.NewsContent.Content)

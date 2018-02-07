@@ -62,8 +62,8 @@
         {
             var category = PrepareCategory(viewModel, true);
 
-            //if(!_categoryCreatingPersistence.Validate(category))//check name, etc/
-            // SetErrorMessage("Cannot create category with same name");
+            if(!_categoryCreatingPersistence.Validate(category))//check name, etc/
+                SetErrorMessage("Cannot create category with the same name");
 
             if (_categoryCreatingPersistence.CreateCategory(category))
             {
@@ -90,13 +90,12 @@
                 SetErrorMessage("Please, validate all fields");
                 return View(viewModel);
             }
-
             var category = PrepareCategory(viewModel, false);
 
             if (_categoryEditingPersistence.SaveCategory(category))
-                SetSucceedMessage("Save category successfully");
+                SetSucceedMessage("Category saved  successfully");
             else
-                SetErrorMessage("Cannot edit category");
+                SetErrorMessage("Cannot update category. See validation errors.");
 
             return RedirectToAction("Index", "Category");
         }
@@ -216,18 +215,11 @@
         #region private methods
         private Category PrepareCategory(CategoryViewModel model, bool isNew)
         {
-
-            //return CategoryFactory.GetCategory(
-            //                            isNew ? 0 : model.CategoryId,
-            //                            model.Name,
-            //                            model.SortDescription,
-            //                            GetUserName());
-
             return new Category
             {
                 Id = isNew ? 0 : model.CategoryId,
                 Name = model.Name,
-                Description = model.Description,
+                Description = model.ShortDescription,
                 CreatedBy = isNew ? GetUserName() : model.CreatedBy,
                 CreatedDate = isNew ? DateTime.Now : model.CreatedDate,
             };

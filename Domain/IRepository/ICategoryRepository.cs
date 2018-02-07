@@ -7,6 +7,8 @@
     {
         Category GetById(int id);
 
+        Category GetByName(string name);
+
         IEnumerable<Category> GetCategories();
 
         bool SaveCategory(Category category);
@@ -29,6 +31,7 @@
         bool RemoveUserSubscription(User user, int categoryId);
 
         bool RemoveUserSubscriptions(string userName, List<int> categoryIds);
+
         bool RemoveUserSubscriptions(User user, List<int> categoryIds);
 
         bool RemoveAllUserSubscriptions(string userName);

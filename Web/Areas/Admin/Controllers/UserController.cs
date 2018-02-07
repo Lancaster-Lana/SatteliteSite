@@ -135,14 +135,13 @@ namespace Sattelite.Web.Areas.Admin.Controllers
                     throw new ArgumentException("userId");
 
                 isSucceed = _userRepository.DeleteUser(userId);
-
                 //update cach : AppCach.AllUsers.Except(AppCach.AllUsers.Where(n => n.Id == userId));
                 AppCach.AllUsers = new ConcurrentBag<User>(_userRepository.GetUsers());//ViewBag.AllNews = _newsRepository.GetNews().ToList();
             }
             catch (Exception ex)
             {
                 isSucceed = false; //SetErrorMessage(string.Format("Cannot remove user. {0} ", ex.Message));
-                string errMsg = string.Format("Cannot remove user. See {0} ", ex.InnerException.Message);
+                string errMsg = string.Format("Cannot remove user. See {0} ", ex.Message);
                 //throw new Exception(errMsg);  //Display error in modal window
                 return Json(new
                 {

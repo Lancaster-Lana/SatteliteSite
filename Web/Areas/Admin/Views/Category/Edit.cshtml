@@ -1,6 +1,7 @@
 ﻿@model CategoryEditingViewModel
 @using Sattelite.EntityFramework.ViewModels.Admin.Category
-@using System.Web.Optimization
+@using Sattelite.Web
+@using Sattelite.EntityFramework.Extensions
 
 @{
     ViewBag.Title = "Редагування категорії";
@@ -18,10 +19,12 @@
                 <span class="req">max 100 symbols</span>
                 <label>Назва категорії <span>(*)</span></label>
                 @Html.TextBoxFor(x => x.Name, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </p>
             <p>
                 <label>Опис </label>
-                @Html.TextAreaFor(x => x.Description, new { Class = "field size1" })
+                @Html.TextAreaFor(x => x.ShortDescription, new { Class = "field size1" })
+                @Html.ValidationMessageFor(m => m.ShortDescription, "", new { @class = "text-danger" })
             </p>
         </div>
         <div class="buttons">

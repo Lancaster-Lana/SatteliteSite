@@ -11,30 +11,32 @@
     <div id="content col-md-6">
         <div class="box">
             <div class="box-head h5"> Категорії Проектів\Новин </div>
-
-            <table class="tblFilter table table-striped table-bordered">
+            <table class="filterable table table-striped table-bordered">
+              <thead>
+                  <tr>
+                        <th>Категорія</th>
+                        <th>Власник</th>
+                        @*<th>Створено</th>*@
+                        <th></th>
+                  </tr>
+               </thead>
+             <tbody>
+             @foreach (var category in allCategories)
+             {
                 <tr>
-                    <th>Категорія</th>
-                    <th>Власник</th>
-                    @*<th>Створено</th>*@
-                    <th></th>
+                    <td><a href="#">@category.Name</a> </td>
+                    <td><a href="#">@category.CreatedBy</a></td>
+                    @*<td>@category.CreatedDate</td>*@
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Category", new { id = category.Id }, new { Class = "ico edit" }) |
+                        @*@Html.ActionLink("Delete", "Delete", "Category", new { id = category.Id }, new { Class = "ico del" })*@
+                        <a href="/Admin/Category/Delete/@category.Id" class="ico del" data-toggle="modal" data-target="#delete_category_modal">
+                            Delete
+                        </a>
+                    </td>
                 </tr>
-
-                @foreach (var category in allCategories)
-                {
-                    <tr>
-                        <td><a href="#">@category.Name</a> </td>
-                        <td><a href="#">@category.CreatedBy</a></td>
-                        @*<td>@category.CreatedDate</td>*@
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", "Category", new { id = category.Id }, new { Class = "ico edit" }) |
-                            @*@Html.ActionLink("Delete", "Delete", "Category", new { id = category.Id }, new { Class = "ico del" })*@
-                            <a href="/Admin/Category/Delete/@category.Id" class="ico del" data-toggle="modal" data-target="#delete_category_modal">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
                 }
+               </tbody>
             </table>
         </div>
     </div>

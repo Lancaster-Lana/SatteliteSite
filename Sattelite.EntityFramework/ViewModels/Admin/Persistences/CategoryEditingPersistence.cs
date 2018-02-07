@@ -28,13 +28,13 @@
             if (oldCategory == null && oldCategory.Name == null)
                 throw new NoNullAllowedException(string.Format("Category with id={0}", category.Id).ToNotNullErrorMessage());
 
-            oldCategory.ModifiedDate = DateTime.Now;
-
-            if (!oldCategory.Name.Equals(category.Name, StringComparison.InvariantCulture))
+            if (string.IsNullOrEmpty(oldCategory.Name) || !oldCategory.Name.Equals(category.Name, StringComparison.InvariantCulture))
                 oldCategory.Name = category.Name;
 
-            if (!oldCategory.Description.Equals(category.Description, StringComparison.InvariantCulture))
+            if (string.IsNullOrEmpty(oldCategory.Description) || !oldCategory.Description.Equals(category.Description, StringComparison.InvariantCulture))
                 oldCategory.Description = category.Description;
+
+            oldCategory.ModifiedDate = DateTime.Now;
 
             return _categoryRepository.SaveCategory(oldCategory);
         }

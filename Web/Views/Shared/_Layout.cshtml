@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
 
-@using System.Web.Optimization
 @{
     var usersOnline = HttpContext.Current.Application["users_count"];
 }
@@ -16,9 +15,9 @@
     @RenderSection("HeaderContent", required: false)
 </head>
 
-<body id="top">
-    <div id="network">
-        <div class="center-wrapper">
+<body>
+    <div class="center-wrapper">
+        <div id="network">
             <div class="left">@DateTime.Now.ToShortDateString() <span class="text-separator">|</span> <span class="quiet">@usersOnline users online</span></div>
             <div class="login-toolbar">
                 @if (User == null || string.IsNullOrWhiteSpace(User.Identity.Name))
@@ -40,10 +39,8 @@
                 }
             </div>
         </div>
-    </div>
 
-    <div id="site">
-        <div class="center-wrapper">
+        <div id="site">
             @RenderBody()
         </div>
     </div>
@@ -58,10 +55,6 @@
     <script type="text/javascript">
         $(function () {
             $(".feed").on('click', function () {
-
-                //var url = $(this).attr('href');
-                //$('#subscribeCat').load(url);
-
                 //Remove cached data in the modal window
                 $('body').on('hidden.bs.modal', '.modal', function () {
                     $(this).removeData('bs.modal');
@@ -72,6 +65,9 @@
                     //1. If user subscribed to category, then suggest unsubscribe from
                     //2. if not, then suggest to click "Subscribe"
                 });
+
+                //var url = $(this).attr('href');
+                //$('#subscribeCat').load(url);
             });
         });
     </script>

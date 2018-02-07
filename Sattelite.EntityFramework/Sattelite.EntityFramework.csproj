@@ -139,10 +139,6 @@
     <Compile Include="Migrations\201801301601318_InitDB.Designer.cs">
       <DependentUpon>201801301601318_InitDB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802060208570_UpdateProjectRelationship.cs" />
-    <Compile Include="Migrations\201802060208570_UpdateProjectRelationship.Designer.cs">
-      <DependentUpon>201802060208570_UpdateProjectRelationship.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Seeder.cs" />
     <Compile Include="Profiles\ProjectMemberMapperProfile.cs" />
     <Compile Include="Repository\ProjectRoleRepository.cs" />
@@ -264,9 +260,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201801301601318_InitDB.resx">
       <DependentUpon>201801301601318_InitDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802060208570_UpdateProjectRelationship.resx">
-      <DependentUpon>201802060208570_UpdateProjectRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

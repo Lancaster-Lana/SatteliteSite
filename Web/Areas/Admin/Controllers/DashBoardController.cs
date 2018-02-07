@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Configuration;
     using System.Linq;
     using System.Web.Mvc;
     using Sattelite.Entities;
@@ -9,7 +10,6 @@
     using Sattelite.EntityFramework.Repository;
     using Sattelite.EntityFramework.ViewModels;
     using Sattelite.EntityFramework.ViewModels.Admin.DashBoard;
-    ///sing AppCach = System.Web.HttpContext;
 
     [Authorize]
     public class DashBoardController : BaseController
@@ -50,7 +50,10 @@
 
             _titleSearchText = titleSearchText;
             _currentPage = currentPage;
-            _numOfPage = 10; // ConfigurationManager.GetAppConfigBy("NumOfPage").ToInteger();
+            
+            _numOfPage = ConfigurationManager.AppSettings["NumOfPage"] != null
+                ? Int32.Parse(ConfigurationManager.AppSettings["NumOfPage"])
+                : 10;
         }
 
         public ActionResult Index(int page = 1)

@@ -7,7 +7,8 @@
 
     @Styles.Render("~/bundles/admin.css")
     @Styles.Render("~/bundles/alert.css")
-    @Styles.Render("~/bundles/datatables.css")
+    @*@Styles.Render("~/bundles/datatables.css")*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
     @*@Styles.Render("~/bundles/modernizr.css")*@
 
     @RenderSection("HeaderContent", required: false)
@@ -55,14 +56,14 @@
     @Scripts.Render("~/bundles/jquery.js")
     @Scripts.Render("~/bundles/bootstrap.js")
     @Scripts.Render("~/bundles/alert.js")
-    @RenderSection("Scripts", required: false)
 
     @*@Scripts.Render("~/bundles/datatables.js")*@
 
+    @*<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.12.4.js"> </script>*@
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
     <script type="text/javascript">
         $(function () {
-            //filterable table
-            //$('.tblFilter').dataTable();
             //Hightlight selected tab
             var str = location.href.toLowerCase();
             $('ul.admin_menu li a').each(function () {
@@ -71,16 +72,15 @@
                 }
             });
 
+            //MODALS
             //Remove cached data in modal window
             $('body').on('hidden.bs.modal', '.modal', function () {
                 $(this).removeData('bs.modal');
             });
-
-            //Handle error as alert message
+            //Handle errors in modal (as alert message)
             $('body').on('shown.bs.modal', '.modal', function () {
                 var modalW = $(this);
                 var btnSubmit = $(modalW).find('.delete'); //or update
-                //$(theModal).submit();
                 if (btnSubmit) {
                     $(btnSubmit).on('click', function (e) {
                         try {
@@ -125,5 +125,39 @@
         });
     </script>
 
+    <script type="text/javascript">
+        $(function () {
+            //Create filterable tables
+            (function () {
+                var options = {//display on bottom paging
+                    responsive: true,
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "scrollY": 200,
+                    "dom": '<"top"Bf>rt<"bottom"lip><"clear">',
+                    "buttons": ['excel', 'pageLength']
+                        /*[
+                        //{ extend: 'create', editor: editor },
+                        //{ extend: 'edit', editor: editor },
+                        //{ extend: 'remove', editor: editor },
+                        {extend: 'collection',
+                        text: 'Export',
+                        buttons: [
+                                'copy',
+                                'excel',
+                                'csv',
+                                'pdf',
+                                'print'
+                            ]
+                        }
+                     ]  */ 
+                };
+
+                $('.filterable').dataTable(options);
+                //filter by columns https://datatables.net/examples/api/regex.html
+            })();
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

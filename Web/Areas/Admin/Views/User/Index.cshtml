@@ -6,27 +6,29 @@
     <span> Користувачі</span>
 </div>
 
-<table class="tblFilter table table-striped table-bordered">
-    <tr class="list-group-item-heading">
-        <th>
-            @Html.Label("UserName")
-        </th>
-        <th>
-            @Html.Label("DisplayName")
-        </th>
-        <th>
-            @Html.Label("Email")
-        </th>
-        <th>
-            @Html.Label("Role")
-        </th>
-        <th>
-            @Html.Label("Actions")
-        </th>
-    </tr>
-
-    @foreach (var user in Model.AllUsers)
-    {
+<table class="filterable table table-striped table-bordered">
+    <thead>
+        <tr class="list-group-item-heading">
+            <th>
+                @Html.Label("UserName")
+            </th>
+            <th>
+                @Html.Label("DisplayName")
+            </th>
+            <th>
+                @Html.Label("Email")
+            </th>
+            <th>
+                @Html.Label("Role")
+            </th>
+            <th>
+                @Html.Label("Actions")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var user in Model.AllUsers)
+     {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => user.UserName)
@@ -48,7 +50,8 @@
                 @*@Html.ActionLink("Delete", "Delete", new { id = user.Id }, new { @data_toogle = "modal", @data_target = "#delete_user_modal" })*@
             </td>
         </tr>
-    }
+}
+    </tbody>
 </table>
 
 

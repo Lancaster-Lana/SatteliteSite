@@ -1,13 +1,14 @@
-﻿@model Sattelite.EntityFramework.ViewModels.Client.HeaderViewModel
+﻿@model HeaderViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
 
-<div class="site_header" >
-    <h1 class="text-center" >
+<div class="site_header text-center" >
+    <h1 id="site_title">
         @Model.SiteTitle
     </h1>
 </div>
 
 <aside class="pull-left">
-      @*<div class="clearer">&nbsp;</div>*@
+    <div class="clearer">&nbsp;</div>
     <div class="site_sidebar">
       <div class="site_menu">
         @if (Model.Categories.Any())

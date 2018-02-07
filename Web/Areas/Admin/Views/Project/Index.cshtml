@@ -24,32 +24,30 @@
                         onchange = "this.form.submit();",
                         Class = "field small-field"
                     })
-
-                    @*<label>Назва</label>
-                        @Html.TextBoxFor(m => m.TitleSearchText, new { Class = "field small-field" })*@
-                    @*<button type="submit" class="button pull-right" value="search" id="searchByName" name="знайти" />*@
                 </div>
             </div>
 
-            <table class="table table-striped table-bordered">
-                <tr class="list-group-item-heading">
-                    <th width="12"><input type="checkbox" class="checkbox" /></th>
-                    <th>@Html.Label("Категорія")</th>
-                    <th>@Html.Label("Назва")</th>
-                    <th>@Html.Label("Опис")</th>
-                    <th>@Html.Label("Координатор")</th>
-                    <th>@Html.Label("Дата")</th>
-                    <th>@Html.Label("Створено")</th>
-                    <th></th>
-                </tr>
-
+            <table class="filterable table table-striped table-bordered">
+                <thead>
+                    <tr class="list-group-item-heading">
+                        <th width="12"><input type="checkbox" class="checkbox" /></th>
+                        <th>@Html.Label("Категорія")</th>
+                        <th>@Html.Label("Назва")</th>
+                        <th>@Html.Label("Опис")</th>
+                        <th>@Html.Label("Координатор")</th>
+                        <th>@Html.Label("Дата")</th>
+                        <th>@Html.Label("Створено")</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
                 @foreach (var project in projects)
                 {
                     var category = allCategories.FirstOrDefault(p => p.Id == project.CategoryId);
                     var categoryName = category != null ? category.Name : "";
                     var coordinator = allUsers.FirstOrDefault(u => u.Id == project.CoordinatorId);
                     string coordinatorName = coordinator != null ? coordinator.UserName : string.Empty;
-                    <tr>
+                     <tr>
                         <td> <input type="checkbox" class="checkbox" /> </td>
                         <td> @categoryName </td>
                         <td> @project.ProjectContent.Name  </td>
@@ -62,12 +60,13 @@
                             <a href="/Admin/Project/Delete/@project.Id" class="ico del" data-toggle="modal" data-target="#delete_project_modal">
                                 Delete
                             </a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-    </div>
+                          </td>
+                       </tr>
+                 }
+              </tbody>
+           </table>
+       </div>
+   </div>
 }
 <div class="right-sidebar text-center">
     <div class="box">

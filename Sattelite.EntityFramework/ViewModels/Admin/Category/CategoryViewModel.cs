@@ -9,7 +9,5 @@ namespace Sattelite.EntityFramework.ViewModels.Admin.Category
 
         [Required (ErrorMessage = "Назва категорії обов'язкова")]
         public string Name { get; set; }
-
-        public string Description { get; set; }
     }
 }

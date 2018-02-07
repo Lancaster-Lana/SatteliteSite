@@ -44,24 +44,24 @@
 
             // Mapping details
             var oldContent = oldArticle.NewsContent;
-            var newsContent = article.NewsContent;
+            var newContent = article.NewsContent;
 
-            if (!oldContent.Title.Equals(newsContent.Title, StringComparison.InvariantCulture))
-                oldArticle.NewsContent.Title = newsContent.Title;
+            if (!oldContent.Title.Equals(newContent.Title, StringComparison.InvariantCulture))
+                oldArticle.NewsContent.Title = newContent.Title;
 
-            if (!oldContent.ShortDescription.Equals(newsContent.ShortDescription, StringComparison.InvariantCulture))
-                oldArticle.NewsContent.ShortDescription = newsContent.ShortDescription;
+            if (!oldContent.ShortDescription.Equals(newContent.ShortDescription, StringComparison.InvariantCulture))
+                oldArticle.NewsContent.ShortDescription = newContent.ShortDescription;
 
-            if (oldContent.Content == null || !oldContent.Content.Equals(newsContent.Content, StringComparison.InvariantCulture))
-                oldArticle.NewsContent.Content = newsContent.Content;
+            if (oldContent.Content == null || !oldContent.Content.Equals(newContent.Content, StringComparison.InvariantCulture))
+                oldArticle.NewsContent.Content = newContent.Content;
 
             //Update images
-            if (newsContent.SmallImage != null && !oldContent.SmallImage.Equals(newsContent.SmallImage, StringComparison.InvariantCulture))
-                oldArticle.NewsContent.SmallImage = newsContent.SmallImage;
-            if (newsContent.MediumImage != null && !oldContent.MediumImage.Equals(newsContent.MediumImage, StringComparison.InvariantCulture))
-                oldArticle.NewsContent.MediumImage = newsContent.MediumImage;
-            if (newsContent.BigImage != null && !oldContent.BigImage.Equals(newsContent.BigImage, StringComparison.InvariantCulture))
-                oldArticle.NewsContent.BigImage = newsContent.BigImage;
+            if (newContent.SmallImage != null && !oldContent.SmallImage.Equals(newContent.SmallImage, StringComparison.InvariantCulture))
+                oldArticle.NewsContent.SmallImage = newContent.SmallImage;
+            if (newContent.MediumImage != null && !oldContent.MediumImage.Equals(newContent.MediumImage, StringComparison.InvariantCulture))
+                oldArticle.NewsContent.MediumImage = newContent.MediumImage;
+            if (newContent.BigImage != null && !oldContent.BigImage.Equals(newContent.BigImage, StringComparison.InvariantCulture))
+                oldArticle.NewsContent.BigImage = newContent.BigImage;
 
             // Update modified tome    
             oldArticle.ModifiedDate = DateTime.Now;

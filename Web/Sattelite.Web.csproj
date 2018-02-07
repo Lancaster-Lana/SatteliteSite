@@ -288,6 +288,15 @@
     <Content Include="Content\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
+    <Content Include="Content\images\left_menu.png" />
+    <Content Include="Content\images\left_menu_hover.png" />
+    <Content Include="Content\images\menu_divider.png" />
+    <Content Include="Content\images\navigation-arrow.gif" />
+    <Content Include="Content\images\site_body.png" />
+    <Content Include="Content\images\site_content_top.png" />
+    <Content Include="Content\images\site_footer.png" />
+    <Content Include="Content\images\site_header.png" />
+    <Content Include="Content\images\site_wrapper.png" />
     <Content Include="Content\jquery-ui.min.css">
       <DependentUpon>jquery-ui.css</DependentUpon>
     </Content>
@@ -303,7 +312,6 @@
     <Content Include="Content\images\add-button.gif" />
     <Content Include="Content\images\button.gif" />
     <Content Include="Content\images\close.gif" />
-    <Content Include="Content\images\tab_hover.gif" />
     <Content Include="Content\images\del.gif" />
     <Content Include="Content\images\edit.gif" />
     <Content Include="Content\images\footer.gif" />
@@ -311,7 +319,6 @@
     <Content Include="Content\images\msg-error.gif" />
     <Content Include="Content\images\msg-ok.gif" />
     <Content Include="Content\images\pagging.gif" />
-    <Content Include="Content\images\tab.gif" />
     <Content Include="Content\images\th.gif" />
     <Content Include="Content\admin\adminSite.css" />
     <Content Include="Content\Site.min.css">

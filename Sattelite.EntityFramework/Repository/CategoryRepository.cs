@@ -29,6 +29,11 @@
                            x => x.Subscriptions); //with related entities
         }
 
+        public Category GetByName(string name)
+        {
+            return GetOne(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
         public IEnumerable<Category> GetCategories()
         {
             return GetIncluding(x => x.CreatedDate.HasValue,
@@ -40,7 +45,6 @@
             //try catch
             Save(category);
 
-            //if everything ok
             return true;
         }
 
