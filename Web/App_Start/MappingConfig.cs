@@ -7,8 +7,8 @@ namespace Sattelite.Web.App_Start
     {
         public static void Configure()
         {
-            Mapper.AddProfile(new RoleMapperProfile());
             Mapper.AddProfile(new UserMapperProfile());
+            Mapper.AddProfile(new RoleMapperProfile());
 
             Mapper.AddProfile(new CategoryMapperProfile());
             Mapper.AddProfile(new SubscriptionMapperProfile());
@@ -16,6 +16,7 @@ namespace Sattelite.Web.App_Start
             Mapper.AddProfile(new NewsMapperProfile());
             Mapper.AddProfile(new ProjectMapperProfile());
             Mapper.AddProfile(new ProjectMemberMapperProfile());
+            Mapper.AddProfile(new ProjectRoleMapperProfile());
         }
     }
 }

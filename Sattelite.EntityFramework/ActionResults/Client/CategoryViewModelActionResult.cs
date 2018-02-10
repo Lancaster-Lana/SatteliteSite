@@ -67,13 +67,13 @@
             var subscriptions = _categoryRepository.GetUserCategories(_userIdentity.Name);//TODO: get only current user subscriptions
 
             var mainViewModel = new HomePageViewModel();
-            var headerViewModel = new HeaderViewModel();
+            var menuViewModel = new MainMenuViewModel();
             var footerViewModel = new FooterViewModel();
             var mainPageViewModel = new MainPageViewModel();
 
             if (categories != null && categories.Any())
             {
-                headerViewModel.Categories = subscriptions.ToList();
+                menuViewModel.Categories = subscriptions.ToList();
                 footerViewModel.Categories = categories.ToList();
             }
 
@@ -81,11 +81,11 @@
             mainPageViewModel.RightColumn = BindDataForMainPage_RightColumnViewModel();
 
             var news = ((CategoryLeftColumnViewModel)mainPageViewModel.LeftColumn).News;
-            headerViewModel.SiteTitle = (news != null && news.Count > 0) 
+            menuViewModel.SiteTitle = (news != null && news.Count > 0) 
                 ? string.Format("{0}", news.FirstOrDefault().Category.Name)
                 :"Супутник НК Website";
 
-            mainViewModel.Header = headerViewModel;
+            mainViewModel.MainMenu = menuViewModel;
             mainViewModel.DashBoard = new DashboardViewModel();
             mainViewModel.Footer = footerViewModel;
             mainViewModel.MainPage = mainPageViewModel;

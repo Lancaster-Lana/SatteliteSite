@@ -24,6 +24,7 @@
                  .ForMember(x => x.UserId, o => o.MapFrom(m => m.Id))
                  .ForMember(x => x.UserName, o => o.MapFrom(m => m.UserName))
                  .ForMember(x => x.Password, o => o.MapFrom(m => m.Password))
+                 //.ForMember(x => x.ConfirmPassword, o => o.MapFrom(m => m.ConfirmPassword))
                  .ForMember(x => x.DisplayName, o => o.MapFrom(m => m.DisplayName))
                  .ForMember(x => x.Email, o => o.MapFrom(m => m.Email))
                  .ForMember(x => x.RoleId, o => o.MapFrom(m => m.RoleId))

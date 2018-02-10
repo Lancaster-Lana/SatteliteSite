@@ -1,5 +1,5 @@
-﻿@model Sattelite.EntityFramework.ViewModels.LoginModel
-
+﻿@model LoginModel
+@using Sattelite.EntityFramework.ViewModels
 @{
     ViewBag.Title = "Вхід в систему Супутник НК";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
@@ -18,7 +18,7 @@
                            <label for="UserName" class="col-sm-2 control-label ">Username</label>
                             <div class="col-sm-offset-1 col-sm-9 input-icon-container ">
                                 @*<i class="fa fa-user"></i>*@
-                                <input id="UserName" class="form-control" placeholder="">
+                                @Html.TextBoxFor(m => m.UserName, new { Class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.UserName)
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                             <label for="Password" class="col-sm-2 control-label">Password</label>
                             <div class="col-sm-offset-1 col-sm-9 input-icon-container">
                                 @*<i class="fa fa-lock"></i>*@
-                                <input id="Password" type="password" class="form-control" placeholder="">
+                                @Html.PasswordFor(m => m.Password, new { Class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Password)
                             </div>
                         </div>

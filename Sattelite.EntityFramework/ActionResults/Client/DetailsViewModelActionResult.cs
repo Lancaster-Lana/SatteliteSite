@@ -33,7 +33,7 @@
         public DetailsViewModelActionResult(
                     Expression<Func<TController, ActionResult>> viewNameExpression,
                     int articleId,
-                    ICategoryRepository categoryRepository, 
+                    ICategoryRepository categoryRepository,
                     INewsRepository itemRepository) : base(viewNameExpression)
         {
             _categoryRepository = categoryRepository;
@@ -51,27 +51,27 @@
         {
             base.ExecuteResult(context);
 
-           _newsRepository.IncreaseNumOfView(_articleId);
+            _newsRepository.IncreaseNumOfView(_articleId);
 
             var mainViewModel = new HomePageViewModel();
-            var headerViewModel = new HeaderViewModel();
+            var menuViewModel = new MainMenuViewModel();
             var footerViewModel = new FooterViewModel();
             var mainPageViewModel = new MainPageViewModel();
 
             var categories = _categoryRepository.GetCategories();
             if (categories != null && categories.Any())
             {
-                headerViewModel.Categories = categories.ToList();
+                menuViewModel.Categories = categories.ToList();
                 footerViewModel.Categories = categories.ToList();
             }
 
             mainPageViewModel.LeftColumn = this.BindingDataForDetailsLeftColumnViewModel(_articleId);
             mainPageViewModel.RightColumn = this.BindingDataForMainPageRightColumnViewModel();
 
-            headerViewModel.SiteTitle = string.Format("Супутник НК Website - {0}",
-                ((DetailsLeftColumnViewModel)mainPageViewModel.LeftColumn).CurrentItem.NewsContent.Title);
+            menuViewModel.SiteTitle = string.Format("Супутник НК Website - {0}",
+                ((DetailsLeftColumnViewModel)mainPageViewModel.LeftColumn).CurrentArticle.NewsContent.Title);
 
-            mainViewModel.Header = headerViewModel;
+            mainViewModel.MainMenu = menuViewModel;
             mainViewModel.DashBoard = new DashboardViewModel();
             mainViewModel.Footer = footerViewModel;
             mainViewModel.MainPage = mainPageViewModel;
@@ -81,10 +81,11 @@
 
         public override void EnsureAllInjectInstanceNotNull()
         {
-            Guard.ArgumentNotNull(_categoryRepository, "CategoryRepository");
-            Guard.ArgumentNotNull(_newsRepository, "NewsRepository");
-            Guard.ArgumentMustMoreThanZero(_numOfPage, "NumOfPage");
             Guard.ArgumentMustMoreThanZero(_articleId, "NewsId");
+            Guard.ArgumentNotNull(_newsRepository, "NewsRepository");
+            Guard.ArgumentNotNull(_categoryRepository, "CategoryRepository");
+
+            Guard.ArgumentMustMoreThanZero(_numOfPage, "NumOfPage");
         }
 
         #endregion
@@ -100,7 +101,7 @@
             if (item == null)
                 throw new NoNullAllowedException(string.Format("Item id={0}", itemId).ToNotNullErrorMessage());
 
-            viewModel.CurrentItem = item;
+            viewModel.CurrentArticle = item;
 
             return viewModel;
         }

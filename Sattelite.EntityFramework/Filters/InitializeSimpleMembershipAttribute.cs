@@ -26,7 +26,8 @@
             {
                 try
                 {
-                    WebSecurity.InitializeDatabaseConnection(CONSTS.DefaultConnectionString, "User", "Id", "UserName", autoCreateTables: true);
+                    if (!WebSecurity.Initialized)
+                        WebSecurity.InitializeDatabaseConnection(CONSTS.DefaultConnectionString, "User", "Id", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

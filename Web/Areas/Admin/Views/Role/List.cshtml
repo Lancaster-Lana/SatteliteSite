@@ -1,0 +1,66 @@
+﻿@model RoleListViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Role
+@using Sattelite.Web
+
+@{
+    Layout = null;
+    var roles = Model.Roles; //AppCach.AllRoles;  //predefined roles
+}
+
+<div class="right-sidebar text-center">
+    <div class="box">
+        <div class="box-head">Управління </div>
+        <div class="box-content">
+            <a href="/Admin/Role/Create" class="add-button">
+                <span> Нова роль</span>
+            </a>
+        </div>
+        <div class="cl">&nbsp;</div>
+    </div>
+</div>
+
+@if (roles.Any())
+{
+    <table class="filterable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.Label("Name")
+                </th>
+                <th>
+                    @Html.Label("Description")
+                </th>
+                <th class="no-sort"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in roles)
+            {
+                <tr>
+                    <td>
+                        <b>
+                            @Html.DisplayFor(modelItem => role.Name)
+                        </b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => role.Description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Role", new { id = role.Id }, new { Class = "ico edit" }) |
+                        <a href="/Admin/Role/Delete/@role.Id" class="ico del" data-toggle="modal" data-target="#delete_role_modal">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Modals-->
+<div id="delete_role_modal" class="modal fade" aria-labelledby="AreaRole" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

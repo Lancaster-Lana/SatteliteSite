@@ -1,4 +1,5 @@
-﻿@model Sattelite.EntityFramework.ViewModels.Client.HomePageViewModel
+﻿@model HomePageViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
 @{
     ViewBag.Title = "Index";
 }
@@ -10,7 +11,7 @@
 
 @if (Model != null)
 {
-    @Html.Partial("_LeftMenu", Model.Header)
+    @Html.Partial("_LeftMenu", Model.MainMenu)
 
     @Html.Partial("_MainPage", Model.MainPage)
 

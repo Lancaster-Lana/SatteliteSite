@@ -255,6 +255,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\MappingConfig.cs" />
     <Compile Include="App_Start\RoleHelper.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProjectRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
@@ -396,6 +397,15 @@
     <Content Include="Areas\Admin\Views\Category\Delete.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Admin\Views\ProjectRole\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectRole\Delete.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Admin\Views\ProjectRole\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectRole\List.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectRole\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\List.cshtml" />
+    <Content Include="Areas\Admin\Views\User\List.cshtml" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -445,7 +455,7 @@
     <Content Include="Scripts\plugins\DataTable\datatables.min.js">
       <DependentUpon>datatables.js</DependentUpon>
     </Content>
-    <Content Include="Views\Shared\RSSCategoryFeed.cshtml" />
+    <Content Include="Views\Shared\SubscribeToCategory.cshtml" />
     <Content Include="Areas\Admin\Views\User\Create.cshtml" />
     <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
@@ -524,7 +534,6 @@
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\_DetailPage.cshtml" />
     <Content Include="Views\Home\_DetailsPageLeftColumn.cshtml" />
-    <Content Include="Views\Home\Category.cshtml" />
     <Content Include="Views\Home\_CategoryPage.cshtml" />
     <Content Include="Views\Home\_CategoryPageLeftColumn.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -538,13 +547,13 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Shared\_LoginRequired.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
-    <Content Include="Views\Shared\RSSCategoryFeedSubsriptionSuccess.cshtml" />
-    <Content Include="Views\Shared\RSSCategoryFeedSubsriptionError.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Scripts\plugins\sweetalert\example\example.scss" />
     <Content Include="Scripts\plugins\sweetalert\themes\facebook\facebook.scss" />
     <Content Include="Scripts\plugins\sweetalert\themes\google\google.scss" />
     <Content Include="Scripts\plugins\sweetalert\themes\twitter\twitter.scss" />
+    <Content Include="Views\Shared\UnsubscribeFromCategory.cshtml" />
+    <Content Include="Views\Shared\_LayoutModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

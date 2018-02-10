@@ -35,8 +35,6 @@
             base.ExecuteResult(context);
 
             var viewModel = new UserCreatingViewModel();
-            //viewModel.AllRoles = 
-
             GetViewResult(viewModel).ExecuteResult(context);
         }
 

@@ -1,10 +1,11 @@
-﻿using Sattelite.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Sattelite.Base;
+using Sattelite.Entities;
 
 namespace Sattelite.EntityFramework.ViewModels.Admin.Role
 {
-    public class RoleViewModel
+    public class RoleViewModel //: BaseViewModel
     {
         public int? RoleId { get; set; }
 

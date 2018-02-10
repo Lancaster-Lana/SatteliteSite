@@ -16,8 +16,8 @@ namespace Sattelite.EntityFramework.ViewModels.Admin.User
         public string Password { get; set; }
 
         //[Required]
-        //[Compare("Password", ErrorMessage = "Password doesn't match")]
-        //public string ConfirmPassword { get; set; }
+        [Compare("Password", ErrorMessage = "Password doesn't match")]
+        public string ConfirmPassword { get; set; }
 
         /// <summary>
         /// Default role is 'RegisterUser'

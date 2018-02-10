@@ -14,21 +14,20 @@
     {
         #region variables & ctors
 
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IUserRepository _userRepository;
         private readonly IProjectRepository _projectRepository;
-        private readonly IProjectRoleRepository _projectRolesRepository;
-
+ 
         public ProjectCreatingViewModelActionResult(Expression<Func<TController, ActionResult>> viewNameExpression)
-            : this(viewNameExpression,
-            DependencyResolver.Current.GetService<ICategoryRepository>(),
-            DependencyResolver.Current.GetService<IUserRepository>(),
-            DependencyResolver.Current.GetService<IProjectRepository>(),
-            DependencyResolver.Current.GetService<IProjectRoleRepository>())
+            : this(viewNameExpression, DependencyResolver.Current.GetService<IProjectRepository>())
         {
         }
 
         public ProjectCreatingViewModelActionResult(Expression<Func<TController, ActionResult>> viewNameExpression,
+             IProjectRepository projectRepository) : base(viewNameExpression)
+        {
+            _projectRepository = projectRepository;
+        }
+
+        /*public ProjectCreatingViewModelActionResult(Expression<Func<TController, ActionResult>> viewNameExpression,
              ICategoryRepository categoryRepository,
              IUserRepository userRepository,
              IProjectRepository projectRepository,
@@ -38,7 +37,7 @@
             _categoryRepository = categoryRepository;
             _userRepository = userRepository;
             _projectRolesRepository = projectRolesRepository;
-        }
+        }*/
 
         #endregion
 
@@ -49,21 +48,12 @@
             base.ExecuteResult(context);
 
             var viewModel = new ProjectCreatingViewModel();
-
-            //fill all collections (users, categories lists) to propogate dropdown controls
-            //viewModel.AllCategories = _categoryRepository.GetCategories().ToList();
-            //viewModel.AllUsers = _userRepository.GetUsers().ToList();
-            //viewModel.AllProjectMemberRoles = _projectRolesRepository.GetProjectRoles().ToList();
-
             GetViewResult(viewModel).ExecuteResult(context);
         }
 
         public override void EnsureAllInjectInstanceNotNull()
         {
-            Guard.ArgumentNotNull(_categoryRepository, "CategoryRepository");
-            Guard.ArgumentNotNull(_userRepository, "UserRepository");
             Guard.ArgumentNotNull(_projectRepository, "ProjectRepository");
-            Guard.ArgumentNotNull(_userRepository, "ProjectRoleRepository");
         }
 
         #endregion

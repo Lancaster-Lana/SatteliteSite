@@ -6,7 +6,6 @@
 
     public class RoleMapperProfile : Profile 
     {
-        //TODO:
         protected override void Configure()
         {
            // Mapper.CreateMap<List<Role>, RoleViewModel>()

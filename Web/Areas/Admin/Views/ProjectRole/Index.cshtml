@@ -1,0 +1,17 @@
+﻿@*@model ProjectRoleListViewModel*@
+@using Sattelite.EntityFramework.ViewModels.Admin.Role
+@using Sattelite.Web
+@{
+    //Predefined roles (cannot be removed): 
+    //var predefinedProjectRoles = Enum.GetNames(typeof/(Sattelite.DefaultProjectMemberRoles));
+
+    //all existing project roles
+    var projectRoles = AppCach.AllProjectRoles;
+    var Model = new ProjectRoleListViewModel { ProjectRoles = projectRoles.ToList()};
+}
+<div class="box-head h5">
+    <span> Project Roles </span>
+</div>
+<div>
+    @Html.Partial("List", Model)
+</div>

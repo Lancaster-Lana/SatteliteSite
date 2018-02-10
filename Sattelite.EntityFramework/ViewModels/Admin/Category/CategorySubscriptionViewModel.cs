@@ -1,6 +1,6 @@
 ﻿namespace Sattelite.EntityFramework.ViewModels.Admin.Category
 {
-    public class SubscriptionViewModel
+    public class CategorySubscriptionViewModel
     {
         public int UserId { get; set; }
 

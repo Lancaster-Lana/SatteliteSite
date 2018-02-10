@@ -57,11 +57,6 @@ body {
     font: normal 75% sans-serif;
 }
 
-
-/* 
-   Typography 
-------------------------------------------------------------------- */
-
 /* Headings */
 
 h1, h2, h3, h4, h5, h6 {
@@ -839,13 +834,7 @@ img.alignright, img.right {
     color: #000;
 }
 
-
-/* 
-   Misc overriding classes
-------------------------------------------------------------------- */
-
 /* Border */
-
 .noborder {
     border: 0;
 }
@@ -1046,11 +1035,13 @@ input[type="password"].input-validation-error {
     display: none;
 }
 
+.icon-time {
+    background-image: url(/Content/themes/base/images/icon-time.gif);
+    width: 14px;
+    height: 14px;
+}
 
-/*
- site themes
-*/
-
+/*==================================== site THEME==============================================*/
 body {
     margin: 0px;
     padding: 0px;

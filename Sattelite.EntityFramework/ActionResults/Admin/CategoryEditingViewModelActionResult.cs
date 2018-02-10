@@ -27,8 +27,8 @@
             Expression<Func<TController, ActionResult>> viewNameExpression, int categoryId, ICategoryRepository categoryRepository)
             : base(viewNameExpression)
         {
-            this._categoryRepository = categoryRepository;
-            this._categoryId = categoryId;
+            _categoryId = categoryId;
+            _categoryRepository = categoryRepository;
         }
 
         #endregion
@@ -50,8 +50,8 @@
 
         public override void EnsureAllInjectInstanceNotNull()
         {
-            Guard.ArgumentNotNull(_categoryRepository, "CategoryRepository");
             Guard.ArgumentMustMoreThanZero(_categoryId, "CategoryId");
+            Guard.ArgumentNotNull(_categoryRepository, "CategoryRepository");
         }
 
         #endregion

@@ -52,8 +52,8 @@
             <center class="text-center">НК Супутник &copy; @DateTime.Now.Year</center>
         </div>*@
 
-    @Scripts.Render("~/bundles/jqueryval.js")
     @Scripts.Render("~/bundles/jquery.js")
+    @Scripts.Render("~/bundles/jqueryval.js")
     @Scripts.Render("~/bundles/bootstrap.js")
     @Scripts.Render("~/bundles/alert.js")
 
@@ -102,17 +102,6 @@
                                         theModal.modal("hide");
                                     });
                                 });
-
-                            /* //or
-                               $.ajax({
-                                type: 'POST',
-                                url: url,
-                                data: theModal.serializeObject(),
-                                    success: function (response) {
-                                    },
-                                    error: function (response) {
-                                    }
-                                });*/
                         }
                         catch (ex) {
                             e.preventDefault();
@@ -129,31 +118,21 @@
         $(function () {
             //Create filterable tables
             (function () {
-                var options = {//display on bottom paging
+                var options = {
                     responsive: true,
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
                     "scrollY": 200,
-                    "dom": '<"top"Bf>rt<"bottom"lip><"clear">',
+                    "dom": '<"top"Bf>rt<"bottom"lip><"clear">',//display on bottom paging
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false,
+                    }],
                     "buttons": ['excel', 'pageLength']
-                        /*[
-                        //{ extend: 'create', editor: editor },
-                        //{ extend: 'edit', editor: editor },
-                        //{ extend: 'remove', editor: editor },
-                        {extend: 'collection',
-                        text: 'Export',
-                        buttons: [
-                                'copy',
-                                'excel',
-                                'csv',
-                                'pdf',
-                                'print'
-                            ]
-                        }
-                     ]  */ 
                 };
 
                 $('.filterable').dataTable(options);
-                //filter by columns https://datatables.net/examples/api/regex.html
+                //can filter by columns https://datatables.net/examples/api/regex.html
+
             })();
         });
     </script>

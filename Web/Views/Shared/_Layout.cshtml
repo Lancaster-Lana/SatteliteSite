@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html>
-
 @{
     var usersOnline = HttpContext.Current.Application["users_count"];
 }
@@ -11,6 +10,7 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     @Styles.Render("~/bundles/main.css")
+    @Styles.Render("~/bundles/alert.css")
     @Scripts.Render("~/bundles/modernizr.js")
     @RenderSection("HeaderContent", required: false)
 </head>
@@ -48,9 +48,8 @@
     @Scripts.Render("~/bundles/jquery.js")
     @Scripts.Render("~/bundles/jqueryval.js")
     @Scripts.Render("~/bundles/bootstrap.js")
+    @Scripts.Render("~/bundles/alert.js")
     @*NOTE: requires JQUERY >1.9.1 < 2.0*@
-
-    @RenderSection("Scripts", required: false)
 
     <script type="text/javascript">
         $(function () {
@@ -65,11 +64,41 @@
                     //1. If user subscribed to category, then suggest unsubscribe from
                     //2. if not, then suggest to click "Subscribe"
                 });
-
-                //var url = $(this).attr('href');
-                //$('#subscribeCat').load(url);
             });
         });
+
+        function successMessage(msg) {
+            swal({
+                title: 'Success',
+                text: msg,
+                type: 'success',
+                showCancelButton: false,
+                closeOnConfirm: true
+            }, function () {
+                window.location.reload();
+            });
+            return false;
+        }
+
+        function infoMessage(msg) {
+            swal({
+                title: 'Info',
+                text: msg,
+                type: 'info',
+                showCancelButton: false,
+                closeOnConfirm: true
+            }, function () {
+                window.location.reload();
+            });
+            return false;
+        }
+
+        function errorMessage(msg) {
+            swal('Error !', msg, 'error');
+        }
+
     </script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

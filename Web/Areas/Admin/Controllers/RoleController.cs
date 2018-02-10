@@ -3,6 +3,8 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Collections.Concurrent;
+
     using Sattelite.Entities;
     using Sattelite.EntityFramework;
     using Sattelite.EntityFramework.ActionResults.Admin;
@@ -11,12 +13,12 @@
     using Sattelite.EntityFramework.ViewModels.Admin.Role;
     using Sattelite.Framework.Extensions;
     using Sattelite.EntityFramework.Repository;
-    using System.Collections.Concurrent;
 
     [Authorize]
     public class RoleController : BaseController
     {
         private readonly IRoleRepository _roleRepository;
+        private readonly IProjectRoleRepository _projectRoleRepository;
 
         private readonly IRoleCreatingPersistence _roleCreatingPersistence;
         private readonly IRoleEditingPersistence _roleEditingPersistence;
@@ -26,16 +28,21 @@
             IRoleRepository roleRepository,
             IRoleCreatingPersistence roleCreatingPersistence,
             IRoleEditingPersistence roleEditingPersistence,
-            IRoleDeletingPersistence roleDeletingPersistence)
+            IRoleDeletingPersistence roleDeletingPersistence,
+
+            IProjectRoleRepository projectRoleRepository)
         {
             _roleRepository = roleRepository;
             _roleCreatingPersistence = roleCreatingPersistence;
             _roleDeletingPersistence = roleDeletingPersistence;
             _roleEditingPersistence = roleEditingPersistence;
-
             //Refresh cached collection from DB
             if (AppCach.AllRoles == null || !AppCach.AllRoles.Any())
                 AppCach.AllRoles = new ConcurrentBag<Role>(_roleRepository.GetRoles());
+
+            _projectRoleRepository = projectRoleRepository;
+            if (AppCach.AllProjectRoles == null || !AppCach.AllProjectRoles.Any())
+                AppCach.AllProjectRoles = new ConcurrentBag<ProjectRole>(_projectRoleRepository.GetProjectRoles());
         }
 
         public ActionResult Index(int page = 1)

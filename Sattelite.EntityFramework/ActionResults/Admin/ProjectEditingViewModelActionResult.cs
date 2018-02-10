@@ -46,8 +46,6 @@
 
         #endregion
 
-        #region implementation
-
         public override void ExecuteResult(ControllerContext context)
         {
             base.ExecuteResult(context);
@@ -75,7 +73,5 @@
             Guard.ArgumentMustMoreThanZero(_projectId, "ProjectId");
             Guard.ArgumentNotNull(_projectRepository, "ProjectRepository");
         }
-
-        #endregion
     }
 }

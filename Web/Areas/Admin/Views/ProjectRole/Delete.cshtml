@@ -1,0 +1,25 @@
+﻿@model ProjectRoleViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Role
+
+@{
+    ViewBag.Title = "Видалити проектну роль";
+    Layout = null; //because open in modal
+}
+
+@if (ViewBag.Error != null)
+{
+    <label class="label-danger">@ViewBag.Error</label>
+}
+
+@using (Html.BeginForm("DeleteProjectRoleConfirm", "ProjectRole", new { area = "Admin", controller = "ProjectRole", @roleId = Model.RoleId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="modal-header bg-info">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3 id="AreaRole" class="modal-title panel-title">@ViewBag.Title @Model.Name ?</h3>
+    </div>
+    @Html.ValidationSummary(true)
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"> Cancel </button>
+        <button type="submit" class="btn btn-danger col-md-offset-2"> Delete </button>
+    </div>
+}

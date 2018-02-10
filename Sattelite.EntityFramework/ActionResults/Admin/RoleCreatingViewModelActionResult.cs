@@ -24,7 +24,7 @@
         public RoleCreatingViewModelActionResult(Expression<Func<TController, ActionResult>> viewNameExpression, IRoleRepository roleRepository)
             : base(viewNameExpression)
         {
-             this._roleRepository = roleRepository;
+             _roleRepository = roleRepository;
         }
 
         #endregion
@@ -36,16 +36,14 @@
             base.ExecuteResult(context);
 
             var viewModel = new RoleCreatingViewModel();
-
-            //viewModel.Permissiions = this._roleRepository.GetPermissions().ToList();
+            //viewModel.Permissions = _roleRepository.GetPermissions().ToList();
 
             this.GetViewResult(viewModel).ExecuteResult(context);
         }
 
         public override void EnsureAllInjectInstanceNotNull()
         {
-            Guard.ArgumentNotNull(this._roleRepository, "RoleRepository");
-            //Guard.ArgumentMustMoreThanZero(this._roleId, "RoleId");
+            Guard.ArgumentNotNull(_roleRepository, "RoleRepository");
         }
 
         #endregion

@@ -1,12 +1,12 @@
-﻿@using Sattelite.EntityFramework.ViewModels.Client
-@model MainPageViewModel
+﻿@model MainPageViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
 
 <div class="main" id="main-two-columns">
-    
-    @Html.Partial("_MainPageLeftColumn", (MainPageLeftColumnViewModel)Model.LeftColumn)
-    
+
+    @Html.Partial("_MainPageLeftColumn", Model.LeftColumn)
+
     @Html.Partial("_MainPageRightColumn", Model.RightColumn)
-    
+
     <div class="clearer">&nbsp;</div>
 
 </div>

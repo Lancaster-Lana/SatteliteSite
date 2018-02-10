@@ -35,10 +35,7 @@
             base.ExecuteResult(context);
 
             var viewModel = new CategoryCreatingViewModel();
-
-            //viewModel.Categories = this._categoryRepository.GetCategories().ToList();
-
-            this.GetViewResult(viewModel).ExecuteResult(context);
+            GetViewResult(viewModel).ExecuteResult(context);
         }
 
         public override void EnsureAllInjectInstanceNotNull()

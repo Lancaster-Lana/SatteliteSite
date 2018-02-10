@@ -1,0 +1,16 @@
+﻿@Styles.Render("~/bundles/alert.css")
+@RenderSection("HeaderContent", required: false)
+
+@{
+    Layout = null;
+}
+
+<div class="">
+    @RenderBody()
+</div>
+
+@Scripts.Render("~/bundles/jquery.js")
+@Scripts.Render("~/bundles/bootstrap.js")
+@Scripts.Render("~/bundles/alert.js")
+
+@RenderSection("Scripts", required: false)

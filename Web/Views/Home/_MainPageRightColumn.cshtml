@@ -2,38 +2,12 @@
 @using Sattelite.EntityFramework.ViewModels.Client
 
 <aside class="right-sidebar">
-    <section class="section-title">
-        <div>
-            <span> Останні Новини</span>
-            <div class="pull-right">
-                <img src="/Content/themes/base/images/icon-time.gif" width="14" height="14" alt="" />
-            </div>
-        </div>
-        <div class="clearer">&nbsp;</div>
-    </section>
-    <section class="section-content">
-        <ul class="nice-list">
-            @foreach (var article in Model.LatestNews)
-            {
-                <li>
-                    <div class="left">
-                        @Html.ActionLink(article.NewsContent.Title, "Details", "Home", new { id = article.Id }, null)
-                    </div>
-                    <div class="right">@article.CreatedDate.Value.ToShortTimeString()</div>
-                    <div class="clearer">&nbsp;</div>
-                </li>
-            }
-            <li>
-                <a href="#" class="more">Browse all </a>
-            </li>
-        </ul>
-    </section>
     <section>
         <div class="section-title">
             <div>
                 <span>Проекти </span>
                 <div class="pull-right">
-                    <img src="/Content/themes/base/images/icon-time.gif" width="14" height="14" alt="" />
+                    <img class="icon-time" alt="" />
                 </div>
             </div>
 
@@ -67,10 +41,40 @@
                         (@currentArticle.NewsContent.NumOfView times)
                     </li>
                 }
-                <li><a href="#" class="more">Browse all &#187;</a></li>
+                <li>
+                    <a href="#" class="more">Browse all &#187;</a>
+                </li>
             </ul>
         </div>
     </section>
+
+    <section class="section-title">
+        <div>
+            <span> Останні Новини</span>
+            <div class="pull-right">
+                <img class="icon-time" alt="" />
+            </div>
+        </div>
+        <div class="clearer">&nbsp;</div>
+    </section>
+    <section class="section-content">
+        <ul class="nice-list">
+            @foreach (var article in Model.LatestNews)
+            {
+                <li>
+                    <div class="left">
+                        @Html.ActionLink(article.NewsContent.Title, "Details", "Home", new { id = article.Id }, null)
+                    </div>
+                    <div class="right">@article.CreatedDate.Value.ToShortTimeString()</div>
+                    <div class="clearer">&nbsp;</div>
+                </li>
+            }
+            <li>
+                <a href="#" class="more">Browse all </a>
+            </li>
+        </ul>
+    </section>
+
 </aside>
 
 

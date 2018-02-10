@@ -126,7 +126,6 @@
             if (!subsriptions.Any(c => c.Id == categoryId))
             {
                 SubscribeToCategory(userId, categoryId);
-                UnitOfWork.SaveChanges();
             }
             return true;
         }
@@ -185,7 +184,8 @@
                 SubscribeToCategory(user.Id, categoryId);
             }
 
-            //UnitOfWork.SaveChanges();
+            DbContext.SaveChanges();
+            UnitOfWork.SaveChanges();
 
             return true;
         }
@@ -201,11 +201,14 @@
             };
 
             DbContext.Set<CategorySubscription>().Add(subscription);
+            //DbContext.SaveChanges();
+            //UnitOfWork.SaveChanges();
         }
 
         private void SubscribeToCategory(string userName, int categoryId)
         {
-            WebSecurity.InitializeDatabaseConnection(CONSTS.DefaultConnectionString, "User", "Id", "UserName", autoCreateTables: true);
+            if(!WebSecurity.Initialized)
+                WebSecurity.InitializeDatabaseConnection(CONSTS.DefaultConnectionString, "User", "Id", "UserName", autoCreateTables: true);
             var userId = (int)Membership.GetUser(userName)?.ProviderUserKey;//HttpContext.Current.User.Identity.UserName;
             SubscribeToCategory(userId, categoryId);
         }
@@ -220,8 +223,11 @@
         {
             var categorySubscription = GetUserSubscriptions(userName).FirstOrDefault(s => s.CategoryId == categoryId);
             if (categorySubscription != null)
+            {
                 DbContext.Set<CategorySubscription>().Remove(categorySubscription);
-
+                DbContext.SaveChanges();
+                UnitOfWork.SaveChanges();
+            }
             return true;
         }
 

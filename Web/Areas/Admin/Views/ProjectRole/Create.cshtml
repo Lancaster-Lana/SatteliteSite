@@ -1,8 +1,8 @@
-﻿@model RoleCreatingViewModel
+﻿@model ProjectRoleViewModel
 @using Sattelite.EntityFramework.ViewModels.Admin.Role
 
 @{
-    ViewBag.Title = "Create Role";
+    ViewBag.Title = "Create Project Role";
 }
 @using (Html.BeginForm())
 {
@@ -18,13 +18,13 @@
                 @Html.ValidationMessageFor(model => model.Name)
             </p>
             <p>
-                @Html.LabelFor(model => model.Description)
-                @Html.TextAreaFor(model => model.Description, new { Class = "field size1" })
-                @Html.ValidationMessageFor(model => model.Description)
+                @Html.LabelFor(model => model.ShortDescription)
+                @Html.TextAreaFor(model => model.ShortDescription, new { Class = "field size1" })
+                @Html.ValidationMessageFor(model => model.ShortDescription)
             </p>
         </div>
         <div class="buttons">
-            @Html.ActionLink("Всі ролі", "Index", null, new { @class = "btn btn-info pull-left" })
+            @Html.ActionLink("Всі проектні ролі", "Index", null, new { @class = "btn btn-info pull-left" })
             <input type="submit" class="btn btn-success" value="Створити">
         </div>
     </div>

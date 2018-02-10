@@ -1,38 +1,38 @@
-﻿@using Sattelite.EntityFramework.Extensions
-@model Sattelite.EntityFramework.ViewModels.Client.MainPageLeftColumnViewModel
+﻿@model MainPageLeftColumnViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
+@using Sattelite.EntityFramework.Extensions
 
 <div class="main-left">
-    @if (Model.FirstItem != null)
+    @if (Model.FirstArticle != null)
     {
         <article class="post">
             <div class="post-title">
                 <h2>
-                    @Html.ActionLink(Model.FirstItem.NewsContent.Title, "Details", "Home", new { id = Model.FirstItem.Id }, null)
+                    @Html.ActionLink(Model.FirstArticle.NewsContent.Title, "Details", "Home", new { id = Model.FirstArticle.Id }, null)
                 </h2>
             </div>
-            <div class="post-date">@Model.FirstItem.NewsContent.CreatedDate.Value.ToShortDateString() by @Model.FirstItem.NewsContent.CreatedBy</div>
+            <div class="post-date">@Model.FirstArticle.NewsContent.CreatedDate.Value.ToShortDateString() by @Model.FirstArticle.NewsContent.CreatedBy</div>
             <div class="post-body">
-                <p><a href="#">@Html.RenderImageWithPath(Model.FirstItem.NewsContent.BigImage, "bordered", 510, 233)</a></p>
-                @Html.Raw(@Model.FirstItem.NewsContent.ShortDescription)
-                @Html.ActionLink("Read more >>", "Details", "Home", new { id = Model.FirstItem.Id }, new { Class = "more" })
+                <p><a href="#">@Html.RenderImageWithPath(Model.FirstArticle.NewsContent.BigImage, "bordered", 510, 233)</a></p>
+                @Html.Raw(@Model.FirstArticle.NewsContent.ShortDescription)
+                @Html.ActionLink("Read about >>", "Details", "Home", new { id = Model.FirstArticle.Id }, new { Class = "more" })
             </div>
 
         </article>
     }
     @*<div class="content-separator"></div>*@
 
-    @foreach (var item in Model.RemainItems)
+    @foreach (var article in Model.RemainNews)
     {
         <article class="post">
-            <a href="#">@Html.RenderImageWithPath(item.NewsContent.MediumImage, "left bordered", 152, 119)</a>
+            <a href="#">@Html.RenderImageWithPath(article.NewsContent.MediumImage, "left bordered", 152, 119)</a>
             <h3>
-                @Html.ActionLink(item.NewsContent.Title, "Details", "Home", new { id = item.Id }, null)
+                @Html.ActionLink(article.NewsContent.Title, "Details", "Home", new { id = article.Id }, null)
             </h3>
-            @Html.Raw(@item.NewsContent.ShortDescription)
-            @Html.ActionLink("Read more >>", "Details", "Home", new { id = item.Id }, new { Class = "more" })
+            @Html.Raw(@article.NewsContent.ShortDescription)
+            @Html.ActionLink("Read more >>", "Details", "Home", new { id = article.Id }, new { Class = "more" })
             <div class="clearer">&nbsp;</div>
         </article>
         <div class="content-separator"></div>
     }
-
 </div>

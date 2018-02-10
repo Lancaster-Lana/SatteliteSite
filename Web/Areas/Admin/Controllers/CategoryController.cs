@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
-    using System.Web.Security;
 
     using Sattelite.Entities;
     using Sattelite.EntityFramework;
@@ -13,6 +12,7 @@
     using Sattelite.EntityFramework.ViewModels.Admin.Category;
     using System.Collections.Concurrent;
     using Sattelite.Framework.Extensions;
+    using System.Web.Security;
 
     [Authorize]
     public class CategoryController : BaseController
@@ -51,6 +51,7 @@
 
         #region public methods
 
+        [HttpGet]
         public ActionResult Create()
         {
             return new CategoryCreatingViewModelActionResult<CategoryController>(x => x.Create());
@@ -62,7 +63,7 @@
         {
             var category = PrepareCategory(viewModel, true);
 
-            if(!_categoryCreatingPersistence.Validate(category))//check name, etc/
+            if (!_categoryCreatingPersistence.Validate(category))//check name, etc/
                 SetErrorMessage("Cannot create category with the same name");
 
             if (_categoryCreatingPersistence.CreateCategory(category))
@@ -152,45 +153,54 @@
         /// </summary>
         /// <param name="id">category id</param>
         /// <returns></returns>
-        [HandleError(ExceptionType = typeof(ArgumentNullException), View = "ErrorPage")]
+        [HandleError(View = "ErrorPage")]
         public ActionResult RSSCategoryFeed(int id)
         {
             if (id < 1)
             {
-                ModelState.AddModelError("Error", "Error to subscribe to category with id < 1");
+                ModelState.AddModelError("", "Error to subscribe to category with id < 1");
                 throw new ArgumentNullException("CategoryId");
             }
 
             if (User == null || User.Identity == null)
             {
-                ModelState.AddModelError("Error", "User is not authenticated (or no login)");
+                ModelState.AddModelError("", "User is not authenticated (or no login)");
                 throw new ArgumentNullException("User");
             }
 
-            var newSubscription = new SubscriptionViewModel
+            //Check if user subscribed to category already
+            string currentUserName = User.Identity.Name;
+            var userSubcriptions = _categoryRepository.GetUserSubscriptions(currentUserName);
+            bool isUserSubscribedToCategory = userSubcriptions.Any(s => s.CategoryId == id);
+
+            var subscription = new CategorySubscriptionViewModel
             {
                 CategoryId = id,
                 CategoryName = _categoryRepository.GetById(id)?.Name,
                 UserId = (int)Membership.GetUser(User.Identity.Name)?.ProviderUserKey,
-                UserName = User?.Identity?.Name
+                UserName = currentUserName
             };
 
-            return View("RSSCategoryFeed", newSubscription);
+            if (!isUserSubscribedToCategory)
+                return View("SubscribeToCategory", subscription);
+
+            //else suggest to unsubscribe fom category
+            return View("UnsubscribeFromCategory", subscription);
         }
 
-        public ActionResult RSSCategoryFeedSubsriptionSuccess()
+        public JsonResult CreateSubscription(string userName, int categoryId)
         {
-            return View();
-        }
+            bool isSubscribed = true;
+            try
+            {
+                isSubscribed = _categoryRepository.AddUserSubscription(userName, categoryId);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, responseText = ex.Message });
+            }
 
-        public ActionResult CreateSubscription(int userId, int categoryId)
-        {
-            var isSubscribed = _categoryRepository.AddUserSubscription(userId, categoryId);
-
-            if (isSubscribed)
-                return View("RSSCategoryFeedSubsriptionSuccess");
-
-            return View("RSSCategoryFeedSubsriptionError");
+            return Json(new { Success = isSubscribed }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -199,13 +209,19 @@
         /// <param name="userName"></param>
         /// <param name="categoryId"></param>
         /// <returns></returns>
-        public ActionResult RemoveSubscription(string userName, int categoryId)
+        public JsonResult RemoveCategorySubscriptionConfirm(string userName, int categoryId)
         {
-            bool removed = _categoryRepository.RemoveUserSubscription(userName, categoryId);
-            if (removed)
-                return View("RSSCategoryFeedRemovedSuccess");
+            bool isSubscriptionRemoved = true;
+            try
+            {
+                isSubscriptionRemoved = _categoryRepository.RemoveUserSubscription(userName, categoryId);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, responseText = ex.Message });
+            }
 
-            return View("RSSCategoryFeedSubsriptionError");
+            return Json(new { Success = isSubscriptionRemoved }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

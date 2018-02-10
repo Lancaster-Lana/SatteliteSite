@@ -2,7 +2,7 @@
 {
     public class HomePageViewModel
     {
-        public HeaderViewModel Header { get; set; }
+        public MainMenuViewModel MainMenu { get; set; }
 
         public MainPageViewModel MainPage { get; set; }
 

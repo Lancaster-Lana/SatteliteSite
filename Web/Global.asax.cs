@@ -1,20 +1,21 @@
 ﻿namespace Sattelite.Web
 {
-    using Autofac;
-    using Autofac.Integration.Mvc;
-    using Sattelite.Web.App_Start;
     using System;
     using System.Reflection;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
 
+    using Autofac;
+    using Autofac.Integration.Mvc;
+    using Sattelite.Data;
+    using Sattelite.Web.App_Start;
+    using WebMatrix.WebData;
+
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
-            //AppConfig.Run(); //removed autofac
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
@@ -22,12 +23,16 @@
             builder.RegisterModule<WebModule>();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterFilterProvider();
+
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            if (!WebSecurity.Initialized)
+                WebSecurity.InitializeDatabaseConnection(CONSTS.DefaultConnectionString, "User", "Id", "UserName", autoCreateTables: true);
         }
 
         protected void Session_Start(Object sender, EventArgs e)

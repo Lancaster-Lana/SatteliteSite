@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="ActionResults\Admin\CategoryCreatingViewModelActionResult.cs" />
     <Compile Include="ActionResults\Admin\CategoryEditingViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Admin\ProjectRoleCreatingViewModelActionResult.cs" />
     <Compile Include="ActionResults\Admin\UserCreatingViewModelActionResult.cs" />
     <Compile Include="ActionResults\Admin\ProjectMemberDeletingViewModelActionResult.cs" />
     <Compile Include="ActionResults\Admin\ProjectDeletingViewModelActionResult.cs" />
@@ -141,6 +142,7 @@
     </Compile>
     <Compile Include="Migrations\Seeder.cs" />
     <Compile Include="Profiles\ProjectMemberMapperProfile.cs" />
+    <Compile Include="Profiles\ProjectRoleMapperProfile.cs" />
     <Compile Include="Repository\ProjectRoleRepository.cs" />
     <Compile Include="ViewModels\Admin\Category\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\Admin\News\NewsListViewModel.cs" />
@@ -153,6 +155,8 @@
     <Compile Include="ViewModels\Admin\Project\ProjectContentViewModel.cs" />
     <Compile Include="ViewModels\Admin\Project\ProjectMemberRoleViewModel.cs" />
     <Compile Include="ViewModels\Admin\Project\ProjectMemberViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Role\ProjectRoleListViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Role\ProjectRoleViewModel.cs" />
     <Compile Include="ViewModels\Admin\Role\RoleViewModel.cs" />
     <Compile Include="ViewModels\Admin\User\UserListViewModel.cs" />
     <Compile Include="ViewModels\BaseListViewModel.cs" />
@@ -181,7 +185,7 @@
     <Compile Include="Repository\NewsRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="ViewModels\AccountModels.cs" />
-    <Compile Include="ViewModels\Admin\Category\SubscriptionViewModel.cs" />
+    <Compile Include="ViewModels\Admin\Category\CategorySubscriptionViewModel.cs" />
     <Compile Include="ViewModels\Admin\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Admin\Category\CategoryEditingViewModel.cs" />
     <Compile Include="ViewModels\Admin\Category\CategoryCreatingViewModel.cs" />
@@ -221,7 +225,7 @@
     <Compile Include="ViewModels\Admin\Role\RoleListViewModel.cs" />
     <Compile Include="ViewModels\Client\DashboardViewModel.cs" />
     <Compile Include="ViewModels\Client\FooterViewModel.cs" />
-    <Compile Include="ViewModels\Client\HeaderViewModel.cs" />
+    <Compile Include="ViewModels\Client\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\Client\HomePageViewModel.cs" />
     <Compile Include="ViewModels\Client\MainPageViewModel.cs" />
     <Compile Include="ViewModels\GlobalCollections.cs" />

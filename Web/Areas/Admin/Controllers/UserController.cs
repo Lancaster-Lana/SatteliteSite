@@ -49,8 +49,16 @@ namespace Sattelite.Web.Areas.Admin.Controllers
 
         public ActionResult Index(int page = 1)
         {
-            var viewModel = new UserListViewModel(AppCach.AllUsers);
-            return View(viewModel);
+            return View();
+        }
+
+        public ActionResult List()
+        {
+            var viewModel = new UserListViewModel
+            {
+                Users = AppCach.AllUsers?.ToList()
+            };
+            return PartialView(viewModel);
         }
 
         #region public methods
@@ -71,11 +79,12 @@ namespace Sattelite.Web.Areas.Admin.Controllers
             {
                 SetSucceedMessage("User created successfully");
                 AppCach.AllUsers.Add(user); //save to global cach
+                return RedirectToAction("Index", "User");
             }
             else
                 SetErrorMessage("Cannot create user");
 
-            return RedirectToAction("Index", "User");
+            return View(viewModel);
         }
 
         public ActionResult Edit(int id)
@@ -93,23 +102,22 @@ namespace Sattelite.Web.Areas.Admin.Controllers
                 return View(userViewModel);
             }
 
-            var user = PrepareUser(userViewModel, false); //userViewModel.MapTo<User>(); //
+            var user = PrepareUser(userViewModel, false); //userViewModel.MapTo<User>();
 
             //then update user subscriptions: add new, remove old
-            var newUserSubscriptions = !string.IsNullOrWhiteSpace(userViewModel.SubscriptionsIds)
-                //JsonConvert.DeserializeObject<List<int>>(userViewModel.SubscriptionsIds);
-                ? userViewModel.SubscriptionsIds.Split(',').Select(e => Convert.ToInt32(e)).ToList()
-                : null;
+            var newUserSubscriptions = //!string.IsNullOrWhiteSpace(userViewModel.SubscriptionsIds) ? userViewModel.SubscriptionsIds.Split(',').Select(e => Convert.ToInt32(e)).ToList(): null;
+                userViewModel.Subscriptions?.MapTo<CategorySubscription>();
 
             //Update all user details
             if (_userEditingPersistence.SaveUser(user, newUserSubscriptions))
             {
                 SetSucceedMessage("User saved successfully");
+                return RedirectToAction("Index", "User");
             }
             else
                 SetErrorMessage("Cannot save user");
 
-            return RedirectToAction("Index", "User");
+            return View(userViewModel);
         }
 
         [HttpGet]
@@ -137,21 +145,23 @@ namespace Sattelite.Web.Areas.Admin.Controllers
                 isSucceed = _userRepository.DeleteUser(userId);
                 //update cach : AppCach.AllUsers.Except(AppCach.AllUsers.Where(n => n.Id == userId));
                 AppCach.AllUsers = new ConcurrentBag<User>(_userRepository.GetUsers());//ViewBag.AllNews = _newsRepository.GetNews().ToList();
+
+                //SetSucceedMessage("User removed successfully !"); //TODO: Display error as alert
+                return RedirectToAction("Index", "User");
             }
             catch (Exception ex)
             {
-                isSucceed = false; //SetErrorMessage(string.Format("Cannot remove user. {0} ", ex.Message));
+                isSucceed = false;
                 string errMsg = string.Format("Cannot remove user. See {0} ", ex.Message);
-                //throw new Exception(errMsg);  //Display error in modal window
-                return Json(new
-                {
-                    Error = errMsg,
-                    Success = isSucceed
-                });
-            }
-            SetSucceedMessage("User removed successfully !"); //TODO: alert
+                SetErrorMessage(errMsg);
 
-            return RedirectToAction("Index");
+                return View();
+                //return Json(new
+                //{
+                //    Error = errMsg,
+                //    Success = isSucceed
+                //});
+            }
         }
 
         public ActionResult AssignUserToRole(string userName, string roleName)
