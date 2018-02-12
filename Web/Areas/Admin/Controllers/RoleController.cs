@@ -117,9 +117,9 @@
         }
 
         [HttpPost]
-        public ActionResult DeleteRoleConfirm(int roleId)
+        public ActionResult Delete(RoleEditingViewModel model)
         {
-            var isSucceed = _roleDeletingPersistence.RemoveRole(roleId);
+            var isSucceed = _roleDeletingPersistence.RemoveRole(model.RoleId.Value);
 
             if (isSucceed)
             {

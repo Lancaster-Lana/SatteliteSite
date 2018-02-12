@@ -11,11 +11,12 @@ namespace Sattelite.Entities
         [Required]
         public string UserName { get; set; }
 
+        [Required]
+        public string Email { get; set; }
+
         public string DisplayName { get; set; }
 
         public string Password { get; set; }
-
-        public string Email { get; set; }
 
         /// <summary>
         /// Site role (not project role). See DefaultRoles

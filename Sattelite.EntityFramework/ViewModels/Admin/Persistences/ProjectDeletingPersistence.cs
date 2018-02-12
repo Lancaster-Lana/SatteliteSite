@@ -1,7 +1,5 @@
 ﻿namespace Sattelite.EntityFramework.ViewModels.Admin.Persistences
 {
-    using System.Data;
-    using Sattelite.Framework.Extensions;
     using Sattelite.EntityFramework.Repository;
 
     public class ProjectDeletingPersistence : IProjectDeletingPersistence
@@ -18,9 +16,9 @@
             return _projectRepository.DeleteProject(id);
         }
 
-        public bool DeleteProjectMember(int projectId, int projectMemberId)
-        {
-            return _projectRepository.DeleteProjectMember(projectId, projectMemberId);
-        }
+        //public bool DeleteProjectMember(int projectMemberId)
+        //{
+        //    return _projectRepository.DeleteProjectMember(projectMemberId);
+        //}
     }
 }

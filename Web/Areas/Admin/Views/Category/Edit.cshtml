@@ -1,7 +1,5 @@
 ﻿@model CategoryEditingViewModel
 @using Sattelite.EntityFramework.ViewModels.Admin.Category
-@using Sattelite.Web
-@using Sattelite.EntityFramework.Extensions
 
 @{
     ViewBag.Title = "Редагування категорії";
@@ -12,17 +10,17 @@
     @Html.HiddenFor(m => m.CategoryId)
 
     <div class="box">
-        <div class="box-head">@ViewBag.Title <b>@Model.Name </b></div>
+        <div class="box-head h5">@ViewBag.Title <b>@Model.Name </b></div>
 
         <div class="form">
             <p>
                 <span class="req">max 100 symbols</span>
-                <label>Назва категорії <span>(*)</span></label>
+                <label for="Name" class="control-label">Назва категорії <span>(*)</span></label>
                 @Html.TextBoxFor(x => x.Name, new { Class = "field size1" })
                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </p>
             <p>
-                <label>Опис </label>
+                <label for="Name" class="control-label">Опис </label>
                 @Html.TextAreaFor(x => x.ShortDescription, new { Class = "field size1" })
                 @Html.ValidationMessageFor(m => m.ShortDescription, "", new { @class = "text-danger" })
             </p>

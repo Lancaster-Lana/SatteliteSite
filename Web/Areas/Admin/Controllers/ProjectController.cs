@@ -11,12 +11,8 @@
     using Sattelite.EntityFramework.ActionResults.Admin;
     using Sattelite.EntityFramework.ViewModels.Admin.Project;
     using Sattelite.EntityFramework.ViewModels.Admin.Persistences;
-    using Sattelite.EntityFramework.ViewModels.Admin.User;
     using Sattelite.EntityFramework.Repository;
 
-    /// <summary>
-    /// 
-    /// </summary>
     [Authorize]
     public class ProjectController : BaseController
     {
@@ -60,28 +56,6 @@
             return new ProjectCreatingViewModelActionResult<ProjectController>(x => x.Create());
         }
 
-        /// <summary>
-        /// Begin assigning a new particioant of the project 
-        /// </summary>
-        /// <param name="projectId"></param>
-        /// <returns></returns>
-        public ActionResult AddProjectMember(int projectId)
-        {
-            //return new ProjectMemberCreatingViewModelActionResult<ProjectController>(x => x.AddProjectMember());
-
-            //var project = _projectRepository.GetById(projectId);
-            //project.ProjectMembers
-
-            var model = new ProjectMemberViewModel
-            {
-                ProjectId = projectId,
-                ProjectUser = new UserViewModel { UserName = "Please, select a user" },
-                ProjectRole = new ProjectMemberRoleViewModel() { Id = 0, Name = "Please, select a member role" }
-            };
-
-            return View(model);
-        }
-
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(ProjectCreatingViewModel viewModel)
@@ -92,11 +66,13 @@
             {
                 SetSucceedMessage("The project is saved  successfully");
                 AppCach.AllProjects.Add(project); //save global cach
+                return RedirectToAction("Index", "Project");
             }
             else
+            {
                 SetErrorMessage("Cannot create project");
-
-            return RedirectToAction("Index", "Project");
+                return View(viewModel);
+            }
         }
 
         public ActionResult Edit(int id)
@@ -105,7 +81,7 @@
         }
 
         [HttpPost]
-        [ValidateInput(true)]
+        //[ValidateInput(false)]
         public ActionResult Edit(ProjectEditingViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -117,16 +93,16 @@
             var project = PrepareProject(viewModel, false);
 
             if (_projectEditingPersistence.SaveProject(project))
+            {
                 SetSucceedMessage("Project saved successfully");
+                return RedirectToAction("Index", "Project");
+            }
             else
+            {
                 SetErrorMessage("Cannot save project data");
-            return RedirectToAction("Index", "Project");//return View();
+                return View(viewModel);
+            }
         }
-
-        //public ActionResult EditProjectMember(int projectId)
-        //{
-        //    return new ProjectMemberEditingViewModelActionResult<ProjectController>(x => x.Edit(id), id);
-        //}
 
         [HttpGet]
         public ActionResult Delete(int id)
@@ -145,7 +121,7 @@
         }
 
         [HttpPost]
-        public ActionResult DeleteProjectConfirm(ProjectViewModel model)//int projectId)
+        public ActionResult Delete(ProjectViewModel model)//int projectId)
         {
             bool isSucceed = false;
 
@@ -167,7 +143,7 @@
             }
             catch (Exception ex)
             {
-                isSucceed = false; 
+                isSucceed = false;
                 string errMsg = string.Format("Cannot remove project. See {0} ", ex.InnerException.Message);
 
                 SetErrorMessage(errMsg); //TODO; log error
@@ -179,42 +155,104 @@
             return RedirectToAction("Index");
         }
 
+        #region Project Membership
+
+        /// <summary>
+        /// Assign a new participant to the project role
+        /// </summary>
+        /// <param name="id">projectId</param>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteProjectMember(int projectId, int projectMemberId)
+        public ActionResult AddProjectMember(int id)
+        {
+            var model = new ProjectMemberViewModel
+            {
+                ProjectId = id,
+                //ProjectRoleId = -1, UserId = -1
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddProjectMember(ProjectMemberViewModel model)
+        {
+            bool isMemberAdded = false;
+
+            try
+            {
+                var newProjectMember = PrepareProjectMember(model, true);
+                isMemberAdded = _projectEditingPersistence.AddProjectMember(newProjectMember);
+                if (isMemberAdded)
+                {
+                    SetSucceedMessage(string.Format( "User '{0}' has been added to project role '{1}' !", newProjectMember.User.UserName, newProjectMember.ProjectRole.Name));
+                }
+            }
+            catch (Exception ex)
+            {
+                SetErrorMessage("Project member hasn't been created !" + ex.Message);
+                //return ShowAlertErrorMessage("Project member hasn't been created !" + ex.Message );
+            }
+
+            if (!isMemberAdded)
+                return View(model);//AddProjectMember(model.ProjectId);
+
+            //Stay on edit project if success
+            return Edit(model.ProjectId);
+        }
+
+        /// <summary>
+        /// Delete the user from some role in the project
+        /// </summary>
+        /// <param name="id">projectMemberId</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteProjectMember(int id)
         {
             return new ProjectMemberDeletingViewModelActionResult<ProjectController>(
-               x => x.DeleteProjectMember(projectId, projectMemberId), projectId, projectMemberId);
+               x => x.DeleteProjectMember(id), id);
 
-            //var project = _projectRepository.GetById(projectId);
-            //if (project == null)
-            //{
-            //    SetErrorMessage("Project hasn't been found by id = " + projectId);
-            //    return View();
-            //}
-            //var member = project.ProjectMembers.FirstOrDefault(m => m.Id == projectMemberId);
             //var viewModel = member?.MapTo<ProjectMemberViewModel>();
+            //return View(viewModel);
         }
 
-        [HttpDelete]
-        public ActionResult DeleteProjectMemberConfirm(int projectId, int projectMemberId)
+        [HttpPost]
+        public ActionResult DeleteProjectMember(int projectId, int projectMemberId)
         {
-            //var isSucceed = _projectRepository.DeleteProjectMember(projectId, projectMemberId);
+            bool isSucceed = false;
+            try
+            {
+                isSucceed = _projectRepository.DeleteProjectMember(projectMemberId);
 
-            if (_projectDeletingPersistence.DeleteProjectMember(projectId, projectMemberId))
-                SetSucceedMessage("Project removed successfully !");
-            else
-                SetErrorMessage(string.Format("Cannot remove the project member with Id={0}", projectMemberId));
+                if (isSucceed)
+                {
+                    SetSucceedMessage("The project member removed successfully !"); //ShowAlertSuccessMessage("Project member removed successfully !");
+                }
+                else
+                {
+                    SetErrorMessage(string.Format("Cannot remove the project member with Id={0}", projectMemberId));
+                }
+            }
+            catch (Exception ex)
+            {
+                SetErrorMessage(string.Format("Cannot remove the project member with Id={0}. See error : {1}", projectMemberId, ex.Message));
+            }
 
-            return RedirectToAction("Index");
+            if(!isSucceed)
+                return View(projectId); //Display the delete view with errors
+
+            //return to the project edit page
+            return Edit(projectId);
         }
 
-        #region private methods
+        #endregion
+
+        #region Private methods
 
         private Project PrepareProject(ProjectViewModel model, bool isNew)
         {
-            var project = model.MapTo<Project>(); //- not proper
+            //var project = model.MapTo<Project>(); //- not proper
 
-            project = new Project
+            var project = new Project
             {
                 Id = isNew ? 0 : (int)model.ProjectId,
                 CategoryId = model.CategoryId,
@@ -236,21 +274,25 @@
                 }
                 //ProjectMembers = isNew ? new List<ProjectMember>() : model.ProjectMembers
             };
-
-            //if (isNew)
-            //{
-            //    //if new project, add coordinator as the fisrt project member
-            //    project.ProjectMembers.Add(new ProjectMember
-            //    {
-            //        UserId = project.Coordinator.Id,
-            //        //User = project.Coordinator
-            //        ProjectRoleId = (int)DefaultProjectMemberRoles.Coordinator,
-            //        //ProjectRole = model.AllProjectMemberRoles.FirstOrDefault(r => r.Id == (int)DefaultProjectMemberRoles.Coordinator),
-            //        CreatedDate = DateTime.Now,
-            //        CreatedBy = GetUserName(),
-            //    });
-            //}
             return project;
+        }
+
+        private ProjectMember PrepareProjectMember(ProjectMemberViewModel model, bool isNew)
+        {
+            var projectMember = new ProjectMember
+            {
+                Id = isNew ? 0 : model.Id.Value,
+                UserId = model.UserId,
+                ProjectId = model.ProjectId,
+                ProjectRoleId = model.ProjectRoleId,
+                CreatedDate = isNew ? DateTime.Now : model.CreatedDate,
+                CreatedBy = isNew ? GetUserName() : model.CreatedBy,
+                ModifiedDate = isNew ? null : model.ModifiedDate,
+            };
+
+            //var projectMember = model.MapTo<ProjectMember>()
+
+            return projectMember;
         }
 
         #endregion

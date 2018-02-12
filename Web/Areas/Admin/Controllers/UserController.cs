@@ -155,12 +155,7 @@ namespace Sattelite.Web.Areas.Admin.Controllers
                 string errMsg = string.Format("Cannot remove user. See {0} ", ex.Message);
                 SetErrorMessage(errMsg);
 
-                return View();
-                //return Json(new
-                //{
-                //    Error = errMsg,
-                //    Success = isSucceed
-                //});
+                return View(); //return Json(new {Success = isSucceed, Error = errMsg});
             }
         }
 

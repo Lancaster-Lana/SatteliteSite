@@ -1,30 +1,31 @@
-﻿@using Sattelite.EntityFramework.ViewModels.Admin.Project
-@model ProjectMemberViewModel
+﻿@model ProjectMemberViewModel
+@using Sattelite.EntityFramework.ViewModels.Admin.Project
+
 @{
-    ViewBag.Title = "Видалити учасника проекту ?";
     Layout = null;
+    ViewBag.Title = String.Format("Видалити учасника проекту '{0}' з ролі '{1}' ?", Model.ProjectUser.UserName, Model.ProjectRole.Name);
 }
 
-@using (Html.BeginForm("DeleteProjectMemberConfirm", "Project",
-    new { area = "Admin", controller = "Project", @projectId = Model.ProjectId, @projectMemberId = Model.ProjectMemberId },
+@using (Html.BeginForm("DeleteProjectMember", "Project",
+    new { area = "Admin", controller = "Project", @projectId = Model.ProjectId, @projectMemberId = Model.Id },
     FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    <div class="modal-header bg-info">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3 id="AreaMember" class="modal-title panel-title">@ViewBag.Title </h3>
+    </div>
     @Html.Partial("_SucceedMessage")
     @Html.Partial("_ErrorMessage")
 
     @Html.ValidationSummary(true)
-
-    <div class="modal-header bg-info">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h3 id="AreaMember" class="modal-title panel-title">@ViewBag.Title @Model.User.UserName ?</h3>
-    </div>
-    <div class="modal-content">
-        <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3">Project Role: </label>
-            <label name="ProjectRole" class="form-control col-md-6 col-sm-6">@Model.ProjectRole.Name</label>
+    @*<div class="modal-content">
+        <div class="form-inline">
+            <div class="">
+                <label for="ProjectRole" class="control-label">Project Role: </label>
+                <text disabled id="ProjectRole" name="ProjectRole" class="">@Model.ProjectRole.Name</text>
+            </div>
         </div>
-    </div>
+    </div>*@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"> Cancel </button>
         <button type="submit" class="btn btn-danger col-md-offset-2"> Delete </button>

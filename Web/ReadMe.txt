@@ -3,7 +3,7 @@
    PM> update-database -project Sattelite.EntityFramework
    (then look in SQL Server if SatteliteDB database created)
 
-2. run application Sttelite.Web in IIS Express. If it is running, click 'Login' on the right top corner of the site
+2. Run application Sattelite.Web in IIS Express. If it is running, click 'Login' on the right top corner of the site
 2.1 to login as administrator enter
   Login: Admin
   Password: Admin

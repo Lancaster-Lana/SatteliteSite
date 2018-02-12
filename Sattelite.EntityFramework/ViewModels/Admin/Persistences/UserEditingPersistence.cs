@@ -29,20 +29,21 @@
             if (oldUser == null && oldUser.UserName == null)
                 throw new NoNullAllowedException(string.Format("User with id={0}", user.Id).ToNotNullErrorMessage());
 
-            //Update user properties
+            //1. Update user properties
             if (!oldUser.UserName.Equals(user.UserName, StringComparison.InvariantCulture))
                 oldUser.UserName = user.UserName;
             if (!oldUser.DisplayName.Equals(user.DisplayName, StringComparison.InvariantCulture))
                 oldUser.DisplayName = user.DisplayName;
-            if (!oldUser.Email.Equals(user.Email, StringComparison.InvariantCulture))
+            if (oldUser.Email == null ||!oldUser.Email.Equals(user.Email, StringComparison.InvariantCulture))
                 oldUser.Email = user.Email;
-            if (!oldUser.Password.Equals(user.Password, StringComparison.InvariantCulture) && !string.IsNullOrWhiteSpace(user.Password))
+            if (oldUser.Password == null || !oldUser.Password.Equals(user.Password, StringComparison.InvariantCulture) && !string.IsNullOrWhiteSpace(user.Password))
                 oldUser.Password = user.Password;
 
             oldUser.RoleId = user.RoleId;
             oldUser.ModifiedDate = DateTime.Now;
+            oldUser.ModifiedBy = user.ModifiedBy;
 
-            //refresh related collections
+            //2. Refresh related collections
             //Re-create subscriptions for user
             if (newCategoriesToSubscribe != null)
                 _categoryRepository.AddUserSubscriptions(oldUser, newCategoriesToSubscribe, true);

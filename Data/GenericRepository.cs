@@ -87,6 +87,11 @@ namespace Sattelite.EntityFramework.Repository
             return originalItem != null ? originalItem : default(TEntity);
         }
 
+        public SubEntity GetByKey<SubEntity>(object keyValue) where SubEntity: Entity
+        {
+            var originalItem = DbContext.Set<SubEntity>().Find(keyValue);
+            return originalItem != null ? originalItem : default(SubEntity);
+        }
         /// <summary>
         /// to be provste
         /// </summary>
@@ -139,15 +144,6 @@ namespace Sattelite.EntityFramework.Repository
             return specification.SatisfyingEntitiesFrom(GetQuery()).OrderByDescending(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize).AsEnumerable();
         }
 
-        //public TEntity Single(Expression<Func<TEntity, bool>> criteria)
-        //{
-        //    return GetQuery().Single(criteria);
-        //}
-
-        //public TEntity Single(ISpecification<TEntity> criteria)
-        //{
-        //    return criteria.SatisfyingEntityFrom(GetQuery());
-        //}
 
         public TEntity First(Expression<Func<TEntity, bool>> predicate)
         {

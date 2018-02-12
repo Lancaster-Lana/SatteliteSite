@@ -6,6 +6,8 @@
     {
         bool SaveProject(Project project);
 
-        bool AddProjectMember(Project project, User projectMemberUser, ProjectRole projectRole);
+        bool AddProjectMember(int projectId, int userId, int projectRoleId);
+
+        bool AddProjectMember(ProjectMember newProjectMember);
     }
 }

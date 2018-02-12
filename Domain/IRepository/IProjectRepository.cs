@@ -23,8 +23,28 @@
 
         bool DeleteProject(Project project);
 
-        bool DeleteProjectMember(int projectId, int projectMemberId);
+        #region Project Membership
 
-        bool DeleteProjectMember(Project project, int projectMemberId);
+        ProjectMember GetProjectMemberById(int projectMemberId);
+
+        bool AddProjectMember(int projectId, int userId, int projectRoleId, string createdBy);
+
+        bool AddProjectMember(ProjectMember projectMember);
+
+        bool DeleteProjectMember(int projectMemberId);
+
+        bool DeleteProjectMember(ProjectMember projectMember);
+
+        /// <summary>
+        /// Remove user from a role in the project.
+        /// NOTE. this user may stay in another projectMemberRole in this project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="userId"></param>
+        /// <param name="projectMemberRole"></param>
+        /// <returns></returns>
+        bool DeleteProjectMember(int projectId, int userId, int projectMemberRoleId);
+
+        #endregion
     }
 }

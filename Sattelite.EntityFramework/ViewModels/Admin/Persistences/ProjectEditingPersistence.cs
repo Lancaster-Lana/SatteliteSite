@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data;
+    using System.Web;
     using System.Web.Mvc;
     using Sattelite.Entities;
     using Sattelite.EntityFramework.Repository;
@@ -55,9 +56,20 @@
             return _projectRepository.SaveProject(oldIProject);
         }
 
-        public bool AddProjectMember(Project project, User projectMemberUser, ProjectRole projectRole)
+        public bool AddProjectMember(int projectId, int userId, int projectRoleId)
         {
-            throw new NotImplementedException();
+            var creatorUser = HttpContext.Current.User.Identity.Name;
+            return _projectRepository.AddProjectMember(projectId, userId, projectRoleId, creatorUser);
         }
+
+        public bool AddProjectMember(ProjectMember projectMember)
+        {
+            return _projectRepository.AddProjectMember(projectMember);
+        }
+
+        //public bool DeleteProjectMember(int projectId, int userId)
+        //{
+        //    return _projectRepository.DeleteProjectMember(projectId, userId);
+        //}
     }
 }

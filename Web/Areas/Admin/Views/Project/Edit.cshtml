@@ -11,79 +11,99 @@
 
 @using (Html.BeginForm("Edit", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(m => m.ProjectId)
-
     <div class="box">
-        <div class="box-head"> Редагування проекту @Model.Name </div>
-        @Html.ValidationSummary(true)
+        <div class="box-head h5"> @ViewBag.Title @Model.Name </div>
         <div class="form">
-            <p>
-                <span class="req">max 100 symbols</span>
-                <label>Назва<span>(*)</span></label>
-                @Html.TextBoxFor(x => x.Name, new { Class = "field size1" })
-                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
-            </p>
-            <p class="inline-field">
-                <label>Категорія</label>
-                @Html.DropDownListFor(x => x.CategoryId, new SelectList(allCategories, "Id", "Name", Model.CategoryId), new { Class = "field size1" })
-                @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
-            </p>
-            <p>
-                <label>Куратор</label>
-                @Html.DropDownListFor(x => x.CoordinatorId, new SelectList(allUsers, "Id", "UserName", Model.CoordinatorId), new { Class = "field size3" })
-            </p>
-            <p>
-                <label>Опис<span>(*)</span></label>
-                @Html.TextAreaFor(x => x.ShortDescription, new { Class = "field size1" })
-            </p>
-            <p>
-                <label>Основний контент</label>
-                @Html.TextAreaFor(x => x.Content, new { Class = "field size1" })
-            </p>
+            @Html.HiddenFor(m => m.ProjectId)
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="Name" class="control-label">Назва<span>(*)max 100 symbol</label>
+                        @Html.TextBoxFor(x => x.Name, new { Class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+                    </div>
 
-            <fieldset>
-                <legend>Виконавці</legend>
-                <a href="/Admin/Project/AddProjectMember/@Model.ProjectId" class="add-button"
-                   data-toggle="modal" data-target="#add_project_member_modal">
-                    <span> Додати учасника до проекту</span>
-                </a>
+                    <div class="col-md-3">
+                        <label for="CategoryId" class="control-label">Категорія</label>
+                        @Html.DropDownListFor(x => x.CategoryId, new SelectList(allCategories, "Id", "Name", Model.CategoryId), new { Class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+                    </div>
 
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th>
-                            @Html.Label("Name")
-                        </th>
-                        <th>
-                            @Html.Label("Email")
-                        </th>
-                        <th>
-                            @Html.Label("Role")
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                    @foreach (var member in Model.ProjectMembers)
-                    {
-                        //TODO: User -> display info from UserProfile
-                        <tr>
-                            <td> @member.User.DisplayName </td>
-                            <td> @member.User.Email </td>
-                            <td> @member.ProjectRole.Name </td>
-                            <td>
-                                @Html.ActionLink("Edit", "EditProjectMember", "Project", new { id = member.Id }, new { Class = "ico edit" }) |
-                                <a href="/Admin/Project/DeleteProjectMember/@member.Id" class="ico del"
-                                   data-toggle="modal" data-target="#delete_project_member_modal">
-                                    <span> Delete</span>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </fieldset>
+                    <div class="col-md-3">
+                        <label for="CoordinatorId" class="control-label">Куратор</label>
+                        @Html.DropDownListFor(x => x.CoordinatorId, new SelectList(allUsers, "Id", "UserName", Model.CoordinatorId), new { Class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="ShortDescription" class="control-label">Опис<span>(*)</span></label>
+                        @Html.TextAreaFor(x => x.ShortDescription, new { Class = "form-control" })
+                    </div>
+                </div>
+            </div>
 
-            <div class="buttons">
-                @Html.ActionLink("Всі проекти", "Index", null, new { @class = "btn btn-info pull-left" })
-                <input type="submit" class="btn btn-success" value="Зберегти" />
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="Content" class="control-label">Основний контент</label>
+                        @Html.TextAreaFor(x => x.Content, new { Class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label label-info">Виконавці</label>
+                        <a class="add-button"
+                           href="/Admin/Project/AddProjectMember/@Model.ProjectId"
+                           data-toggle="modal" data-target="#add_project_member_modal">
+                            <span> Додати учасника до проекту</span>
+                        </a>
+
+                        <table class="filterable table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.Label("Name")
+                                    </th>
+                                    <th>
+                                        @Html.Label("Email")
+                                    </th>
+                                    <th>
+                                        @Html.Label("Role")
+                                    </th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var member in Model.ProjectMembers)
+                                {
+                                    //TODO: User -> display info from UserProfile
+                                    <tr>
+                                        <td> @member.User.DisplayName </td>
+                                        <td> @member.User.Email </td>
+                                        <td> @member.ProjectRole.Name </td>
+                                        <td>
+                                            <a href="/Admin/Project/DeleteProjectMember/@member.Id" class="ico del" data-toggle="modal" data-target="#delete_project_member_modal">
+                                                <span> Delete</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="buttons">
+                    @Html.ActionLink("Всі проекти", "Index", null, new { @class = "btn btn-info pull-left" })
+                    <input type="submit" class="btn btn-success" value="Зберегти" />
+                </div>
             </div>
         </div>
     </div>
@@ -102,52 +122,52 @@
     </div>
 </div>
 
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            var form = $('form');
+            form.submit(function (e) {
+                e.preventDefault();
 
-@Scripts.Render("~/bundles/jquery.js")
-<script type="text/javascript">
-    $(function () {
-        var form = $('form');
-        form.submit(function (e) {
-            e.preventDefault();
+                //Get correct\selected
+                var newCategoryId = $("select[name='CategoryId'] option:selected").val();
+                var newCoordinatorId = $("select[name='CoordinatorId'] option:selected").val();
 
-            //Get correct\selected
-            var newCategoryId = $("select[name='CategoryId'] option:selected").val();
-            var newCoordinatorId = $("select[name='CoordinatorId'] option:selected").val();
+                var projectViewModel = $(this).serializeArray();
 
-            var projectViewModel = $(this).serializeArray();
-
-            $.each(projectViewModel, function () {
-                if (this.name == 'CategoryId') {
-                    this.value = newCategoryId;
-                }
-                if (this.name == 'CoordinatorId') {
-                    this.value = newCoordinatorId;
-                }
-            });
-
-            //Pass corrected ViewModel to action
-            var url = $('form').attr('action'); // href="/Admin/Project/Edit"
-            $.post(url, projectViewModel, function (response) {
-
-            }).fail(function (response) {
-                //var errorMsg = (response.error) ? response.error.message : response.message;
-                var errorMsg = 'Error to delete(update) record. Seems to be related child tables\records, related to this one';
-                swal({
-                    title: "Error",
-                    text: errorMsg,
-                    type: "warning",
-                    showCancelButton: false,
-                    closeOnConfirm: true
-                }, function () {
-                    //if Edit is opened in modal window
-                    //var theModal = $(this).closest('.modal').find('form');
-                    //theModal.modal("hide");
+                $.each(projectViewModel, function () {
+                    if (this.name == 'CategoryId') {
+                        this.value = newCategoryId;
+                    }
+                    if (this.name == 'CoordinatorId') {
+                        this.value = newCoordinatorId;
+                    }
                 });
-            }).always(function (response) {
-                //abp.ui.clearBusy($(busyModal));
+
+                //Pass corrected ViewModel to action
+                var url = $('form').attr('action'); // href="/Admin/Project/Edit"
+                $.post(url, projectViewModel, function (response) {
+
+                }).fail(function (response) {
+                    //var errorMsg = (response.error) ? response.error.message : response.message;
+                    var errorMsg = 'Error to delete(update) record. Seems to be related child tables\records, related to this one';
+                    swal({
+                        title: "Error",
+                        text: errorMsg,
+                        type: "warning",
+                        showCancelButton: false,
+                        closeOnConfirm: true
+                    }, function () {
+                        //if Edit is opened in modal window
+                        //var theModal = $(this).closest('.modal').find('form');
+                        //theModal.modal("hide");
+                    });
+                }).always(function (response) {
+                    //abp.ui.clearBusy($(busyModal));
+                });
+
             });
-
         });
-    });
-</script>
-
+    </script>
+}

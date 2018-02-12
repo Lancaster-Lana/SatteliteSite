@@ -6,7 +6,7 @@
     Layout = null;
 }
 
-@using (Html.BeginForm("DeleteProjectConfirm", "Project", new { area = "Admin", controller = "Project", @projectId = Model.ProjectId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Delete", "Project", new { area = "Admin", controller = "Project", @projectId = Model.ProjectId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="modal-header bg-info">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>

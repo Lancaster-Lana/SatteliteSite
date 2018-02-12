@@ -13,11 +13,11 @@
 @using (Html.BeginForm("Create", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="box">
-        <div class="box-head"> Cтворення проекту </div>
+        <div class="box-head"> @ViewBag.Title </div>
         <div class="form">
             <p>
                 <span class="req">max 100 symbols</span>
-                <label>Назва<span>(*)</span></label>
+                <label for="Name">Назва<span>(*)</span></label>
                 @Html.TextBoxFor(x => x.Name, new { Class = "field size1" })
                 @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
             </p>
@@ -27,43 +27,18 @@
                 @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
             </p>
             <p>
-                <label>Куратор</label>
+                <label for="CoordinatorId">Куратор</label>
                 @Html.DropDownListFor(x => x.CoordinatorId, new SelectList(allUsers, "Id", "UserName", Model.CoordinatorId), new { Class = "field size3" })
             </p>
             <p>
-                <label>Опис<span>(*)</span></label>
+                <label for="ShortDescription">Опис<span>(*)</span></label>
                 @Html.TextAreaFor(x => x.ShortDescription, new { Class = "field size1" })
                 @Html.ValidationMessageFor(m => m.ShortDescription, null, new { @class = "text-danger" })
             </p>
             <p>
-                <label>Основний контент</label>
+                <label for="Content">Основний контент</label>
                 @Html.TextAreaFor(x => x.Content, new { Class = "field size1" })
             </p>
-
-            <table id="tblMembers" class="table table-striped table-bordered">
-                <tr class="text-info text-capitalize">
-                    <th width="12">
-                        @*<input type="checkbox" class="checkbox" />*@
-                    </th>
-                    <th>
-                        @Html.Label("Учасники проекту")
-                    </th>
-                </tr>
-                @*@foreach (var member in Model.ProjectMembers)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => member.DisplayName)
-                                @Html.DisplayFor(modelItem => member.Email)
-                                @Html.HiddenFor(modelItem => member.Id)
-                            </td>
-                            <td width="12">
-                                <button class="btn btn-danger">x</button>
-                            </td>
-                        </tr>
-                    }*@
-            </table>
-
         </div>
 
         <div class="buttons">

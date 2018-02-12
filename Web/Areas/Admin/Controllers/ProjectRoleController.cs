@@ -117,13 +117,13 @@
         }
 
         [HttpPost]
-        public ActionResult DeleteProjectRoleConfirm(int roleId)
+        public ActionResult Delete(ProjectRoleViewModel model)
         {
-            var isSucceed = _projectRoleRepository.DeleteProjectRole(roleId);
+            var isSucceed = _projectRoleRepository.DeleteProjectRole(model.RoleId.Value);
 
             if (isSucceed)
             {
-                SetSucceedMessage("Role removed successfully !");
+                SetSucceedMessage("Project role has been removed successfully !");
                 //update cach : AppCach.AllRoles.Except(AppCach.AllRoles.Where(r => r.Id == roleId));
                 AppCach.AllProjectRoles = new ConcurrentBag<ProjectRole>(_projectRoleRepository.GetProjectRoles());
             }

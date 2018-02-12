@@ -15,26 +15,26 @@
     {
         #region variables & ctors
 
-        private readonly int _projectId;
+        //private readonly int _projectId;
         private readonly int _projectMemberId;
         private readonly IProjectRepository _projectRepository;
 
         public ProjectMemberDeletingViewModelActionResult(
                 Expression<Func<TController, ActionResult>> viewNameExpression,
-                int projectId, int projectMemeberId)
+                int projectMemberId)
             : this(viewNameExpression, 
-                  projectId, projectMemeberId,
+                  projectMemberId,
                   DependencyResolver.Current.GetService<IProjectRepository>())
         {
         }
 
         public ProjectMemberDeletingViewModelActionResult(
             Expression<Func<TController, ActionResult>> viewNameExpression, 
-            int projectId, int projectMemberId,
+            int projectMemberId,
             IProjectRepository projectRepository)
             : base(viewNameExpression)
         {
-            _projectId = projectId;
+            //_projectId = projectId;
             _projectMemberId = projectMemberId;
             _projectRepository = projectRepository;
         }
@@ -45,25 +45,21 @@
         {
             base.ExecuteResult(context);
 
-            var project = _projectRepository.GetById(_projectId);
+            var projectMember = _projectRepository.GetProjectMemberById(_projectMemberId);
 
-            if (project == null)
-                throw new NoNullAllowedException(string.Format("Project with id={0} cannot be deleted", _projectId).ToNotNullErrorMessage());
+            if (projectMember == null)
+                throw new NoNullAllowedException(string.Format("projectMember with id={0} cannot be deleted", _projectMemberId).ToNotNullErrorMessage());
 
-            var viewModel = project.MapTo<ProjectEditingViewModel>();
+            var viewModel = projectMember.MapTo<ProjectMemberViewModel>();
 
-            viewModel.Content = project.ProjectContent?.Content;
-            viewModel.Name = project.ProjectContent?.Name;
-            viewModel.ShortDescription = project.ProjectContent?.ShortDescription;
-            //Delete member
-
+            //Show confirmation dialog with Delete button
             GetViewResult(viewModel).ExecuteResult(context);
         }
 
         public override void EnsureAllInjectInstanceNotNull()
         {
+            Guard.ArgumentMustMoreThanZero(_projectMemberId, "ProjectMemberId");
             Guard.ArgumentNotNull(_projectRepository, "ProjectRepository");
-            Guard.ArgumentMustMoreThanZero(_projectId, "ProjectId");
         }
     }
 }

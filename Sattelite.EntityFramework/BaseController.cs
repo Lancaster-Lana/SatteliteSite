@@ -32,7 +32,7 @@
             ViewBag.ErrorMessage = errorMsg; //TODO: can be removed 
         }
 
-        protected JavaScriptResult ShowSuccessMessageAlert(string errorMsg)
+        protected JavaScriptResult ShowAlertSuccessMessage(string errorMsg)
         {
             string errorScript = string.Format("successMessage('{0}');", errorMsg);
             return JavaScript(errorScript);
@@ -45,7 +45,7 @@
         //    return Content(script);
         //}
 
-        protected JavaScriptResult ShowErrorMessageAlert(string errorMsg)
+        protected JavaScriptResult ShowAlertErrorMessage(string errorMsg)
         {
             string errorScript = string.Format("errorMessage('{0}');", errorMsg);
             return JavaScript(errorScript);

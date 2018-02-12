@@ -8,5 +8,11 @@
          {
              return string.Format(ConstantMessage.ShouldNotBeNull, source);
          }
+
+        public static string ToExistErrorMessage(this string source)
+        {
+            return string.Format(ConstantMessage.ExistDuplicate, source);
+        }
+        
     }
 }
