@@ -1,29 +1,56 @@
-﻿@model Sattelite.EntityFramework.ViewModels.Client.CategoryLeftColumnViewModel
+﻿@model CategoryLeftColumnViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
 
 <div id="main-left" class="left">
-    @foreach(var item in Model.News)
+
+    @foreach (var article in Model.News)
     {
         <div class="post">
             <div class="post-title">
-                <h2>
-                    @Html.ActionLink(@item.NewsContent.Title, "Details", "Home", new {id=@item.Id}, null)
-                </h2>
+                <h4>
+                    <em> Article</em>  @Html.ActionLink(@article.NewsContent.Title, "NewsDetails", "Home", new { id = @article.Id }, null)
+                </h4>
             </div>
             <div class="post-date">
-                In 
-                @Html.ActionLink(@item.Category.Name, "Category", "Home", new {id = item.Category.Id}, null) 
-                - 
-                @Html.Raw(@item.CreatedDate.Value.ToShortDateString()) by @Html.Raw(@item.CreatedBy)
-            </div>
-            <div class="post-date">
+                 about
+                @Html.ActionLink(@article.Category.Name, "Category", "Home", new { id = article.Category.Id }, null)
+                -
+                @Html.Raw(@article.CreatedDate.Value.ToShortDateString()) by @Html.Raw(@article.CreatedBy)
             </div>
             <div class="post-body">
-                <p>
-                    @Html.Raw(@item.NewsContent.ShortDescription)
+                <p class="badge">
+                    @Html.Raw(@article.NewsContent.ShortDescription)
                 </p>
-                @Html.ActionLink("Read more >>", "Details", "Home", new {id = item.Id}, new {Class = "more"})
+                @Html.ActionLink(" read >>", "NewsDetails", "Home", new { id = article.Id }, new { Class = "more" })
             </div>
         </div>
     }
+
+    <div class="clearer">&nbsp;</div>
+
+    <hr />
+    @foreach (var project in Model.Projects)
+    {
+        <div class="post">
+            <div class="post-title">
+                <h4>
+                    <span>Project</span>  @Html.ActionLink(@project.ProjectContent.Name, "ProjectDetails", "Home", new { id = @project.Id }, null)
+                </h4>
+            </div>
+            <div class="post-date">
+                in @Html.ActionLink(@project.Category.Name, "Category", "Home", new { id = project.Category.Id }, null)
+                -
+                @Html.Raw(@project.CreatedDate.Value.ToShortDateString()) by @Html.Raw(@project.CreatedBy)
+            </div>
+
+            <div class="post-body">
+                <p>
+                    @Html.Raw(@project.ProjectContent.ShortDescription)
+                </p>
+                @Html.ActionLink("Read more >>", "ProjectDetails", "Home", new { id = project.Id }, new { Class = "more" })
+            </div>
+        </div>
+    }
+
     <div class="clearer">&nbsp;</div>
 </div>

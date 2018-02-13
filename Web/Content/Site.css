@@ -549,9 +549,13 @@ img.alignright, img.right {
         color: #444;
     }
 
-.post-title h1, .post-title h2, .post-title h3 {
-    margin-bottom: 0;
+.post-title {
+    padding: 20px 5px 5px
 }
+
+/*.post-title h1, .post-title h2, .post-title h3 {
+    margin-bottom: 0;
+}*/
 
 .post-meta {
     background: #F6F6F6;

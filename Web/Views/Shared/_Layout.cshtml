@@ -67,35 +67,35 @@
             });
         });
 
-        function successMessage(msg) {
-            swal({
-                title: 'Success',
-                text: msg,
-                type: 'success',
-                showCancelButton: false,
-                closeOnConfirm: true
-            }, function () {
-                window.location.reload();
-            });
-            return false;
-        }
+            function successMessage(msg) {
+                swal({
+                    title: 'Success',
+                    text: msg,
+                    type: 'success',
+                    showCancelButton: false,
+                    closeOnConfirm: true
+                }, function () {
+                    window.location.reload();
+                });
+                return false;
+            }
 
-        function infoMessage(msg) {
-            swal({
-                title: 'Info',
-                text: msg,
-                type: 'info',
-                showCancelButton: false,
-                closeOnConfirm: true
-            }, function () {
-                window.location.reload();
-            });
-            return false;
-        }
+            function infoMessage(msg) {
+                swal({
+                    title: 'Info',
+                    text: msg,
+                    type: 'info',
+                    showCancelButton: false,
+                    closeOnConfirm: true
+                }, function () {
+                    window.location.reload();
+                });
+                return false;
+            }
 
-        function errorMessage(msg) {
-            swal('Error !', msg, 'error');
-        }
+            function errorMessage(msg) {
+                swal('Error !', msg, 'error');
+            }
 
     </script>
 

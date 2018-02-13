@@ -5,41 +5,46 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Web.Mvc;
+    using System.Security.Principal;
 
     using Sattelite.Framework;
     using Sattelite.Framework.Extensions;
     using Sattelite.EntityFramework.ViewModels.Client;
     using Sattelite.EntityFramework.Repository;
 
-    public class DetailsViewModelActionResult<TController> : ActionResultBase<TController> where TController : Controller
+    public class NewsDetailsViewModelActionResult<TController> : ActionResultBase<TController> where TController : Controller
     {
+        public const string SITE_TITLE = "Супутник НК Website - {0}";
+
         #region variables & ctors
+
+        private IIdentity _userIdentity;
+        private readonly int _articleId;
+        private readonly int _numOfPage;
 
         private readonly ICategoryRepository _categoryRepository;
         private readonly INewsRepository _newsRepository;
-        private readonly int _articleId;
 
-        private readonly int _numOfPage;
-
-        public DetailsViewModelActionResult(
+        public NewsDetailsViewModelActionResult(
                 Expression<Func<TController, ActionResult>> viewNameExpression,
-                int articleId)
-            : this(viewNameExpression, articleId,
+                IIdentity userIdentity, int articleId)
+            : this(viewNameExpression, userIdentity, articleId,
                    DependencyResolver.Current.GetService<ICategoryRepository>(),
                    DependencyResolver.Current.GetService<INewsRepository>())
         {
         }
 
-        public DetailsViewModelActionResult(
+        public NewsDetailsViewModelActionResult(
                     Expression<Func<TController, ActionResult>> viewNameExpression,
-                    int articleId,
+                    IIdentity userIdentity, int articleId,
                     ICategoryRepository categoryRepository,
                     INewsRepository itemRepository) : base(viewNameExpression)
         {
-            _categoryRepository = categoryRepository;
-            _newsRepository = itemRepository;
+            _userIdentity = userIdentity;
             _articleId = articleId;
 
+            _categoryRepository = categoryRepository;
+            _newsRepository = itemRepository;
             _numOfPage = ConfigurationManager.GetAppConfigBy("NumOfPage").ToInteger();
         }
 
@@ -59,22 +64,26 @@
             var mainPageViewModel = new MainPageViewModel();
 
             var categories = _categoryRepository.GetCategories();
+            var subscriptions = _categoryRepository.GetUserCategories(_userIdentity.Name); //get only current user subscriptions
+
             if (categories != null && categories.Any())
             {
-                menuViewModel.Categories = categories.ToList();
+                //left menu with subscribed categories
+                menuViewModel.Categories = subscriptions.ToList();
+
                 footerViewModel.Categories = categories.ToList();
             }
 
             mainPageViewModel.LeftColumn = this.BindingDataForDetailsLeftColumnViewModel(_articleId);
             mainPageViewModel.RightColumn = this.BindingDataForMainPageRightColumnViewModel();
 
-            menuViewModel.SiteTitle = string.Format("Супутник НК Website - {0}",
+            menuViewModel.SiteTitle = string.Format(SITE_TITLE,
                 ((DetailsLeftColumnViewModel)mainPageViewModel.LeftColumn).CurrentArticle.NewsContent.Title);
 
-            mainViewModel.MainMenu = menuViewModel;
             mainViewModel.DashBoard = new DashboardViewModel();
+            mainViewModel.MainMenu = menuViewModel;
+            mainViewModel.MainPage = mainPageViewModel; //article content
             mainViewModel.Footer = footerViewModel;
-            mainViewModel.MainPage = mainPageViewModel;
 
             GetViewResult(mainViewModel).ExecuteResult(context);
         }
@@ -92,16 +101,15 @@
 
         #region private functions
 
-        private DetailsLeftColumnViewModel BindingDataForDetailsLeftColumnViewModel(int itemId)
+        private DetailsLeftColumnViewModel BindingDataForDetailsLeftColumnViewModel(int articleId)
         {
+            var article = _newsRepository.GetById(articleId);
+
+            if (article == null)
+                throw new NoNullAllowedException(string.Format("Article id={0}", articleId).ToNotNullErrorMessage());
+
             var viewModel = new DetailsLeftColumnViewModel();
-
-            var item = this._newsRepository.GetById(itemId);
-
-            if (item == null)
-                throw new NoNullAllowedException(string.Format("Item id={0}", itemId).ToNotNullErrorMessage());
-
-            viewModel.CurrentArticle = item;
+            viewModel.CurrentArticle = article;
 
             return viewModel;
         }
@@ -110,8 +118,8 @@
         {
             var mainPageRightCol = new MainPageRightColumnViewModel();
 
-            mainPageRightCol.LatestNews = this._newsRepository.GetLatestNews(this._numOfPage).ToList();
-            mainPageRightCol.MostViews = this._newsRepository.GetMostViews(this._numOfPage).ToList();
+            mainPageRightCol.LatestNews = _newsRepository.GetLatestNews(_numOfPage).ToList();
+            mainPageRightCol.MostViews = _newsRepository.GetMostViews(_numOfPage).ToList();
 
             return mainPageRightCol;
         }

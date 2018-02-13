@@ -1,0 +1,22 @@
+﻿@model HomePageViewModel
+@using Sattelite.EntityFramework.ViewModels.Client
+
+@section TitleContent{
+    News Details page   
+}
+
+@section HeaderContent{
+    
+}
+
+@{
+    ViewBag.Title = "News Details";
+}
+
+@Html.Partial("_LeftMenu", Model.MainMenu)
+
+@Html.Partial("_DetailPage", Model.MainPage)
+
+@Html.Partial("_DashBoard", Model.DashBoard)
+
+@Html.Partial("_Footer", Model.Footer)

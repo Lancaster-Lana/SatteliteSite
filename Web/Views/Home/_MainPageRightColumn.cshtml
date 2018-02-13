@@ -19,7 +19,7 @@
                 {
                     <li>
                         <div class="left">
-                            @Html.ActionLink(project.ProjectContent.Name, "Details", "Project", new { id = project.Id }, null)
+                            @Html.ActionLink(project.ProjectContent.Name, "ProjectDetails", "Home", new { id = project.Id }, null)
                         </div>
                         <div class="right">@project.CreatedDate.Value.ToShortTimeString()</div>
                         <div class="clearer">&nbsp;</div>
@@ -37,7 +37,7 @@
                     var currentArticle = Model.MostViews.ElementAt(index);
                     <li>
                         <span class="quiet">@Html.Raw(index + 1).</span>
-                        @Html.ActionLink(currentArticle.NewsContent.Title, "Details", "Home", new { id = currentArticle.Id }, null)
+                        @Html.ActionLink(currentArticle.NewsContent.Title, "NewsDetails", "Home", new { id = currentArticle.Id }, null)
                         (@currentArticle.NewsContent.NumOfView times)
                     </li>
                 }
@@ -63,7 +63,7 @@
             {
                 <li>
                     <div class="left">
-                        @Html.ActionLink(article.NewsContent.Title, "Details", "Home", new { id = article.Id }, null)
+                        @Html.ActionLink(article.NewsContent.Title, "NewsDetails", "Home", new { id = article.Id }, null)
                     </div>
                     <div class="right">@article.CreatedDate.Value.ToShortTimeString()</div>
                     <div class="clearer">&nbsp;</div>

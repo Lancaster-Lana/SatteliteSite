@@ -6,8 +6,7 @@
     Layout = "~/Views/Shared/_LayoutModal.cshtml";
 }
 
-@using (Html.BeginForm("CreateSubscription", "Category", new { categoryId = Model.CategoryId, userId = Model.UserId, userName = Model.UserName },
-    FormMethod.Post))
+@using (Html.BeginForm("CreateSubscription", "Category", new { categoryId = Model.CategoryId, userId = Model.UserId, userName = Model.UserName }, FormMethod.Post))
 {
     <div class="modal-header alert-success">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>

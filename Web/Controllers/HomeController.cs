@@ -14,10 +14,22 @@
             return new HomePageViewModelActionResult<HomeController>(x => x.Index(), currentUserIdentity);
         }
 
+        /// <summary>
+        /// News\article details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Details(int id)
+        public ActionResult NewsDetails(int id)
         {
-            return new DetailsViewModelActionResult<HomeController>(x => x.Details(id), id);
+            var currentUserIdentity = User.Identity;
+            return new NewsDetailsViewModelActionResult<HomeController>(x => x.NewsDetails(id), currentUserIdentity, id);
+        }
+
+        public ActionResult ProjectDetails(int id)
+        {
+            var currentUserIdentity = User.Identity;
+            return new ProjectDetailsViewModelActionResult<HomeController>(x => x.ProjectDetails(id), currentUserIdentity, id);
         }
 
         [AllowAnonymous]

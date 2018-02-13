@@ -25,11 +25,15 @@
     public class DetailsLeftColumnViewModel : LeftColumnViewModelBase
     {
         public News CurrentArticle { get; set; }
+
+        public Project CurrentProject { get; set; }
     }
 
     public class CategoryLeftColumnViewModel : LeftColumnViewModelBase
     {
         public List<News> News { get; set; } = new List<News>();
+
+        public List<Project> Projects { get; set; } = new List<Project>();
     }
 
     public class MainPageRightColumnViewModel

@@ -131,7 +131,8 @@
     <Compile Include="ActionResults\Admin\NewsEditingViewModelActionResult.cs" />
     <Compile Include="ActionResults\Admin\UserEditingViewModelActionResult.cs" />
     <Compile Include="ActionResults\Client\CategoryViewModelActionResult.cs" />
-    <Compile Include="ActionResults\Client\DetailsViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Client\ProjectDetailsViewModelActionResult.cs" />
+    <Compile Include="ActionResults\Client\NewsDetailsViewModelActionResult.cs" />
     <Compile Include="ActionResults\Client\HomePageViewModelActionResult.cs" />
     <Compile Include="ActionResults\ActionResultBase.cs" />
     <Compile Include="BaseController.cs" />

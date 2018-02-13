@@ -6,7 +6,6 @@
     using System.Linq.Expressions;
     using System.Security.Principal;
     using System.Web.Mvc;
-    using Sattelite.Entities.ProjectAgg;
     using Sattelite.Framework;
     using Sattelite.Framework.Extensions;
     using Sattelite.EntityFramework.ViewModels.Client;
@@ -16,19 +15,18 @@
     {
         #region variables & ctors
 
+        private IIdentity _userIdentity;
+        private readonly int _categoryId;
+        private readonly int _numOfPage;
+
         private readonly ICategoryRepository _categoryRepository;
         private readonly INewsRepository _newsRepository;
         private readonly IProjectRepository _projectRepository;
 
-        private IIdentity _userIdentity { get; set; }
-        private readonly int _categoryId;
-
-        private readonly int _numOfPage;
-
         public CategoryViewModelActionResult(
                 Expression<Func<TController, ActionResult>> viewNameExpression,
                 IIdentity userIdentity,
-                int categoryId = 0)
+                int categoryId)
             : this(viewNameExpression, userIdentity, categoryId,
                    DependencyResolver.Current.GetService<ICategoryRepository>(),
                    DependencyResolver.Current.GetService<INewsRepository>(),
@@ -39,16 +37,15 @@
         public CategoryViewModelActionResult(
                     Expression<Func<TController, ActionResult>> viewNameExpression,
                     IIdentity userIdentity,
-                    int categoryId,
-                    ICategoryRepository categoryRepository,
-                    INewsRepository itemRepository,
+                    int categoryId, ICategoryRepository categoryRepository,
+                    INewsRepository newsRepository,
                     IProjectRepository projectRepository)
             : base(viewNameExpression)
         {
             _categoryId = categoryId;
             _categoryRepository = categoryRepository;
 
-            _newsRepository = itemRepository;
+            _newsRepository = newsRepository;
             _projectRepository = projectRepository;
 
             _userIdentity = userIdentity;
@@ -110,13 +107,18 @@
             var viewModel = new CategoryLeftColumnViewModel();
 
             var news = _newsRepository.GetByCategory(categoryId);
-
             if (news == null)
-                throw new NoNullAllowedException("Items".ToNotNullErrorMessage());
+                throw new NoNullAllowedException("News".ToNotNullErrorMessage());
 
             if (news.Any())
             {
                 viewModel.News = news.ToList();
+            }
+
+            var projects = _projectRepository.GetByCategory(categoryId);
+            if (projects.Any())
+            {
+                viewModel.Projects = projects.ToList();
             }
 
             return viewModel;

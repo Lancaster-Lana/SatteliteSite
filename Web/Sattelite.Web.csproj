@@ -531,7 +531,7 @@
     <Content Include="Views\Home\_MainPage.cshtml" />
     <Content Include="Views\Home\_MainPageLeftColumn.cshtml" />
     <Content Include="Views\Home\_MainPageRightColumn.cshtml" />
-    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\NewsDetails.cshtml" />
     <Content Include="Views\Home\_DetailPage.cshtml" />
     <Content Include="Views\Home\_DetailsPageLeftColumn.cshtml" />
     <Content Include="Views\Home\_CategoryPage.cshtml" />
@@ -554,6 +554,7 @@
     <Content Include="Scripts\plugins\sweetalert\themes\twitter\twitter.scss" />
     <Content Include="Views\Shared\UnsubscribeFromCategory.cshtml" />
     <Content Include="Views\Shared\_LayoutModal.cshtml" />
+    <Content Include="Views\Home\ProjectDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

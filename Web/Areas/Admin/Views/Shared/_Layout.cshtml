@@ -57,11 +57,6 @@
     @Scripts.Render("~/bundles/bootstrap.js")
     @Scripts.Render("~/bundles/alert.js")
 
-    @*@Scripts.Render("~/bundles/datatables.js")*@
-
-    @*<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.12.4.js"> </script>*@
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-
     <script type="text/javascript">
         $(function () {
             //Hightlight selected tab
@@ -112,32 +107,7 @@
             });
 
         });
-    </script>
 
-    <script type="text/javascript">
-        $(function () {
-            //Create filterable tables
-            (function () {
-                var options = {
-                    responsive: true,
-                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                    "scrollY": 200,
-                    "dom": '<"top"Bf>rt<"bottom"lip><"clear">',//display on bottom paging
-                    "columnDefs": [{
-                        "targets": 'no-sort',
-                        "orderable": false,
-                    }],
-                    "buttons": ['excel', 'pageLength']
-                };
-
-                $('.filterable').dataTable(options);
-                //can filter by columns https://datatables.net/examples/api/regex.html
-
-            })();
-        });
-    </script>
-
-    <script type="text/javascript">
 
         function successMessage(msg) {
             swal({
@@ -168,8 +138,33 @@
         function errorMessage(msg) {
             swal('Error !', msg, 'error');
         }
-
     </script>
+
+    @*@Scripts.Render("~/bundles/datatables.js")*@
+
+    @*<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.12.4.js"> </script>*@
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //Create filterable tables
+            (function () {
+                var options = {
+                    responsive: true,
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "scrollY": 200,
+                    "dom": '<"top"Bf>rt<"bottom"lip><"clear">',//display on bottom paging
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false,
+                    }],
+                    "buttons": ['excel', 'pageLength']
+                };
+
+                $('.filterable').dataTable(options);
+                //can filter by columns https://datatables.net/examples/api/regex.html
+
+            })();
+        });
     </script>
 
     @RenderSection("Scripts", required: false)

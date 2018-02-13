@@ -8,14 +8,14 @@
         <article class="post">
             <div class="post-title">
                 <h2>
-                    @Html.ActionLink(Model.FirstArticle.NewsContent.Title, "Details", "Home", new { id = Model.FirstArticle.Id }, null)
+                    @Html.ActionLink(Model.FirstArticle.NewsContent.Title, "NewsDetails", "Home", new { id = Model.FirstArticle.Id }, null)
                 </h2>
             </div>
             <div class="post-date">@Model.FirstArticle.NewsContent.CreatedDate.Value.ToShortDateString() by @Model.FirstArticle.NewsContent.CreatedBy</div>
             <div class="post-body">
                 <p><a href="#">@Html.RenderImageWithPath(Model.FirstArticle.NewsContent.BigImage, "bordered", 510, 233)</a></p>
                 @Html.Raw(@Model.FirstArticle.NewsContent.ShortDescription)
-                @Html.ActionLink("Read about >>", "Details", "Home", new { id = Model.FirstArticle.Id }, new { Class = "more" })
+                @Html.ActionLink("Read about >>", "NewsDetails", "Home", new { id = Model.FirstArticle.Id }, new { Class = "more" })
             </div>
 
         </article>
@@ -27,10 +27,10 @@
         <article class="post">
             <a href="#">@Html.RenderImageWithPath(article.NewsContent.MediumImage, "left bordered", 152, 119)</a>
             <h3>
-                @Html.ActionLink(article.NewsContent.Title, "Details", "Home", new { id = article.Id }, null)
+                @Html.ActionLink(article.NewsContent.Title, "NewsDetails", "Home", new { id = article.Id }, null)
             </h3>
             @Html.Raw(@article.NewsContent.ShortDescription)
-            @Html.ActionLink("Read more >>", "Details", "Home", new { id = article.Id }, new { Class = "more" })
+            @Html.ActionLink("Read more >>", "NewsDetails", "Home", new { id = article.Id }, new { Class = "more" })
             <div class="clearer">&nbsp;</div>
         </article>
         <div class="content-separator"></div>

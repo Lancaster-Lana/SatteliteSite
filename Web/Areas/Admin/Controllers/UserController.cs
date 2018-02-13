@@ -102,22 +102,24 @@ namespace Sattelite.Web.Areas.Admin.Controllers
                 return View(userViewModel);
             }
 
-            var user = PrepareUser(userViewModel, false); //userViewModel.MapTo<User>();
+            bool isUpdated = false;
 
-            //then update user subscriptions: add new, remove old
-            var newUserSubscriptions = //!string.IsNullOrWhiteSpace(userViewModel.SubscriptionsIds) ? userViewModel.SubscriptionsIds.Split(',').Select(e => Convert.ToInt32(e)).ToList(): null;
-                userViewModel.Subscriptions?.MapTo<CategorySubscription>();
-
-            //Update all user details
-            if (_userEditingPersistence.SaveUser(user, newUserSubscriptions))
+            try
             {
-                SetSucceedMessage("User saved successfully");
-                return RedirectToAction("Index", "User");
-            }
-            else
-                SetErrorMessage("Cannot save user");
+                var user = PrepareUser(userViewModel, false); //userViewModel.MapTo<User>();
 
-            return View(userViewModel);
+                //then update user subscriptions: add new, remove old
+                var newUserSubscriptions = userViewModel.Subscriptions?.MapTo<CategorySubscription>();
+
+                //Update all user details
+                isUpdated = _userEditingPersistence.SaveUser(user, newUserSubscriptions);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, responseText = ex.Message });
+            }
+
+            return Json(new { Success = isUpdated }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

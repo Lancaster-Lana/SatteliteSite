@@ -11,7 +11,7 @@ namespace Sattelite.Entities
         [Required]
         public string UserName { get; set; }
 
-        [Required]
+        //[Required]
         public string Email { get; set; }
 
         public string DisplayName { get; set; }

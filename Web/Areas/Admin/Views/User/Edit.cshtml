@@ -1,5 +1,6 @@
 ﻿@model UserEditingViewModel
 @using Sattelite.EntityFramework.ViewModels.Admin.User
+@using System.Web.Optimization
 @using Sattelite.Web
 
 @{
@@ -10,117 +11,18 @@
     var allCategories = AppCach.AllCategories;
 }
 
-@if (Model != null)
-{
-    using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="box">
-            <div class="box-head">Редагування даних користувача</div>
-
-            @Html.HiddenFor(model => model.UserId)
-            <div class="form">
-                <div class="row">
-                    <div class="col-md-4">
-                        @Html.LabelFor(model => model.UserName)
-                        @Html.TextBoxFor(model => model.UserName, new { Class = "field" })
-                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4">
-                        @Html.LabelFor(model => model.DisplayName)
-                        @Html.TextBoxFor(model => model.DisplayName, new { Class = "field" })
-                        @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4">
-                        @Html.LabelFor(model => model.Email)
-                        @Html.TextBoxFor(model => model.Email, new { Class = "field" })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        @Html.LabelFor(model => model.Password)
-                        @Html.TextBoxFor(model => model.Password, new { Class = "field", type = "password" })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4">
-                        @Html.LabelFor(model => model.ConfirmPassword)
-                        @Html.TextBoxFor(model => model.ConfirmPassword, new { Class = "field", type = "password" })
-                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4"><span /></div>
-                </div>
-                <div class="row">
-                    <p class="col-md-12">
-                        @Html.Label("Role")
-                        @if (allRoles != null)
-                        {
-                            @Html.DropDownListFor(model => model.RoleId, new SelectList(allRoles, "Id", "Name", Model.RoleId), new { Class = "field size3" })
-                            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-                        }
-                        else
-                        {
-                            <span class="alert alert-danger">any role</span>
-                        }
-                    </p>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <table id="tblSubscriptions" class="table table-bordered">
-                            <tr class="text-info text-capitalize">
-                                <th class="col-md-1">
-                                    @*<input type="checkbox" class="checkbox" />*@
-                                </th>
-                                <th>
-                                    @Html.Label("Категорії підписки")
-                                </th>
-                            </tr>
-                            @if (allCategories != null)
-                            {
-                                foreach (var category in allCategories)
-                                {
-                                    var isUserSubsribedToCategory = Model.Subscriptions.Select(s => s.CategoryId).Contains(category.Id);
-                                    <tr>
-                                        <td width="12">
-                                            <input type="checkbox" class="checkbox" value="@category.Id" id="ckb_@category.Id" name="@category.Name"
-                                                   @(isUserSubsribedToCategory ? "checked" : "") />
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => category.Name)
-                                            @Html.HiddenFor(modelItem => category.Id)
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            @Html.ValidationSummary(true)
-        </div>
-        <div class="buttons">
-            @Html.ActionLink("Список користувачів", "Index", null, new { @class = "btn btn-info pull-left" })
-            <button name="btnSaveUser" class="btn btn-success" type="submit">Зберегти</button>
-        </div>
-    }
-}
-
 @section Scripts
 {
+    @*@Scripts.Render("~/bundles/jquery.js")*@
     <script type="text/javascript">
-        $(function () {
+        (function () {
             var $form = $('form');
             $form.submit(function (e) {
-                //Correct subscriptions : added last element of ViewModel with ids of categories
                 e.preventDefault();
-                $(this).validate();
-                if (!$(this).isValid())
+                var form = $(this).validate();
+                if (!form.valid())
                     return;
                 var url = $(this).attr('action');
-                // url ="/Admin/User/Edit"
 
                 //return selected categories Ids from selected checkboxes
                 var categoriesArr = $.map($(":checkbox:checked"), function (elem) {
@@ -139,35 +41,123 @@
                     DisplayName: $('[name="DisplayName"]').val(), //$('#DisplayName').val(),
                     Email: $('[name="Email"]').val(), //$('#Email').val(),
                     Password: $('[name="Password"]').val(), //$('#Password').val(),
+                    ConfirmPassword: $('[name="ConfirmPassword"]').val(), //$('#ConfirmPassword').val(),
                     RoleId: $('[name="RoleId"]').val(),
                     Subscriptions: categoriesArr
                 };
 
                 $.post(url, userViewModel)
                     .fail(function (response) {
-                        var errorMsg = (response.error)
-                            ? response.error.message
-                            : response.message;
-                        swal({
-                            title: "Error",
-                            text: "Failed to update user",
-                            type: "warning",
-                            showCancelButton: false,
-                            closeOnConfirm: true
-                        });
+                        var errorMsg = (response.responseText)
+                            ? response.responseText : response.message;
+                        errorMessage('Failed to update user: ' + errorMsg);
+
                     }).success(function (response) {
-                        swal({
-                            title: "Success",
-                            text: "Successfully updated user data",
-                            type: "success",
-                            showCancelButton: false,
-                            closeOnConfirm: true
-                        });
+                        var updated = (response.Success == true);
+                        if (updated) {
+                            successMessage("Successfully updated user data!");
+                        }
+                        else {
+                            errorMessage("Failed update user! Please, validate all fields. " );
+                        }
+
                     }).always(function (response) {
                         //abp.ui.clearBusy($(busyModal));
                     });
             });
-        });
+
+        })();
     </script>
 }
 
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="box">
+        <div class="box-head">Редагування даних користувача</div>
+        @Html.HiddenFor(model => model.UserId)
+        <div class="form">
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.UserName)
+                    @Html.TextBoxFor(model => model.UserName, new { Class = "field" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.DisplayName)
+                    @Html.TextBoxFor(model => model.DisplayName, new { Class = "field" })
+                    @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Email)
+                    @Html.TextBoxFor(model => model.Email, new { Class = "field" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Password)
+                    @Html.TextBoxFor(model => model.Password, new { Class = "field", type = "password" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.ConfirmPassword)
+                    @Html.TextBoxFor(model => model.ConfirmPassword, new { Class = "field", type = "password" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4"><span /></div>
+            </div>
+            <div class="row">
+                <p class="col-md-12">
+                    @Html.Label("Role")
+                    @if (allRoles != null)
+                    {
+                        @Html.DropDownListFor(model => model.RoleId, new SelectList(allRoles, "Id", "Name", Model.RoleId), new { Class = "field" })
+                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                    }
+                    else
+                    {
+                        <span class="alert alert-danger">any role</span>
+                    }
+                </p>
+            </div>
+            @Html.ValidationSummary(true)
+            <div class="row">
+                <div class="col-md-6">
+                    <table id="tblSubscriptions" class="table table-bordered">
+                        <tr class="text-info text-capitalize">
+                            <th class="col-md-1">
+                                @*<input type="checkbox" class="checkbox" />*@
+                            </th>
+                            <th>
+                                @Html.Label("Категорії підписки")
+                            </th>
+                        </tr>
+                        @if (allCategories != null)
+                        {
+                            foreach (var category in allCategories)
+                            {
+                                var isUserSubsribedToCategory = Model.Subscriptions.Select(s => s.CategoryId).Contains(category.Id);
+                                <tr>
+                                    <td width="12">
+                                        <input type="checkbox" class="checkbox" value="@category.Id" id="ckb_@category.Id" name="@category.Id"
+                                               @(isUserSubsribedToCategory ? "checked" : "") />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => category.Name)
+                                        @*@Html.HiddenFor(modelItem => category.Id)*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <div class="buttons">
+                @Html.ActionLink("Список користувачів", "Index", null, new { @class = "btn btn-info pull-left" })
+                <input type="submit" name="btnSaveUser" class="btn btn-success" value="Зберегти" />
+            </div>
+        </div>
+    </div>
+}
