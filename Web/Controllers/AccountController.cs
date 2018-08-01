@@ -94,7 +94,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {

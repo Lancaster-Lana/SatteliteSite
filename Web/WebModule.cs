@@ -1,6 +1,7 @@
 ﻿namespace Sattelite.Web
 {
     using Autofac;
+
     using Sattelite.Framework.Configurations;
     using Sattelite.Framework.Encyption.Impl;
     using Sattelite.Web.App_Start;
@@ -8,8 +9,6 @@
     using Sattelite.EntityFramework.MediaItem;
     using Sattelite.EntityFramework.Repository;
     using Sattelite.EntityFramework.ViewModels.Admin.Persistences;
-    using Sattelite.Entities;
-    using WebMatrix.Data;
 
     public class WebModule : Module
     {

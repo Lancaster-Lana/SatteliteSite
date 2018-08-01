@@ -3,26 +3,25 @@
     using DotNetOpenAuth.AspNet.Clients;
     using DotNetOpenAuth.OpenId.RelyingParty;
     using Microsoft.Web.WebPages.OAuth;
-    using Owin;
-    using System.Collections.Generic;
 
     public static class AuthConfig
     {
         public static void RegisterAuth()
         {
             OAuthWebSecurity.RegisterTwitterClient(
-                consumerKey: "daX1XtCiUTPh5ie4xuY22A",
-                consumerSecret: "RjXEDwwsifrcO3EweTcAJvuNxZSiqgUUnNwdnjTqPo");
+                consumerKey: "85CmzrPeNbfDBLqQDhZWvJvj2",
+                consumerSecret: "X6dW6my1ypjUAebxZVINn2QIrFrvJ2oe5hddLgi827JOv5nFjF");
+
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "960531237445623",
+                appSecret: "cd7f8a90861694ae5e252bfe6fd6a699");
+
 
             OAuthWebSecurity.RegisterGoogleClient();
             //var extraData = new Dictionary<string, object>();
             //extraData.Add("clientId", "000-000.apps.googleusercontent.com");
             //extraData.Add("clientSecret", "00000000000");
             //OAuthWebSecurity.RegisterGoogleClient("google", extraData);
-
-            OAuthWebSecurity.RegisterFacebookClient(
-                appId: "960531237445623",
-                appSecret: "cd7f8a90861694ae5e252bfe6fd6a699");
 
             OAuthWebSecurity.RegisterYahooClient();
 

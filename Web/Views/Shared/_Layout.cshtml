@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<html>
 @{
     var usersOnline = HttpContext.Current.Application["users_count"];
 }
+<html>
 <head>
     <title>Супутник НК - @RenderSection("TitleContent", required: false)</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -18,7 +18,10 @@
 <body>
     <div class="center-wrapper">
         <div id="network">
-            <div class="left">@DateTime.Now.ToShortDateString() <span class="text-separator">|</span> <span class="quiet">@usersOnline users online</span></div>
+            <div class="left">
+                @DateTime.Now.ToShortDateString() <span class="text-separator">|</span>
+                <span class="quiet">@usersOnline users online</span>
+            </div>
             <div class="login-toolbar">
                 @if (User == null || string.IsNullOrWhiteSpace(User.Identity.Name))
                 {
@@ -26,17 +29,23 @@
                 }
                 else
                 {
-                    //var rolesArray = Roles.GetRolesForUser(User.Identity.Name);
-                    //var isUserAdmin = User.IsInRole("Administrator");
+                    var rolesArray = Roles.GetRolesForUser(User.Identity.Name);
+                    //Roles.AddUserToRole(User.Identity.Name, roleName)
+                    bool isUserAdmin = User.IsInRole("Admin");
 
                     <span>
-                        @* @if (isUserAdmin)*@
+                        @*@if (isUserAdmin)*@
+
                         @Html.ActionLink("Go to administration board", "Index", new { area = "Admin", controller = "DashBoard" })
 
                         Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage", area = "", href = "/Account/Manage" })!
+
+
                         @Html.ActionLink("Log out", "Logout", new { area = "", controller = "Account" })
+
                     </span>
                 }
+
             </div>
         </div>
 
@@ -67,35 +76,35 @@
             });
         });
 
-            function successMessage(msg) {
-                swal({
-                    title: 'Success',
-                    text: msg,
-                    type: 'success',
-                    showCancelButton: false,
-                    closeOnConfirm: true
-                }, function () {
-                    window.location.reload();
-                });
-                return false;
-            }
+        function successMessage(msg) {
+            swal({
+                title: 'Success',
+                text: msg,
+                type: 'success',
+                showCancelButton: false,
+                closeOnConfirm: true
+            }, function () {
+                window.location.reload();
+            });
+            return false;
+        }
 
-            function infoMessage(msg) {
-                swal({
-                    title: 'Info',
-                    text: msg,
-                    type: 'info',
-                    showCancelButton: false,
-                    closeOnConfirm: true
-                }, function () {
-                    window.location.reload();
-                });
-                return false;
-            }
+        function infoMessage(msg) {
+            swal({
+                title: 'Info',
+                text: msg,
+                type: 'info',
+                showCancelButton: false,
+                closeOnConfirm: true
+            }, function () {
+                window.location.reload();
+            });
+            return false;
+        }
 
-            function errorMessage(msg) {
-                swal('Error !', msg, 'error');
-            }
+        function errorMessage(msg) {
+            swal('Error !', msg, 'error');
+        }
 
     </script>
 

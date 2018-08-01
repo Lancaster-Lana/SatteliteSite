@@ -6,75 +6,75 @@
 }
 
 <div class="col-md-12">
-<div class="login-form">
-    <div class="row">
-        <section class="col-md-9">
-            <fieldset>
-                <legend class="h4">Login with a local account :</legend>
-                <form method="post" ReturnUrl="@ViewData["ReturnUrl"]" class="form-horizontal">
-                    @Html.AntiForgeryToken()
-                    <div class="form-group">
-                      <div class="col-md-12">
-                           <label for="UserName" class="col-sm-2 control-label ">Username</label>
-                            <div class="col-sm-offset-1 col-sm-9 input-icon-container ">
-                                @*<i class="fa fa-user"></i>*@
-                                @Html.TextBoxFor(m => m.UserName, new { Class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.UserName)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <label for="Password" class="col-sm-2 control-label">Password</label>
-                            <div class="col-sm-offset-1 col-sm-9 input-icon-container">
-                                @*<i class="fa fa-lock"></i>*@
-                                @Html.PasswordFor(m => m.Password, new { Class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Password)
-                            </div>
-                        </div>
-                    </div>
-                    @Html.ValidationSummary(true)
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="checkbox">
-                                <label for="RememberMe">
-                                    <input id="RememberMe" type="checkbox" />
-                                    @Html.DisplayNameFor(m => m.RememberMe)
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    @*<div class="form-group">
+    <div class="login-form">
+        <div class="row">
+            <section class="col-md-9">
+                <fieldset>
+                    <legend class="h4">Login with a local account :</legend>
+                    <form method="post" ReturnUrl="@ViewData["ReturnUrl"]" class="form-horizontal">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
                             <div class="col-md-12">
-                                @Html.LabelFor(m => m.RememberMe)
-                                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "checkbox" })
+                                <label for="UserName" class="col-sm-2 control-label ">Username</label>
+                                <div class="col-sm-offset-1 col-sm-9 input-icon-container ">
+                                    @*<i class="fa fa-user"></i>*@
+                                    @Html.TextBoxFor(m => m.UserName, new { Class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.UserName)
+                                </div>
                             </div>
-                        </div>*@
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-success">Log in</button>
                         </div>
-                    </div>
-                    <p>
-                        @Html.ActionLink("Register as a new user?", "Register", new { @class = "col-md-5 btn btn-success" })
-                        @*<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>*@
-                    </p>
-                    <p>
-                        <a asp-action="ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <a href="forgot-password.html" class="text-center">Cannot login?</a>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="Password" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-offset-1 col-sm-9 input-icon-container">
+                                    @*<i class="fa fa-lock"></i>*@
+                                    @Html.PasswordFor(m => m.Password, new { Class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Password)
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </fieldset>
-        </section>
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="checkbox">
+                                    <label for="RememberMe">
+                                        <input id="RememberMe" type="checkbox" />
+                                        @Html.DisplayNameFor(m => m.RememberMe)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-        <section class="col-md-3">
-            @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+                        @*<div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.RememberMe)
+                                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "checkbox" })
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success">Log in</button>
+                            </div>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Register as a new user?", "Register", new { @class = "col-md-5 btn btn-success" })
+                            @*<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>*@
+                        </p>
+                        <p>
+                            <a asp-action="ForgotPassword">Forgot your password?</a>
+                        </p>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <a href="forgot-password.html" class="text-center">Cannot login?</a>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+            </section>
+
+            <section class="col-md-3">
+                @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>
     </div>
-</div>
 </div>
