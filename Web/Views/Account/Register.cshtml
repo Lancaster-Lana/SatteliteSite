@@ -5,35 +5,38 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<div class="badge text-center">
-
+<div class="login-form">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
-        <fieldset class="form-horizontal">
-            <legend>Створити новий аккаунт</legend>
-            @Html.ValidationSummary(true)
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.UserName, new  { @class="col-md-5 control-label"})*@
-                @Html.TextBoxFor(m => m.UserName, new { @placeholder = "User Name", @class = "col-md-5 form-control" })
-            </div>
-            <div class="form-group">
-                @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "col-md-5 form-control" })
-            </div>
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.Password, new { @class = "col-md-5 control-label" })*@
-                @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "col-md-5 form-control" })
-                @Html.ValidationMessageFor(m => m.Password, "Пароль не вірний", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-5 control-label" })*@
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "col-md-5 form-control" })
-                @Html.ValidationMessageFor(m => m.ConfirmPassword)
-            </div>
+        <fieldset class="form-horizontal row">
+            <legend class="h3">Новий аккаунт</legend>
+            <div class="col-offset-1 col-md-10">
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.UserName, new { @placeholder = "User Name", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName, "ім'я користувача обов'язкове", new { @class = "text-danger" })
 
-            <button class="btn btn-success" type="submit">Register</button>
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName, "Email обов'язковий", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "Пароль має бути більше 6 символів, містити цифри", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "Confirm password", @class = "col-6 form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                </div>
+
+            </div>
         </fieldset>
-
+        <div class="navbar">
+            <a class="btn btn-link" href="/">Cancel</a>
+            <button class="btn btn-success pull-right" type="submit">Register</button>
+        </div>
     }
 </div>

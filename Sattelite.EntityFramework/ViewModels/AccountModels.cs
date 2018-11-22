@@ -51,6 +51,7 @@
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
+        [Required]
         public string Email { get; set; }
 
         [Required]

@@ -81,13 +81,11 @@
             return RedirectToAction("Index", "Home");
         }
 
-
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
 
         [HttpPost]
         [AllowAnonymous]

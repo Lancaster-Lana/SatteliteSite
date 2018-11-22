@@ -54,12 +54,10 @@
                         <div class="form-group">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success">Log in</button>
+                                @Html.ActionLink("Register", "Register", new { @class = "pull-right btn btn-outline-success" })
+                                @*<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>*@
                             </div>
                         </div>
-                        <p>
-                            @Html.ActionLink("Register as a new user?", "Register", new { @class = "col-md-5 btn btn-success" })
-                            @*<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>*@
-                        </p>
                         <p>
                             <a asp-action="ForgotPassword">Forgot your password?</a>
                         </p>

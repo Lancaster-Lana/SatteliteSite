@@ -19,13 +19,15 @@
     <div class="center-wrapper">
         <div id="network">
             <div class="left">
-                @DateTime.Now.ToShortDateString() <span class="text-separator">|</span>
-                <span class="quiet">@usersOnline users online</span>
+                <b class="quiet">
+                    @DateTime.Now.ToShortDateString() <span class="text-separator">|</span>
+                    @usersOnline users online
+                </b>
             </div>
             <div class="login-toolbar">
                 @if (User == null || string.IsNullOrWhiteSpace(User.Identity.Name))
                 {
-                    @Html.ActionLink("Login", "Index", new { area = "Admin", controller = "DashBoard" })
+                    @Html.ActionLink("Login", "Index", new { area = "Admin", controller = "DashBoard" }, new { @class = "btn btn-success text-white" })
                 }
                 else
                 {
@@ -40,12 +42,11 @@
 
                         Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage", area = "", href = "/Account/Manage" })!
 
-
                         @Html.ActionLink("Log out", "Logout", new { area = "", controller = "Account" })
 
                     </span>
                 }
-
+                @Html.ActionLink("Register", "Register", "Account")
             </div>
         </div>
 
